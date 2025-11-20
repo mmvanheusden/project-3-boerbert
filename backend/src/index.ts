@@ -17,3 +17,5 @@ const app = new Elysia({adapter: node()})
             `🦊 Elysia is running at ${hostname}:${port}`
         )
     })
+
+export type ElysiaApp = typeof app
