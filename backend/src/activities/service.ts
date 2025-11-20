@@ -24,6 +24,22 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
     });
 }
 
+export async function updateActivity(id: string, activity: Static<typeof InsertActivityRequestBody>) {
+    // Convert image into Uint8Array
+    const heroBytes = new Uint8Array(await activity.hero.arrayBuffer());
+
+
+    await db.update(activitiesTable).set({
+        title: activity.title,
+        subtitle: activity.subtitle,
+        description: activity.description,
+        price: (activity.price as number),
+        hero: heroBytes,
+        capacity: (activity.capacity as number),
+        threshold: (activity.threshold as number),
+    }).where(eq(activitiesTable.id, +id));
+}
+
 export async function getActivity(id: string) {
     return db.select().from(activitiesTable).where(eq(activitiesTable.id, +id));
 }

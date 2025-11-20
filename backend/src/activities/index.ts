@@ -1,5 +1,5 @@
 import {Elysia} from "elysia";
-import {getActivities, getActivity, insertActivity} from "./service";
+import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
 import {InsertActivityRequestBody} from "./model";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
@@ -19,6 +19,15 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         "/",
         async (context) => {
             await insertActivity(context.body)
+        }, {
+            body: InsertActivityRequestBody,
+            type: "multipart/form-data",
+        }
+    )
+    .patch(
+        "/:id",
+        async ({ params: { id}, body }) => {
+            await updateActivity(id, body)
         }, {
             body: InsertActivityRequestBody,
             type: "multipart/form-data",
