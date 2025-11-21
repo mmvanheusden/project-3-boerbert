@@ -1,7 +1,10 @@
 import {drizzle} from 'drizzle-orm/libsql';
+import {createClient} from "@libsql/client";
 
-const dbUrl = process.env.DB_URL as string;
-
-const db = drizzle(dbUrl!);
+const client = createClient({
+	url: process.env.TURSO_DATABASE_URL!,
+	authToken: process.env.TURSO_AUTH_TOKEN!
+});
+const db = drizzle({ client, logger: true });
 
 export default db;
