@@ -6,9 +6,12 @@ import {useState} from "react";
 
 function DetailsModal() {
 	return (
-		<div className="border">
+		<>
+			<div className="bg-green-500">
+				hallo
+			</div>
+		</>
 
-		</div>
 	)
 }
 
