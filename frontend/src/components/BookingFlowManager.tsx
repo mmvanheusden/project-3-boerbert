@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Provider } from "./FormContext";
 import {Slideshow} from "./Slideshow.tsx";
-import {Scanner} from "./Scanner.tsx";
+import {ActivitiesList} from "./ActivitiesList.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -10,7 +10,7 @@ const renderStep = (step: number) => {
 		case 0:
 			return <Slideshow/>;
 		case 1:
-			return <Scanner/>;
+			return <ActivitiesList/>;
 		default:
 			return null;
 	}
