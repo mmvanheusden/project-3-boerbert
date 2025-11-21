@@ -14,20 +14,35 @@ function DetailsModal({ open, onClose }) {
 			onClick={onClose}
 		>
 			<div
-				className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl max-h-[90vh] overflow-auto"
+				className="bg-white rounded-2xl p-6 w-full max-w-3xl shadow-xl max-h-[90vh] overflow-auto"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<h2 className="text-xl font-semibold mb-4">Details</h2>
-
-				<div className="mb-6">
-				</div>
+				<h1 className="text-xl font-semibold mb-4">Titel</h1>
 				<div>
 					<div className="border rounded-md p-4 mb-4 flex items-center gap-3 bg-gray-50">
 						<div className="text-sm text-gray-700">
 							Kleine extra informatie of korte omschrijving hier.
-						</div>
-					</div>
-				</div>
+							<div>
+							Hier komt de beschrijving en plaatje ernaast
+							</div>
+							<div>
+								<div >
+									<span>Prijs: ?</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<span>locatie:</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<span>aantal personen:</span>
+								</div>
+							</div>
+									</div>
+								</div>
+							</div>
 
 				<button
 					onClick={onClose}
