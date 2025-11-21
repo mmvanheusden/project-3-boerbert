@@ -7,7 +7,7 @@ export function Scanner() {
 
 	const { isPending, error, data } = useQuery({
 		queryKey: ['scanner'],
-		queryFn: () => { /*Haal iets op van de backend ofzo*/ return "In deze stap scan je je pasje!!!" },
+		queryFn: () => { /*Haal iets op van de backend ofzo*/ return "In deze stap laat ie de activiteiten zien!!!" },
 	})
 
 	if (isPending) return 'Laden...'
