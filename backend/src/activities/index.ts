@@ -12,7 +12,12 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
     .get(
         '/:id',
         async ({params: {id}}) => {
-            return await getActivity(id);
+            const activity = (await getActivity(id))[0];
+
+            return {
+                ...activity,
+                hero: Buffer.from(activity.hero).toString('base64')
+            }
         }
     )
     .put(

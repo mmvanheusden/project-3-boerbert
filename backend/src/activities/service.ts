@@ -9,32 +9,24 @@ export async function getActivities() {
 }
 
 export async function insertActivity(activity: Static<typeof InsertActivityRequestBody>) {
-    // Convert image into Uint8Array
-    const heroBytes = new Uint8Array(await activity.hero.arrayBuffer());
-
-
     await db.insert(activitiesTable).values({
         title: activity.title,
         subtitle: activity.subtitle,
         description: activity.description,
         price: (activity.price as number),
-        hero: heroBytes,
+        hero: Buffer.from(await activity.hero.arrayBuffer()),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
     });
 }
 
 export async function updateActivity(id: string, activity: Static<typeof InsertActivityRequestBody>) {
-    // Convert image into Uint8Array
-    const heroBytes = new Uint8Array(await activity.hero.arrayBuffer());
-
-
     await db.update(activitiesTable).set({
         title: activity.title,
         subtitle: activity.subtitle,
         description: activity.description,
         price: (activity.price as number),
-        hero: heroBytes,
+        hero: Buffer.from(await activity.hero.arrayBuffer()),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
     }).where(eq(activitiesTable.id, +id));

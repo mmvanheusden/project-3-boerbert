@@ -7,7 +7,7 @@ export const activitiesTable = sqliteTable("activities", {
     subtitle: text().notNull(),
     description: text().notNull(),
     price: int().notNull(),
-    hero: blob().notNull(), // Cover image
+    hero: blob({ mode: 'buffer' }).notNull(), // Cover image
     capacity: int().notNull(),
     threshold: int().notNull(),
 });
