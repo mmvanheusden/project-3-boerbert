@@ -3,13 +3,13 @@
  * Elk component kan de context benaderen.
  * **/
 import { createContext } from "react";
-import {BACKEND} from "../App.tsx";
+import {BACKEND} from "../../App.tsx";
 import type {Treaty} from "@elysiajs/eden";
 
 // https://react.dev/learn/passing-data-deeply-with-context
 
 // De structuur die de context aanhoudt.
-type FormContextType = {
+type ContextPayload = {
 	currentStep: number;
 	setCurrentStep: (step: number) => void;
 	next: () => void;
@@ -18,7 +18,7 @@ type FormContextType = {
 };
 
 
-export const FormContext = createContext<FormContextType>({
+export const Context = createContext<ContextPayload>({
 	currentStep: undefined!,
 	setCurrentStep: () => {},
 	next: () => {},
@@ -27,6 +27,6 @@ export const FormContext = createContext<FormContextType>({
 });
 
 
-export default FormContext;
+export default Context;
 
-export const { Provider, Consumer } = FormContext;
+export const { Provider, Consumer } = Context;

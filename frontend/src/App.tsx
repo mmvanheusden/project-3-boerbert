@@ -1,10 +1,10 @@
 import {treaty} from '@elysiajs/eden'
 import type {ElysiaApp} from "../../backend/src"
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import BookingFlow from "./components/BookingFlowManager.tsx";
+import BookingFlow from "./components/booking/BookingFlowManager.tsx";
 import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
 import Router, {Route, Switch} from "crossroad";
-import AdminPanel from "./components/AdminPanel.tsx";
+import AdminPanel from "./components/admin/AdminPanel.tsx";
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")

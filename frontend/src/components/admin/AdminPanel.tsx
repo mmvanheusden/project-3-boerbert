@@ -1,4 +1,4 @@
-import { Header } from "./KleineDingetjes";
+import { Header } from "../KleineDingetjes";
 
 export default function AdminPanel() {
 	return (

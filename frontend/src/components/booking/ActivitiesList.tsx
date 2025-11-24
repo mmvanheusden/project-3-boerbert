@@ -1,10 +1,10 @@
-import "../index.css";
-import {BACKEND} from "../App.tsx";
+import "../../index.css";
+import {BACKEND} from "../../App.tsx";
 import {useContext, useState} from "react";
 import {Icon} from '@iconify/react';
 import type {Treaty} from "@elysiajs/eden";
-import FormContext from "./FormContext.tsx";
-import {Header} from "./KleineDingetjes.tsx";
+import Context from "./Context.tsx";
+import {Header} from "../KleineDingetjes.tsx";
 
 
 interface DetailsModalProps {
@@ -15,7 +15,7 @@ interface DetailsModalProps {
 export function ActivitiesList() {
 	const [showModal, setModal] = useState(false);
 	const [modalActivity, setModalActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0]>(); // Hierin staat welke activiteit er weergegeven zou moeten worden voor de modal.
-	const context = useContext(FormContext);
+	const context = useContext(Context);
 
 	// Het modal dat de details van de activiteit laat zien.
 	function DetailsModal({onClose}: DetailsModalProps) {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Provider } from "./FormContext";
-import {Slideshow} from "./Slideshow.tsx";
+import { Provider } from "./Context.tsx";
+import {Slideshow} from "../Slideshow.tsx";
 import {ActivitiesList} from "./ActivitiesList.tsx";
-import {BACKEND} from "../App.tsx";
+import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 
