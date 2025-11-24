@@ -3,6 +3,8 @@
  * Elk component kan de context benaderen.
  * **/
 import { createContext } from "react";
+import {BACKEND} from "../App.tsx";
+import type {Treaty} from "@elysiajs/eden";
 
 // https://react.dev/learn/passing-data-deeply-with-context
 
@@ -12,6 +14,7 @@ type FormContextType = {
 	setCurrentStep: (step: number) => void;
 	next: () => void;
 	prev: () => void;
+	availableActivities?: Treaty.Data<typeof BACKEND.activities.get>;
 };
 
 
@@ -20,6 +23,7 @@ export const FormContext = createContext<FormContextType>({
 	setCurrentStep: () => {},
 	next: () => {},
 	prev: () => {},
+	availableActivities: undefined!,
 });
 
 
