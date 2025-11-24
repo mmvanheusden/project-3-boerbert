@@ -4,6 +4,7 @@ import {useContext, useState} from "react";
 import {Icon} from '@iconify/react';
 import type {Treaty} from "@elysiajs/eden";
 import FormContext from "./FormContext.tsx";
+import {Header} from "./KleineDingetjes.tsx";
 
 
 interface DetailsModalProps {
@@ -71,6 +72,12 @@ export function ActivitiesList() {
 
 	return (
 		<>
+			<Header>
+					<span
+						className="select-none rounded-t-lg border-1 bg-blue-500 px-4 mb-1 font-medium text-2xl">
+						Stap 1: Kies een activiteit
+					</span>
+			</Header>
 			<ul>{activityItems}</ul>
 		</>
 
