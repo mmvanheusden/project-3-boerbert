@@ -1,12 +1,23 @@
 import {Elysia} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {InsertActivityRequestBody} from "./model";
+import {activitiesTable, InsertActivityRequestBody, OverrideField} from "./model";
+import {InferSelectModel} from "drizzle-orm";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
         '/',
         async () => {
-            return getActivities();
+            // Before sending, we're base64 encoding the hero field so the requests are smaller.
+            const activites = await getActivities();
+            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'hero', string>[] = [];
+            activites.forEach((activity) => {
+                modifiedActivities.push({
+                    ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64')
+                });
+            })
+
+            return modifiedActivities
         }
     )
     .get(
