@@ -118,12 +118,75 @@ function Deleter() {
 }
 
 
-function Creator() {
-	const {activities, setActivities} = useContext(Context)!;
+function ImageUpload() {
+	const [image, setImage] = useState<string | null>(null);
+
+	function ImageUpload() {
+		return (
+			<button onClick={() => {
+				setImage("hoi")
+			}}
+				type="button" className="bg-gray-200 w-full h-full flex items-center justify-center hover:outline-5 hover:font-bold hover:outline-red-300 hover:cursor-pointer">
+				Uploaden
+			</button>
+		)
+	}
+
+	function ImagePreview() {
+		return (
+			<img src="https://picsum.photos/200/300" alt="Preview" className="object-fill"/>
+		)
+	}
 
 	return (
 		<div>
-			Hier kan je activiteiten toevoegen.
+			<h1 className="text-base font-semibold">Plaatje</h1>
+			<div className="border-2 w-full min-w-[40%] h-[calc(100%-1em)]">
+				{image ? <ImagePreview/> : <ImageUpload/>}
+			</div>
 		</div>
+	)
+}
+
+function Creator() {
+	const {activities, setActivities} = useContext(Context)!;
+
+	return (<>
+			<form>
+				<div className="grid md:grid-cols-2 md:gap-6">
+					<div>
+						<div className="mb-2">
+							<label htmlFor="title">Titel</label>
+							<input id="title" type="text"
+								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+						</div>
+						<div className="mb-2">
+							<label htmlFor="subtitle">Ondertitel</label>
+							<input id="subtitle" type="text"
+								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+						</div>
+					</div>
+					<ImageUpload/>
+				</div>
+				<div className="mb-2">
+					<label htmlFor="price">Prijs</label>
+					<input id="price" type="text"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<div className="mb-2">
+					<label htmlFor="capacity">Capaciteit</label>
+					<input id="capacity" type="text"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<div className="mb-2">
+					<label htmlFor="threshold">Drempelbezetting</label>
+					<input id="threshold" type="text"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<button type="submit" className="bg-blue-500 hover:ring-2">
+					Toevoegen
+				</button>
+			</form>
+		</>
 	)
 }
