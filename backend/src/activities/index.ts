@@ -1,7 +1,8 @@
 import {Elysia} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
 import {activitiesTable, InsertActivityRequestBody, OverrideField} from "./model";
-import {InferSelectModel} from "drizzle-orm";
+import {eq, InferSelectModel} from "drizzle-orm";
+import db from "../config/db";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -23,7 +24,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
     .get(
         '/:id',
         async ({params: {id}}) => {
-            const activity = (await getActivity(id))[0];
+            const activity = await getActivity(id);
 
             return {
                 ...activity,
@@ -47,6 +48,12 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         }, {
             body: InsertActivityRequestBody,
             type: "multipart/form-data",
+        }
+    )
+    .delete(
+        "/:id",
+        async ({params: {id}}) => {
+            await db.delete(activitiesTable).where(eq(activitiesTable.id, +id));
         }
     )
 )

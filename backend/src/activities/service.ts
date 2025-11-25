@@ -33,5 +33,5 @@ export async function updateActivity(id: string, activity: Static<typeof InsertA
 }
 
 export async function getActivity(id: string) {
-    return db.select().from(activitiesTable).where(eq(activitiesTable.id, +id));
+    return ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
 }
