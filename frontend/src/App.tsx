@@ -39,7 +39,7 @@ export function Footer() {
 						</li>
 						<nav>
 							<a href="/admin">
-								<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-blue-500 px-4 font-medium text-2xl">
+								<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-blue-500 px-4 font-medium text-2xl hover:ring-2">
 									Beheerderspaneel
 								</button>
 							</a>
