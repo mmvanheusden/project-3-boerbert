@@ -49,7 +49,7 @@ export function ActivitiesList() {
 	}
 
 	// De kaarten met activiteiten.
-	const activityItems = context.availableActivities!.map((activiteit) =>
+	const activityItems = context.activities!.map((activiteit) =>
 		<>
 			{showModal ? <DetailsModal onClose={() => setModal(false)}/> : null}
 			<div className="flex flex-col bg-white shadow-md rounded-lg p-6 w-96 mb-2">

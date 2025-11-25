@@ -1,5 +1,5 @@
 /**
- * Hier defineren we de context, daarin staat gedeelde "context" die relevant is voor elke stap in het boekingsproces.
+ * Hier defineren we de context, daarin staat gedeelde "context" die relevant is voor de componenten in het beheerderspaneel.
  * Elk component kan de context benaderen.
  * **/
 import { createContext } from "react";
@@ -10,20 +10,12 @@ import type {Treaty} from "@elysiajs/eden";
 
 // De structuur die de context aanhoudt.
 type ContextPayload = {
-	currentStep: number;
-	setCurrentStep: (step: number) => void;
-	next: () => void;
-	prev: () => void;
-	activities?: Treaty.Data<typeof BACKEND.activities.get>;
+    activities?: Treaty.Data<typeof BACKEND.activities.get>;
 };
 
 
 export const Context = createContext<ContextPayload>({
-	currentStep: undefined!,
-	setCurrentStep: () => {},
-	next: () => {},
-	prev: () => {},
-	activities: undefined!,
+    activities: undefined!,
 });
 
 

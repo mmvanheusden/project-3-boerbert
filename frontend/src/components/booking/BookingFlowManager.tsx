@@ -49,7 +49,7 @@ const BookingFlow = () => {
 	const prev = () => setCurrentStep(currentStep - 1);
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, availableActivities: data ?? [] }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: data ?? [] }}>
 			<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
 			<a>
 				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-red-400" onClick={() => next()}>
