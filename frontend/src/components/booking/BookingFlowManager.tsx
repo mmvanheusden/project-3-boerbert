@@ -1,22 +1,30 @@
 import { useState } from "react";
-import { Provider } from "./FormContext";
-import {Slideshow} from "./Slideshow.tsx";
+import { Provider } from "./Context.tsx";
+import {Slideshow} from "../Slideshow.tsx";
 import {ActivitiesList} from "./ActivitiesList.tsx";
-import {BACKEND} from "../App.tsx";
+import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
 const renderStep = (step: number) => {
-	switch (step) {
-		case 0:
-			return <Slideshow/>;
-		case 1:
-			return <ActivitiesList/>;
-		default:
-			return null;
-	}
+	return (
+		<>
+			<div>
+				{(() => {switch (step) {
+					case 0:
+						return <Slideshow/>;
+					case 1:
+						return <ActivitiesList/>;
+					default:
+						return null;
+				}})()}
+
+			</div>
+		</>
+	)
+
 };
 
 const BookingFlow = () => {
@@ -42,10 +50,9 @@ const BookingFlow = () => {
 
 	return (
 		<Provider value={{ currentStep, setCurrentStep, next, prev, availableActivities: data ?? [] }}>
-			<h1 className="content-center">Stap: {currentStep}</h1>
-			<main>{renderStep(currentStep)}</main>
+			<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
 			<a>
-				<button className="border-2 rounded py-3 px-2.5 border-red-400" onClick={() => next()}>
+				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-red-400" onClick={() => next()}>
 					Volgende stap
 				</button>
 			</a>
