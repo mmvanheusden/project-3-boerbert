@@ -74,7 +74,7 @@ export function ActivitiesList() {
 		<>
 			<Header>
 					<span
-						className="select-none rounded-t-lg border-1 bg-green-600 px-4 mb-1 font-medium text-2xl">
+						className="select-none rounded-t-lg border-2 border-white bg-green-600 px-4 mb-1 font-medium text-2xl">
 						Stap 1: Kies een activiteit
 					</span>
 			</Header>

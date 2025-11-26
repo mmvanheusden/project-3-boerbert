@@ -5,6 +5,7 @@ import BookingFlow from "./components/booking/BookingFlowManager.tsx";
 import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
 import Router, {Route, Switch} from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
+import {Component, type PropsWithChildren} from "react";
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")
@@ -27,28 +28,30 @@ export function App() {
 }
 
 
-export function Footer() {
-	return (
-		<Router>
-			<QueryClientProvider client={queryClient}>
-				<footer className="bg-black-400 fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
-					<span className="text-sm text-body sm:text-center">
-						2025 Squad Skyr™
-					</span>
-					<ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-						<li className="me-4 md:me-6">
-							<ConnectivityCheck/>
-						</li>
-						<nav>
-							<a href="/admin">
-								<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
-									Beheerderspaneel
-								</button>
-							</a>
-						</nav>
-					</ul>
-				</footer>
-			</QueryClientProvider>
-		</Router>
-	)
+export class Footer extends Component<PropsWithChildren> {
+	render() {
+		return (
+			<Router>
+				<QueryClientProvider client={queryClient}>
+					<div className="bg-white fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
+						<span className="text-sm text-body sm:text-center">
+							2025 Squad Skyr™
+						</span>
+						<ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
+							<li className="me-4 md:me-6">
+								<ConnectivityCheck/>
+							</li>
+							<nav>
+								<a href="/admin">
+									<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
+										Beheerderspaneel
+									</button>
+								</a>
+							</nav>
+						</ul>
+					</div>
+				</QueryClientProvider>
+			</Router>
+		)
+	}
 }
