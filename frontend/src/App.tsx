@@ -15,10 +15,12 @@ export function App() {
 	return (
 		<Router>
 			<QueryClientProvider client={queryClient}>
-				<Switch redirect="/">
-					<Route path="/" component={BookingFlow} />
-					<Route path="/admin" component={AdminPanel} />
-				</Switch>
+				<div className="pb-28">
+					<Switch redirect="/">
+						<Route path="/" component={BookingFlow} />
+						<Route path="/admin" component={AdminPanel} />
+					</Switch>
+				</div>
 			</QueryClientProvider>
 		</Router>
 	)
