@@ -208,7 +208,7 @@ function Creator() {
 						<div className="mb-2">
 							<label htmlFor="title">Titel</label>
 							<input id="title" type="text"
-								   className="block w-full p-2 text-gray-900 border-2 border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
 							<label htmlFor="subtitle">Ondertitel</label>
