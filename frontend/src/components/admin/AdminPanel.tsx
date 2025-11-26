@@ -37,21 +37,21 @@ export default function AdminPanel() {
 					</span>
 					<button
 						onClick={() => setView("Bewerker")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Bewerker" ? "underline outline-[2px]" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Bewerker" ? "underline outline-[2px] outline-white" : null}`}>
 						<span>
 							Bewerken
 						</span>
 					</button>
 					<button
 						onClick={() => setView("Verwijderen")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Verwijderen" ? "underline outline-[2px]" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Verwijderen" ? "underline outline-[2px] outline-white" : null}`}>
 						<span>
 							Verwijderen
 						</span>
 					</button>
 					<button
 						onClick={() => setView("Activiteit aanmaken")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Activiteit aanmaken" ? "underline outline-white outline-[2px]" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Activiteit aanmaken" ? "underline outline-white outline-[2px] outline-white" : null}`}>
 
 						<span>
 							Toevoegen
@@ -180,7 +180,7 @@ function ImageUpload() {
 
 	function ImagePreview() {
 		return (
-			<img src="https://picsum.photos/200/300" alt="Preview" className="object-fill"/>
+			<img src="https://picsum.photos/500/128" alt="Preview" className="object-fill"/>
 		)
 	}
 
