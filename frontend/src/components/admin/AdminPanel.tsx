@@ -30,43 +30,45 @@ export default function AdminPanel() {
 
 	return (
 		<Provider value={{activities, setActivities}}>
-			<Header>
-				<span className="select-none rounded-t-lg border-x-1 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
-					Beheerderspaneel
-				</span>
-				<button
-					onClick={() => setView("Bewerker")}
-					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Bewerker" ? "underline outline-[2px]" : null}`}>
+			<div className="bg-green/50">
+				<Header>
+					<span className="select-none rounded-t-lg border-x-1 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
+						Beheerderspaneel
+					</span>
+					<button
+						onClick={() => setView("Bewerker")}
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Bewerker" ? "underline outline-[2px]" : null}`}>
 						<span>
 							Bewerken
 						</span>
-				</button>
-				<button
-					onClick={() => setView("Verwijderen")}
-					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Verwijderen" ? "underline outline-[2px]" : null}`}>
+					</button>
+					<button
+						onClick={() => setView("Verwijderen")}
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Verwijderen" ? "underline outline-[2px]" : null}`}>
 						<span>
 							Verwijderen
 						</span>
-				</button>
-				<button
-					onClick={() => setView("Activiteit aanmaken")}
-					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Activiteit aanmaken" ? "underline outline-[2px]" : null}`}>
+					</button>
+					<button
+						onClick={() => setView("Activiteit aanmaken")}
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Activiteit aanmaken" ? "underline outline-[2px]" : null}`}>
 
 						<span>
 							Toevoegen
 						</span>
-				</button>
-				<a href="/">
-					<button
-						className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-base">
-						<Icon icon="ion:arrow-back" width="24" height="24"/>
-						<span>Terug naar hoofdpagina</span>
 					</button>
-				</a>
-			</Header>
-			{currentView == "Bewerker" ? <Editor/> : null}
-			{currentView == "Verwijderen" ? <Deleter/> : null}
-			{currentView == "Activiteit aanmaken" ? <Creator/> : null}
+					<a href="/">
+						<button
+							className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-base py-1">
+							<Icon icon="ion:arrow-back" width="24" height="24"/>
+							<span>Terug naar hoofdpagina</span>
+						</button>
+					</a>
+				</Header>
+				{currentView == "Bewerker" ? <Editor/> : null}
+				{currentView == "Verwijderen" ? <Deleter/> : null}
+				{currentView == "Activiteit aanmaken" ? <Creator/> : null}
+			</div>
 		</Provider>
 	)
 }
@@ -170,7 +172,7 @@ function ImageUpload() {
 			<button onClick={() => {
 				setImage("hoi")
 			}}
-				type="button" className="bg-gray-200 w-full h-full flex items-center justify-center hover:outline-5 hover:font-bold hover:outline-red-300 hover:cursor-pointer">
+				type="button" className="text-black bg-gray-200/80 w-full h-full flex items-center justify-center hover:outline-5 hover:font-bold hover:outline-red-300 hover:cursor-pointer">
 				Uploaden
 			</button>
 		)
@@ -202,7 +204,7 @@ function Creator() {
 					Vul de details van de activiteit hieronder in. Klik op de knop om de activiteit toe te voegen.
 				</p>
 			</ModeDescription>
-			<form>
+			<form className="text-white">
 				<div className="grid md:grid-cols-2 md:gap-6">
 					<div>
 						<div className="mb-2">
