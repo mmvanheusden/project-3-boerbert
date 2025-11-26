@@ -2,7 +2,7 @@ import { Header } from "../KleineDingetjes";
 import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {Provider, Context, type ContextPayload} from "./Context.ts";
-import {useContext, useEffect, useState} from "react";
+import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
 
@@ -64,7 +64,6 @@ export default function AdminPanel() {
 					</button>
 				</a>
 			</Header>
-			<hr className="mb-3 w-[40%] h-[0.2em] rounded bg-gray-900"></hr>
 			{currentView == "Bewerker" ? <Editor/> : null}
 			{currentView == "Verwijderen" ? <Deleter/> : null}
 			{currentView == "Activiteit aanmaken" ? <Creator/> : null}
@@ -77,6 +76,12 @@ function Editor() {
 
 	return (
 		<div>
+			<ModeDescription>
+				<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+				<p>
+					Hieronder vindt u een lijst met alle activiteiten. Klik op de knop om een activiteit te bewerken.
+				</p>
+			</ModeDescription>
 			<ActivitiesEmptyCheck activities={activities}/>
 		</div>
 	)
@@ -104,12 +109,28 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 	)
 }
 
+class ModeDescription extends Component<PropsWithChildren> {
+	render() {
+		return (
+			<div className="border-2 w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white shadow">
+				{this.props.children}
+			</div>
+		)
+	}
+}
+
 
 function Deleter() {
 	const {activities, setActivities} = useContext(Context)!;
 
 	return (
 		<ol>
+			<ModeDescription>
+				<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+				<p>
+					Hieronder vindt u een lijst met alle activiteiten. Klik op de knop om een activiteit te verwijderen.
+				</p>
+			</ModeDescription>
 			<ActivitiesEmptyCheck activities={activities}/>
 			{
 				activities.map((activiteit) => {
@@ -175,13 +196,19 @@ function Creator() {
 	const {activities, setActivities} = useContext(Context)!;
 
 	return (<>
+			<ModeDescription>
+				<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+				<p>
+					Vul de details van de activiteit hieronder in. Klik op de knop om de activiteit toe te voegen.
+				</p>
+			</ModeDescription>
 			<form>
 				<div className="grid md:grid-cols-2 md:gap-6">
 					<div>
 						<div className="mb-2">
 							<label htmlFor="title">Titel</label>
 							<input id="title" type="text"
-								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+								   className="block w-full p-2 text-gray-900 border-2 border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
 							<label htmlFor="subtitle">Ondertitel</label>
