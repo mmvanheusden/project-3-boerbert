@@ -40,7 +40,7 @@ export function ActivitiesList() {
 							</div>
 						</div>
 					</div>
-					<button onClick={onClose} className="px-4 py-2 bg-blue-600 text-white rounded-xl">
+					<button onClick={onClose} className="px-4 py-2 bg-white text-white rounded-xl">
 						<Icon icon="tdesign:close-circle" width="24" height="24"/>
 					</button>
 				</div>
@@ -52,7 +52,7 @@ export function ActivitiesList() {
 	const activityItems = context.activities!.map((activiteit) =>
 		<>
 			{showModal ? <DetailsModal onClose={() => setModal(false)}/> : null}
-			<div className="flex flex-col bg-white shadow-md rounded-lg p-6 w-96 mb-2">
+			<div className="flex flex-col bg-white shadow-md rounded-lg p-6 w-full  mb-2">
 				<span className="text-gray-600 font-mono font-semibold text-sm select-none">ACTIVITEIT</span>
 				<ul>
 					<li className="mb-4">
@@ -65,7 +65,7 @@ export function ActivitiesList() {
 						setModal(true)
 						setModalActivity(activiteit)
 					}
-				} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Meer info</button>
+				} type="button" className="text-white bg-green-700 hover:bg-green-900 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-20 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Meer info</button>
 			</div>
 		</>,
 	);
@@ -74,7 +74,7 @@ export function ActivitiesList() {
 		<>
 			<Header>
 					<span
-						className="select-none rounded-t-lg border-1 bg-blue-500 px-4 mb-1 font-medium text-2xl">
+						className="select-none rounded-t-lg border-1 bg-green-600 px-4 mb-1 font-medium text-2xl">
 						Stap 1: Kies een activiteit
 					</span>
 			</Header>

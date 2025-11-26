@@ -52,7 +52,7 @@ const BookingFlow = () => {
 		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: data ?? [] }}>
 			<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
 			<a>
-				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-red-400" onClick={() => next()}>
+				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={() => next()}>
 					Volgende stap
 				</button>
 			</a>
