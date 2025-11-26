@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 import {Provider, Context, type ContextPayload} from "./Context.ts";
 import {useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
+import {Icon} from "@iconify/react";
 
 
 export default function AdminPanel() {
@@ -30,33 +31,39 @@ export default function AdminPanel() {
 	return (
 		<Provider value={{activities, setActivities}}>
 			<Header>
-				<span className="select-none rounded-t-lg border-1 bg-red-800 px-4 font-medium text-2xl">
-					Beheerderspaneel: {currentView}
+				<span className="select-none rounded-t-lg border-x-1 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
+					Beheerderspaneel
 				</span>
+				<button
+					onClick={() => setView("Bewerker")}
+					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Bewerker" ? "underline outline-[2px]" : null}`}>
+						<span>
+							Bewerken
+						</span>
+				</button>
+				<button
+					onClick={() => setView("Verwijderen")}
+					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Verwijderen" ? "underline outline-[2px]" : null}`}>
+						<span>
+							Verwijderen
+						</span>
+				</button>
+				<button
+					onClick={() => setView("Activiteit aanmaken")}
+					className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 ${currentView == "Activiteit aanmaken" ? "underline outline-[2px]" : null}`}>
+
+						<span>
+							Toevoegen
+						</span>
+				</button>
 				<a href="/">
 					<button
-						className="hover:underline ml-4 hover:ring-2 rounded border-1 cursor-pointer bg-green-200 px-2 font-medium text-2xl -translate-y-1">
-						<span>
-							Hoofdpagina
-						</span>
+						className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-base">
+						<Icon icon="ion:arrow-back" width="24" height="24"/>
+						<span>Terug naar hoofdpagina</span>
 					</button>
 				</a>
 			</Header>
-
-			<div className="inline-flex shadow-xs -space-x-px mb-2" role="group">
-				<button onClick={() => setView("Bewerker")} type="button"
-						className={`rounded-l text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-e-base text-sm px-3 py-2 ${currentView == "Bewerker" ? " bg-green-300 outline-[1px]" : null}`}>
-					Bewerk activiteiten
-				</button>
-				<button onClick={() => setView("Verwijderen")} type="button"
-						className={`text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-e-base text-sm px-3 py-2 ${currentView == "Verwijderen" ? " bg-green-300 outline-[1px]" : null}`}>
-					Verwijder activiteiten
-				</button>
-				<button onClick={() => setView("Activiteit aanmaken")} type="button"
-						className={`rounded-r text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-e-base text-sm px-3 py-2 ${currentView == "Activiteit aanmaken" ? " bg-green-300 outline-[1px]" : null}`}>
-					Voeg activiteiten toe
-				</button>
-			</div>
 			<hr className="mb-3 w-[40%] h-[0.2em] rounded bg-gray-900"></hr>
 			{currentView == "Bewerker" ? <Editor/> : null}
 			{currentView == "Verwijderen" ? <Deleter/> : null}
@@ -70,7 +77,7 @@ function Editor() {
 
 	return (
 		<div>
-			Hier kan je activiteiten bewerken.
+			<ActivitiesEmptyCheck activities={activities}/>
 		</div>
 	)
 }
@@ -81,12 +88,29 @@ async function deleteActivity(activity: Treaty.Data<typeof BACKEND.activities.ge
 	setActivities(prev => prev.filter(a => a.id !== activity.id));
 }
 
+function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.activities.get> }) {
+	const { activities } = props;
+
+	return (
+		<>
+			{(() => {if (activities.length == 0) {
+				return (
+					<div className="border-2 border-black h-[60vh] w-full flex items-center justify-center text-3xl font-bold">
+						Er zijn nog geen activiteiten.
+					</div>
+				)
+			}})()}
+		</>
+	)
+}
+
 
 function Deleter() {
 	const {activities, setActivities} = useContext(Context)!;
 
 	return (
 		<ol>
+			<ActivitiesEmptyCheck activities={activities}/>
 			{
 				activities.map((activiteit) => {
 					return (
@@ -112,7 +136,6 @@ function Deleter() {
 					)
 				})
 			}
-			Hier kan je activiteiten verwijderen.
 		</ol>
 	)
 }

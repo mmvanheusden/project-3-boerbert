@@ -52,7 +52,7 @@ export function ActivitiesList() {
 	const activityItems = context.activities!.map((activiteit) =>
 		<>
 			{showModal ? <DetailsModal onClose={() => setModal(false)}/> : null}
-			<div className="flex flex-col bg-white shadow-md rounded-lg p-6 w-96 mb-2">
+			<div className="flex flex-col bg-white shadow-md rounded-lg p-6 w-full mb-2">
 				<span className="text-gray-600 font-mono font-semibold text-sm select-none">ACTIVITEIT</span>
 				<ul>
 					<li className="mb-4">
