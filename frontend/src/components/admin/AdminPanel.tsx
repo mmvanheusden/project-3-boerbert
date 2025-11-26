@@ -170,17 +170,17 @@ function Creator() {
 				</div>
 				<div className="mb-2">
 					<label htmlFor="price">Prijs</label>
-					<input id="price" type="text"
+					<input id="price" type="number"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="capacity">Capaciteit</label>
-					<input id="capacity" type="text"
+					<input id="capacity" type="number"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="threshold">Drempelbezetting</label>
-					<input id="threshold" type="text"
+					<input id="threshold" type="number"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className="bg-blue-500 hover:ring-2">
