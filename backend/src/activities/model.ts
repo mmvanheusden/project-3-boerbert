@@ -22,7 +22,7 @@ export const InsertActivityRequestBody = t.Object({
         t.String(),
     ]),
     hero: t.File({
-        type: "image/png"
+        type: "image/*"
     }),
     capacity: t.Union([
         t.Number(),
