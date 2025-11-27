@@ -214,12 +214,12 @@ function Creator() {
 					<div>
 						<div className="mb-2">
 							<label htmlFor="title">Titel</label>
-							<input id="title" type="text" required
+							<input id="title" type="text" required placeholder="Bijv. 'Boogschieten'"
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
 							<label htmlFor="subtitle">Ondertitel</label>
-							<input id="subtitle" type="text" required
+							<input id="subtitle" type="text" required placeholder="Bijv. 'Leer boogschieten met onze instructeurs'" 
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 					</div>
@@ -227,17 +227,17 @@ function Creator() {
 				</div>
 				<div className="mb-2">
 					<label htmlFor="price">Prijs</label>
-					<input id="price" type="text" required
+					<input id="price" type="text" required placeholder="Bijv. '€4,50'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="capacity">Capaciteit</label>
-					<input id="capacity" type="text" required
+					<input id="capacity" type="text" required placeholder="Bijv. '20'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="threshold">Drempelbezetting</label>
-					<input id="threshold" type="text" required
+					<input id="threshold" type="text" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className="bg-blue-500 hover:ring-2">
