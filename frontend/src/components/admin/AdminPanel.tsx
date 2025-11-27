@@ -30,28 +30,28 @@ export default function AdminPanel() {
 
 	return (
 		<Provider value={{activities, setActivities}}>
-			<div className="bg-green/50">
+			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<Header>
-					<span className="select-none rounded-t-lg border-x-2 border-white border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
+					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
 						Beheerderspaneel
 					</span>
 					<button
 						onClick={() => setView("Bewerker")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Bewerker" ? "underline outline-[2px] outline-white" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200  hover:outline-[2px] ${currentView == "Bewerker" ? "underline outline-[2px]" : null}`}>
 						<span>
 							Bewerken
 						</span>
 					</button>
 					<button
 						onClick={() => setView("Verwijderen")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Verwijderen" ? "underline outline-[2px] outline-white" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1  px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-[2px] ${currentView == "Verwijderen" ? "underline outline-[2px] " : null}`}>
 						<span>
 							Verwijderen
 						</span>
 					</button>
 					<button
 						onClick={() => setView("Activiteit aanmaken")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 border-white px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-white hover:outline-[2px] ${currentView == "Activiteit aanmaken" ? "underline outline-white outline-[2px] outline-white" : null}`}>
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200  hover:outline-[2px] ${currentView == "Activiteit aanmaken" ? "underline  outline-[2px] " : null}`}>
 
 						<span>
 							Toevoegen
@@ -59,7 +59,7 @@ export default function AdminPanel() {
 					</button>
 					<a href="/">
 						<button
-							className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1 border-white cursor-pointer bg-orange-300 px-2 font-medium text-base py-1 hover:outline-white hover:outline-[2px]">
+							className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1  cursor-pointer bg-orange-300 px-2 font-medium text-base py-1  hover:outline-[2px]">
 							<Icon icon="ion:arrow-back" width="24" height="24"/>
 							<span>Terug naar hoofdpagina</span>
 						</button>
@@ -204,7 +204,7 @@ function Creator() {
 					Vul de details van de activiteit hieronder in. Klik op de knop om de activiteit toe te voegen.
 				</p>
 			</ModeDescription>
-			<form className="text-white">
+			<form>
 				<div className="grid md:grid-cols-2 md:gap-6">
 					<div>
 						<div className="mb-2">
