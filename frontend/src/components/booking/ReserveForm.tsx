@@ -12,7 +12,7 @@ interface DetailsModalProps {
 }
 
 
-export function ActivitiesList() {
+export function ReserveForm() {
 	const [showModal, setModal] = useState(false);
 	const [modalActivity, setModalActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0]>(); // Hierin staat welke activiteit er weergegeven zou moeten worden voor de modal.
 	const context = useContext(Context);
@@ -60,9 +60,17 @@ export function ActivitiesList() {
 						<p className="text-gray-600">{activiteit.subtitle}</p>
 					</li>
 				</ul>
+
+				<h1>Voor hoeveel mensen wil u reserveren?</h1>
+				<div class="plusmin">
+				<button onClick={() => ()}
+				type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+				>+</button>
 				<button onClick={() => next()}
 				type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-				>Bekijk activiteit</button>
+				>-</button>
+				</div>
+
 			</div>
 		</>,
 	);
@@ -72,7 +80,7 @@ export function ActivitiesList() {
 			<Header>
 					<span
 						className="select-none rounded-t-lg border-1 bg-blue-500 px-4 mb-1 font-medium text-2xl">
-						Stap 1: Kies een activiteit
+						Stap 2: Bekijk activiteit details
 					</span>
 			</Header>
 			<ul>{activityItems}</ul>
