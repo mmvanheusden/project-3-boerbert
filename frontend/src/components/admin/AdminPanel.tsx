@@ -168,27 +168,21 @@ function Deleter() {
 function ImageUpload() {
 	const [image, setImage] = useState<string | null>(null);
 
-	function ImageUpload() {
-		return (
-			<div className={`text-black bg-gray-200/80 w-full h-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"}`}>
-				{image && <img src={image} alt="Preview" className="object-fill"/>}
-				<input id="hero" className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
-					const file = e.target.files?.[0];
-					if (!file) return;
-					const reader = new FileReader();
-					reader.onload = (e) => setImage(e.target?.result as string);
-					reader.readAsDataURL(file);
-				}}>
-				</input>
-			</div>
-		)
-	}
-
 	return (
 		<div>
 			<label htmlFor="hero" className="text-base font-semibold">Plaatje</label>
 			<div className="border-2 w-full min-w-[40%] h-[calc(100%-1em)]">
-				<ImageUpload/>
+				<div className={`text-black bg-gray-200/80 w-full h-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"}`}>
+					{image && <img src={image} alt="Preview" className="object-fill"/>}
+					<input id="hero" className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
+						const file = e.target.files?.[0];
+						if (!file) return;
+						const reader = new FileReader();
+						reader.onload = (e) => setImage(e.target?.result as string);
+						reader.readAsDataURL(file);
+					}}>
+					</input>
+				</div>
 			</div>
 		</div>
 	)
