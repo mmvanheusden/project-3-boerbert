@@ -189,11 +189,30 @@ function ImageUpload() {
 }
 
 function Creator() {
-	const {activities, setActivities} = useContext(Context)!;
+	function insertActivity(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault()
+		const form = event.currentTarget
+		// Zet de formdata om naar een JSON object. TODO: Deserialiseer naar een voorgedefineerd model: https://www.epicreact.dev/how-to-type-a-react-form-on-submit-handler
 
-	function insertActivity(formData: FormData) {
-		console.trace(formData);
-		BACKEND.activities.put(formData)
+		const parsedFormData = {
+			// @ts-ignore
+			title: String(form.elements["title"]?.value || ""),
+			// @ts-ignore
+			subtitle: String(form.elements["subtitle"]?.value || ""),
+			// @ts-ignore
+		 	description: String(form.elements["description"]?.value || ""),
+			// @ts-ignore
+			price: Number(form.elements["price"]?.value || 0),
+			// @ts-ignore
+			capacity: Number(form.elements["capacity"]?.value || 0),
+			// @ts-ignore
+			threshold: Number(form.elements["threshold"]?.value || 0),
+			// @ts-ignore
+			hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
+		};
+
+		console.trace(parsedFormData);
+		BACKEND.activities.put(parsedFormData)
 	}
 
 	return (<>
@@ -203,7 +222,7 @@ function Creator() {
 					Vul de details van de activiteit hieronder in. Klik op de knop om de activiteit toe te voegen.
 				</p>
 			</ModeDescription>
-			<form action={insertActivity}>
+			<form onSubmit={insertActivity}>
 				<div className="grid md:grid-cols-2 md:gap-6">
 					<div>
 						<div className="mb-2">
@@ -215,6 +234,11 @@ function Creator() {
 							<label htmlFor="subtitle">Ondertitel</label>
 							<input id="subtitle" type="text" required placeholder="Bijv. 'Leer boogschieten met onze instructeurs'" 
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+						</div>
+						<div className="mb-2">
+							<label htmlFor="description">Beschrijving</label>
+							<textarea id="description" required placeholder="Loek typ hier even iets leuks :)"
+								   className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 					</div>
 					<ImageUpload/>
