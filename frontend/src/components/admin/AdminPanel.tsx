@@ -5,6 +5,7 @@ import {Provider, Context, type ContextPayload} from "./Context.ts";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
+import * as React from "react";
 
 
 export default function AdminPanel() {
@@ -169,26 +170,25 @@ function ImageUpload() {
 
 	function ImageUpload() {
 		return (
-			<button onClick={() => {
-				setImage("hoi")
-			}}
-				type="button" className="text-black bg-gray-200/80 w-full h-full flex items-center justify-center hover:outline-5 hover:font-bold hover:outline-red-300 hover:cursor-pointer">
-				Uploaden
-			</button>
-		)
-	}
-
-	function ImagePreview() {
-		return (
-			<img src="https://picsum.photos/500/128" alt="Preview" className="object-fill"/>
+			<div className={`text-black bg-gray-200/80 w-full h-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"}`}>
+				{image && <img src={image} alt="Preview" className="object-fill"/>}
+				<input id="hero" className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
+					const file = e.target.files?.[0];
+					if (!file) return;
+					const reader = new FileReader();
+					reader.onload = (e) => setImage(e.target?.result as string);
+					reader.readAsDataURL(file);
+				}}>
+				</input>
+			</div>
 		)
 	}
 
 	return (
 		<div>
-			<h1 className="text-base font-semibold">Plaatje</h1>
+			<label htmlFor="hero" className="text-base font-semibold">Plaatje</label>
 			<div className="border-2 w-full min-w-[40%] h-[calc(100%-1em)]">
-				{image ? <ImagePreview/> : <ImageUpload/>}
+				<ImageUpload/>
 			</div>
 		</div>
 	)
@@ -197,6 +197,11 @@ function ImageUpload() {
 function Creator() {
 	const {activities, setActivities} = useContext(Context)!;
 
+	function insertActivity(formData: FormData) {
+		console.trace(formData);
+		BACKEND.activities.put(formData)
+	}
+
 	return (<>
 			<ModeDescription>
 				<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
@@ -204,17 +209,17 @@ function Creator() {
 					Vul de details van de activiteit hieronder in. Klik op de knop om de activiteit toe te voegen.
 				</p>
 			</ModeDescription>
-			<form>
+			<form action={insertActivity}>
 				<div className="grid md:grid-cols-2 md:gap-6">
 					<div>
 						<div className="mb-2">
 							<label htmlFor="title">Titel</label>
-							<input id="title" type="text"
+							<input id="title" type="text" required
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
 							<label htmlFor="subtitle">Ondertitel</label>
-							<input id="subtitle" type="text"
+							<input id="subtitle" type="text" required
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 					</div>
@@ -222,17 +227,17 @@ function Creator() {
 				</div>
 				<div className="mb-2">
 					<label htmlFor="price">Prijs</label>
-					<input id="price" type="text"
+					<input id="price" type="text" required
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="capacity">Capaciteit</label>
-					<input id="capacity" type="text"
+					<input id="capacity" type="text" required
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="threshold">Drempelbezetting</label>
-					<input id="threshold" type="text"
+					<input id="threshold" type="text" required
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className="bg-blue-500 hover:ring-2">
