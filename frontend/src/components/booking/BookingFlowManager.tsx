@@ -5,6 +5,7 @@ import {ActivitiesList} from "./ActivitiesList.tsx";
 import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
+import { ViewActivity } from "./ViewActivity.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -17,6 +18,8 @@ const renderStep = (step: number) => {
 						return <Slideshow/>;
 					case 1:
 						return <ActivitiesList/>;
+					case 2:
+						return <ViewActivity/>
 					default:
 						return null;
 				}})()}
@@ -40,7 +43,7 @@ const BookingFlow = () => {
 
 
 	const next = () => {
-		if (currentStep === 1) {
+		if (currentStep === 2) {
 			// Stap 1 naar 2 -> reset naar stap 0
 			setCurrentStep(0);
 			return;
