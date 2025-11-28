@@ -17,21 +17,12 @@ export const InsertActivityRequestBody = t.Object({
     title: t.String(),
     subtitle: t.String(),
     description: t.String(),
-    price: t.Union([
-        t.Number(),
-        t.String(),
-    ]),
     hero: t.File({
         type: "image/*"
     }),
-    capacity: t.Union([
-        t.Number(),
-        t.String(),
-    ]),
-    threshold: t.Union([
-        t.Number(),
-        t.String(),
-    ]),
+    price: t.Numeric(),
+    capacity: t.Numeric(),
+    threshold: t.Numeric(),
 })
 
 

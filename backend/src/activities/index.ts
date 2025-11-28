@@ -38,7 +38,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             await insertActivity(context.body)
         }, {
             body: InsertActivityRequestBody,
-            type: "multipart/form-data",
+            parse: "multipart/form-data",
         }
     )
     .patch(
@@ -47,7 +47,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             await updateActivity(id, body)
         }, {
             body: InsertActivityRequestBody,
-            type: "multipart/form-data",
+            parse: "multipart/form-data",
         }
     )
     .delete(
