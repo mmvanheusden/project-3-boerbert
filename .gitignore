@@ -154,3 +154,9 @@ fabric.properties
 !.vscode/extensions.json
 .history/
 *.vsix
+
+# Prevent Apple shit from sneaking into the code
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
