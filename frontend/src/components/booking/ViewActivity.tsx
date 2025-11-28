@@ -22,16 +22,21 @@ export function ViewActivity() {
 					<div className="text-sm text-gray-700">
 						{selectedActivity?.subtitle}
 						<div>
-							Beschrijving: {selectedActivity?.description}
+							{selectedActivity?.description}
 						</div>
 						<div>
-							<span>Prijs: {selectedActivity?.price}</span>
+							<span>€ {selectedActivity?.price} per kaartje</span>
 						</div>
 						<div>
-							<span>locatie:</span>
+							<span>Maximaal aantal deelnemers: {selectedActivity?.capacity}</span>
 						</div>
 						<div>
-							<span>aantal personen: {selectedActivity?.capacity}</span>
+							<span>Locatie:</span>
+						</div>
+						<div> 
+							<img className="border-2 w-100 h-60 mr-5 rounded-xl" src={`data:image/png;base64, ${selectedActivity?.hero}`}
+				     		style={{imageRendering: "pixelated"}}
+							></img>
 						</div>
 					</div>
 				</div>
