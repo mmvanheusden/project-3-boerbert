@@ -5,7 +5,7 @@ import {Provider, Context, type ContextPayload} from "./Context.ts";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
-import * as React from "react";
+import type * as React from "react";
 
 
 export default function AdminPanel() {
