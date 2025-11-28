@@ -20,6 +20,7 @@ export function ActivitiesList() {
 						<li className="mb-4">
 							<h3 className="text-xl font-semibold">{activiteit.title}</h3>
 							<p className="text-gray-600">{activiteit.subtitle}</p>
+							<p className="text-gray-600">Leeftijd:{activiteit.minage}</p>
 						</li>
 					</ul>
 					<button onClick={

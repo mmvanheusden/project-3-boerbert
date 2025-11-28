@@ -148,6 +148,8 @@ function Deleter() {
 										<p className="text-gray-600 text-base mb-1">{activiteit.subtitle}</p>
 										<p className="text-gray-700 text-base">Capaciteit: {activiteit.capacity}</p>
 										<p className="text-gray-700 text-base">Drempelwaarde: {activiteit.threshold}</p>
+										<p className="text-gray-700 text-base">Prijs: €{activiteit.price}</p>
+										<p className="text-gray-700 text-base">Leeftijd: {activiteit.minage}</p>
 									</div>
 								</li>
 								<button
@@ -208,6 +210,8 @@ function Creator() {
 			// @ts-ignore
 			threshold: Number(form.elements["threshold"]?.value || 0),
 			// @ts-ignore
+			minage: Number(form.elements["minage"]?.value || 0),
+			// @ts-ignore
 			hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
 		};
 
@@ -256,6 +260,11 @@ function Creator() {
 				<div className="mb-2">
 					<label htmlFor="threshold">Drempelbezetting</label>
 					<input id="threshold" type="number" required placeholder="Bijv. '5'"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<div className="mb-2">
+					<label htmlFor="minage">Minimumleeftijd</label>
+					<input id="minage" type="number" required placeholder="Bijv. '4+'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className="bg-blue-500 hover:ring-2">

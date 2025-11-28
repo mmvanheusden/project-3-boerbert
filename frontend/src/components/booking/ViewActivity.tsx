@@ -31,7 +31,10 @@ export function ViewActivity() {
 							<span>Maximaal aantal deelnemers: {selectedActivity?.capacity}</span>
 						</div>
 						<div>
-							<span>Locatie:</span>
+							<span>Locatie: {selectedActivity?.location}</span>
+						</div>
+						<div>
+							<span>Minimumleeftijd: {selectedActivity?.minage}</span>
 						</div>
 						<div> 
 							<img className="border-2 w-100 h-60 mr-5 rounded-xl" src={`data:image/png;base64, ${selectedActivity?.hero}`}
@@ -40,7 +43,7 @@ export function ViewActivity() {
 						</div>
 					</div>
 				</div>
-				<button onClick={prev} className="px-4 py-2 bg-green-500 text-black rounded-xl">
+				<button onClick={prev} className="px-4 py-2 bg-green-50 0 text-black rounded-xl">
 					<Icon icon="tdesign:close-circle" width="24" height="24" color="black"/>
 				</button>
 			</div>
