@@ -17,6 +17,8 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
         hero: Buffer.from(await activity.hero.arrayBuffer()),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
+        minage: (activity.minage as number),
+        location: activity.location,
     });
 }
 
@@ -29,6 +31,8 @@ export async function updateActivity(id: string, activity: Static<typeof InsertA
         hero: Buffer.from(await activity.hero.arrayBuffer()),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
+        minage: (activity.minage as number),
+        location: activity.location,
     }).where(eq(activitiesTable.id, +id));
 }
 
