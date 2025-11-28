@@ -232,7 +232,7 @@ function Creator() {
 						</div>
 						<div className="mb-2">
 							<label htmlFor="subtitle">Ondertitel</label>
-							<input id="subtitle" type="text" required placeholder="Bijv. 'Leer boogschieten met onze instructeurs'" 
+							<input id="subtitle" type="text" required placeholder="Bijv. 'Leer boogschieten met onze instructeurs'"
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
@@ -245,17 +245,17 @@ function Creator() {
 				</div>
 				<div className="mb-2">
 					<label htmlFor="price">Prijs</label>
-					<input id="price" type="text" required placeholder="Bijv. '€4,50'"
+					<input id="price" type="number" required placeholder="Bijv. '€4,50'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="capacity">Capaciteit</label>
-					<input id="capacity" type="text" required placeholder="Bijv. '20'"
+					<input id="capacity" type="number" required placeholder="Bijv. '20'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
 					<label htmlFor="threshold">Drempelbezetting</label>
-					<input id="threshold" type="text" required placeholder="Bijv. '5'"
+					<input id="threshold" type="number" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className="bg-blue-500 hover:ring-2">
