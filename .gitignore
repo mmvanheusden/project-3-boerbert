@@ -160,3 +160,5 @@ fabric.properties
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+backend/public

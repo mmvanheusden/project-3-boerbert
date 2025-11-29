@@ -9,6 +9,7 @@
  	 	"@elysiajs/cors": "^1.4.0",
  	 	"@elysiajs/node": "^1.4.2",
  	 	"@elysiajs/openapi": "^1.4.11",
+ 	 	"@elysiajs/static": "^1.4.7",
  	 	"@libsql/client": "^0.15.15",
  	 	"dotenv": "^17.2.3",
  	 	"drizzle-orm": "^0.44.7",
