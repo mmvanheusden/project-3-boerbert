@@ -1,7 +1,9 @@
 import {Elysia} from 'elysia'
+import {node} from '@elysiajs/node'
 import 'dotenv/config';
 import {AppRoutes} from "./index.routes";
 import openapi, {fromTypes} from "@elysiajs/openapi";
+import { staticPlugin } from '@elysiajs/static'
 import cors from "@elysiajs/cors";
 
 const app = new Elysia()
@@ -11,6 +13,7 @@ const app = new Elysia()
     .use(cors({
         origin: process.env.FRONTEND_URL || "http://localhost:5173"
     }))
+	.use(staticPlugin())
     .use(AppRoutes)
 	.get("/ping", () => "pong") // ping geeft terug pong
     .listen(3000, ({hostname, port}) => {

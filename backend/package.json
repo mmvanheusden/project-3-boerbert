@@ -8,7 +8,8 @@
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
-    "elysia": "^1.4.22"
+    "elysia": "^1.4.22",
+    "@elysiajs/static": "^1.4.7"
   },
   "devDependencies": {
     "bun-types": "^1.3.6",

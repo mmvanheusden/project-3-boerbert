@@ -1,5 +1,6 @@
 import {activitiesTable, InsertActivityRequestBody, UpdateActivityRequestBody} from './model';
 import db from "../config/db";
+import * as fs from "node:fs";
 import {DrizzleQueryError, eq} from 'drizzle-orm';
 import {Static, status} from "elysia";
 import translate from "translate";
@@ -39,13 +40,14 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
     validateActivity(activity);
 
     try {
+		const imageBuffer = Buffer.from(await activity.hero.arrayBuffer());
         // TODO: (future proof): mocht de vertalingsdienst kapot gaan, alles in Nederlands ipv niks doen
-        await db.insert(activitiesTable).values({
+        const insertedActivity = await db.insert(activitiesTable).values({
             title: await vertaal(activity.title),
             subtitle: await vertaal(activity.subtitle),
             description: await vertaal(activity.description),
             price: (activity.price as number),
-            hero: Buffer.from(await activity.hero.arrayBuffer()),
+            hero: imageBuffer,
             capacity: (activity.capacity as number),
             threshold: (activity.threshold as number),
             minage: activity.minage,
@@ -54,7 +56,10 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             latitude: activity.latitude,
             longitude: activity.longitude,
             targetAudience: activity.targetAudience,
-        })
+        }).returning();
+
+		// Add image to image storage.
+		fs.writeFileSync(`public/${insertedActivity[0].id}.png`, buffer);
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
             if (e.cause?.message.includes('UNIQUE constraint failed')) return status(409, "Een activiteit met deze titel bestaat al.")
@@ -86,7 +91,11 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
 }
 
 export async function getActivity(id: string) {
-    return ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
+	const result = ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
+	if (!result) {
+		throw new Error("Activity not found");
+	}
+	return result;
 }
 
 

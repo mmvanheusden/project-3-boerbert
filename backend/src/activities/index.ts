@@ -1,4 +1,4 @@
-import {Elysia, Static} from "elysia";
+import {Elysia, ElysiaCustomStatusResponse, file, status, Static} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
 import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
 import {eq, InferSelectModel} from "drizzle-orm";
@@ -107,4 +107,16 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             await db.delete(activitiesTable).where(eq(activitiesTable.id, +id));
         }
     )
+	.get(
+		'/image/:id',
+		async ({params: {id}}) => {
+			let activity: InferSelectModel<typeof activitiesTable>;
+			try {
+				activity = await getActivity(id);
+			} catch (error) {
+				return status(404, "Activiteit niet gevonden");
+			}
+
+			return file(`public/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`);
+		})
 )
