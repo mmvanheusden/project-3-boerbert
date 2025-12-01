@@ -275,7 +275,7 @@ function Creator() {
 					<input id="threshold" type="number" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
-				<button type="submit" className=" bg-amber-600 hover:underline ml-1  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2">
+				<button type="submit" className=" bg-green-700 ml-1 rounded border-1 border-black cursor-pointer px-4 font-small text-[1.2em] hover:ring hover:underline hover:ring-black ">
 					Toevoegen
 				</button>
 			</form>
