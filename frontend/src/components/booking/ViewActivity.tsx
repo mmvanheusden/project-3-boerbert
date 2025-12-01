@@ -1,11 +1,10 @@
 import "../../index.css";
 import { useContext } from "react";
-import { Icon } from "@iconify/react";
 import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 
 export function ViewActivity() {
-  const { selectedActivity, prev } = useContext(Context);
+  const { selectedActivity } = useContext(Context);
 
   return (
     <>
