@@ -54,10 +54,6 @@ export function ViewActivity() {
 
           </div>
         </div>
-
-        <button onClick={prev} className="px-4 py-2 bg-green-50 text-black rounded-xl">
-          <Icon icon="tdesign:close-circle" width="24" height="24" color="black" />
-        </button>
       </div>
     </>
   );
