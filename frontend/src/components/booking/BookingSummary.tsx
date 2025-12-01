@@ -20,7 +20,7 @@ export function BookingSummary() {
 				<div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
 					<img
 						className="w-full h-full object-cover object-center"
-						src={`data:image/png;base64, ${selectedActivity?.hero}`}
+						src={`http://localhost:3000/activities/${selectedActivity?.id}/image`}
 						style={{ imageRendering: "pixelated" }}
 						alt={selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
 					/>

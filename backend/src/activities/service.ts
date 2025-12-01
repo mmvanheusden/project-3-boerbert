@@ -47,7 +47,6 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             subtitle: await vertaal(activity.subtitle),
             description: await vertaal(activity.description),
             price: (activity.price as number),
-            hero: imageBuffer,
             capacity: (activity.capacity as number),
             threshold: (activity.threshold as number),
             minage: activity.minage,
@@ -59,7 +58,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
         }).returning();
 
 		// Add image to image storage.
-		fs.writeFileSync(`public/${insertedActivity[0].id}.png`, buffer);
+		fs.writeFileSync(`public/${insertedActivity[0].id}.png`, imageBuffer);
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
             if (e.cause?.message.includes('UNIQUE constraint failed')) return status(409, "Een activiteit met deze titel bestaat al.")
@@ -78,7 +77,6 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         subtitle: await vertaal(activity.subtitle),
         description: await vertaal(activity.description),
         price: (activity.price as number),
-        hero: (activity.hero ? Buffer.from(await activity.hero.arrayBuffer()) : undefined),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
         minage: activity.minage,

@@ -238,7 +238,7 @@ function MapView(props: {
 								<p>{activity.subtitle.nl}</p>
 								<img
 									className="rounded w-full mb-2 mt-2 mx-auto"
-									src={`data:image/png;base64, ${activity.hero}`}
+									src={`http://localhost:3000/activities/${activity.id}/image`}
 									alt={activity.title.nl}
 								/>
 								<details className="open:mb-1">
@@ -1016,7 +1016,7 @@ function ActivityListItem(props: {
 					</div>
 					<img
 						className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
-						src={`data:image/png;base64, ${activiteit?.hero}`}
+						src={`http://localhost:3000/activities/${activiteit.id}/image`}
 						style={{ imageRendering: "pixelated" }}
 						alt={activiteit?.title ?? "activity image"}
 					/>
