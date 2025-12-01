@@ -75,7 +75,7 @@ export default function AdminPanel() {
 }
 
 function Editor() {
-	const {activities, setActivities} = useContext(Context)!;
+	const {activities} = useContext(Context)!;
 
 	return (
 		<div>
