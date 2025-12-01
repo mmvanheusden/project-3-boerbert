@@ -27,10 +27,10 @@ const renderStep = (step: number) => {
 			</div>
 		</>
 	)
-
 };
 
 const BookingFlow = () => {
+	const STEPS = 3; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 
@@ -45,8 +45,8 @@ const BookingFlow = () => {
 
 
 	const next = () => {
-		if (currentStep === 2) {
-			// Stap 1 naar 2 -> reset naar stap 0
+		if (currentStep === STEPS-1) {
+			// Naar volgende stap bij laatste stap -> terug naar stap 0
 			setCurrentStep(0);
 			return;
 		} else setCurrentStep(currentStep + 1);
@@ -62,11 +62,12 @@ const BookingFlow = () => {
 		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: data ?? [], selectedActivity, selectActivity }}>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
+
 				{(currentStep == 0) ? null :  <button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={prev}>
 					{"<--"}  Stap terug
 				</button> }
 
-				{(currentStep == 1) ? null :<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={next}>
+				{(currentStep != 0) ? null :<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={next}>
 						Volgende stap {"-->"}
 					</button> }
 			</div>
