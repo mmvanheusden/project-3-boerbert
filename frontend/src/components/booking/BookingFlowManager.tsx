@@ -51,18 +51,24 @@ const BookingFlow = () => {
 			return;
 		} else setCurrentStep(currentStep + 1);
 	};
-	const prev = () => setCurrentStep(currentStep - 1);
+	const prev = () => {
+		if (currentStep == 0) {
+			return
+		}
+		setCurrentStep(currentStep - 1)
+	};
 
 	return (
 		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: data ?? [], selectedActivity, selectActivity }}>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
-				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={prev}>
-					{"<--"} Stap terug
-				</button>
-				<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={next}>
-					Volgende stap {"-->"}
-				</button>
+				{(currentStep == 0) ? null :  <button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={prev}>
+					{"<--"}  Stap terug
+				</button> }
+
+				{(currentStep == 1) ? null :<button className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-2.5 border-white bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onClick={next}>
+						Volgende stap {"-->"}
+					</button> }
 			</div>
 		</Provider>
 	);
