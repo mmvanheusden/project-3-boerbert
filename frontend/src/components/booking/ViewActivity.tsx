@@ -16,17 +16,17 @@ export function ViewActivity() {
       </Header>
 
       <div
-        className="w-full shadow-xl max-h-[90vh] overflow-auto"
+        className="w-full overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className="text-xl font-semibold mb-4">
           {selectedActivity?.title}
         </h1>
 
-        <div className="border rounded-md p-4 mb-4 bg-gray-50">
-          <div className="inline-flex items-start gap-6 bg-white shadow-md rounded-lg p-6 mb-2">
+       
+          <div className="inline-flex w-full items-start gap-6 bg-white shadow-md rounded-lg p-6 mb-2">
             
-            <div className="text-sm text-gray-700 max-w-[60%]">
+            <div className="text-sm text-gray-700">
               <div className="font-semibold mb-2">
                 {selectedActivity?.subtitle}
               </div>
@@ -43,7 +43,7 @@ export function ViewActivity() {
               <div className="mb-1">
                 Let op: Vanaf {selectedActivity?.minage} jaar oud
               </div>
-            </div>
+           
 
             <img
               className="w-48 h-40 object-cover rounded-xl border-2"
