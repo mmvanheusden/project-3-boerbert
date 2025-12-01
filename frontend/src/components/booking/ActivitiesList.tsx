@@ -12,7 +12,7 @@ export function ActivitiesList() {
 	const activityItems = context.activities!.map((activiteit) =>
 		<>
 			<div className="flex items-center bg-white shadow-md rounded-lg p-6 w-full mb-2">
-				<img className="border-2 w-100 h-60 mr-5 rounded-xl" src={`data:image/png;base64, ${activiteit.hero}`}
+				<img className="border-2 w-100 h-60 mr-5 rounded-xl" src={`http://localhost:3000/activities/image/${activiteit.id}`}
 				     style={{imageRendering: "pixelated"}}
 				></img>
 				<div className="flex-col">
