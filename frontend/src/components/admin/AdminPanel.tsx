@@ -1,7 +1,7 @@
 import { Header } from "../KleineDingetjes";
 import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
-import {Provider, Context, type ContextPayload} from "./Context.ts";
+import {Provider, Context, type ContextPayload} from "./Context.tsx";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
@@ -75,7 +75,7 @@ export default function AdminPanel() {
 }
 
 function Editor() {
-	const {activities, setActivities} = useContext(Context)!;
+	const {activities} = useContext(Context)!;
 
 	return (
 		<div>
@@ -148,10 +148,13 @@ function Deleter() {
 										<p className="text-gray-600 text-base mb-1">{activiteit.subtitle}</p>
 										<p className="text-gray-700 text-base">Capaciteit: {activiteit.capacity}</p>
 										<p className="text-gray-700 text-base">Drempelwaarde: {activiteit.threshold}</p>
+										<p className="text-gray-700 text-base">Prijs: €{activiteit.price}</p>
+										<p className="text-gray-700 text-base">Leeftijd: {activiteit.minage}</p>
+										<p className="text-gray-700 text-base">Locatie: {activiteit.location}</p>
 									</div>
 								</li>
 								<button
-									className="bg-blue-500 hover:ring-2"
+									className=" bg-amber-600 hover:underline ml-10  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
 									onClick={async () => {await deleteActivity(activiteit, { activities, setActivities });}}>
 									Verwijderen
 								</button>
@@ -208,6 +211,10 @@ function Creator() {
 			// @ts-ignore
 			threshold: Number(form.elements["threshold"]?.value || 0),
 			// @ts-ignore
+			minage: Number(form.elements["minage"]?.value || 0),
+			// @ts-ignore
+			location: String(form.elements["location"]?.value || ""),
+			// @ts-ignore
 			hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
 		};
 
@@ -237,15 +244,25 @@ function Creator() {
 						</div>
 						<div className="mb-2">
 							<label htmlFor="description">Beschrijving</label>
-							<textarea id="description" required placeholder="Loek typ hier even iets leuks :)"
+							<textarea id="description" required placeholder="Bijv. 'In deze activiteit leer je boogschieten onder begeleiding van onze ervaren instructeurs...'"
 								   className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 					</div>
 					<ImageUpload/>
 				</div>
 				<div className="mb-2">
+					<label htmlFor="minage">Minimumleeftijd</label>
+					<input id="minage" type="number" required placeholder="Bijv. '4+'"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<div className="mb-2">
 					<label htmlFor="price">Prijs</label>
 					<input id="price" type="number" required placeholder="Bijv. '€4,50'"
+						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				</div>
+				<div className="mb-2">
+					<label htmlFor="location">Locatie</label>
+					<input id="location" type="text" required placeholder="Bijv. 'Boerderijplein'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
@@ -258,7 +275,7 @@ function Creator() {
 					<input id="threshold" type="number" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
-				<button type="submit" className="bg-blue-500 hover:ring-2">
+				<button type="submit" className=" bg-amber-600 hover:underline ml-1  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2">
 					Toevoegen
 				</button>
 			</form>

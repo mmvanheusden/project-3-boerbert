@@ -2,6 +2,7 @@ import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
+import {CancelButton} from "./BookingFlowManager.tsx";
 
 
 export function ActivitiesList() {
@@ -20,6 +21,7 @@ export function ActivitiesList() {
 						<li className="mb-4">
 							<h3 className="text-xl font-semibold">{activiteit.title}</h3>
 							<p className="text-gray-600">{activiteit.subtitle}</p>
+							<p className="text-gray-600">Let op: Vanaf {activiteit.minage} jaar oud</p>
 						</li>
 					</ul>
 					<button onClick={
@@ -30,7 +32,7 @@ export function ActivitiesList() {
 							context.next()
 						}
 					} type="button"
-					        className="text-white bg-green-700 hover:bg-green-900 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-20 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Bekijken
+					        className="border-2 hover:underline hover:cursor-pointer rounded py-2 px-8 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl">Bekijken
 					</button>
 				</div>
 			</div>
@@ -41,11 +43,15 @@ export function ActivitiesList() {
 		<>
 			<Header>
 					<span
-						className="select-none rounded-t-lg border-2 border-white bg-green-600 px-4 mb-1 font-semibold text-3xl">
+						className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl">
 						Stap 1: Kies een activiteit
 					</span>
 			</Header>
 			<ul>{activityItems}</ul>
+
+			<div className="flex justify-end">
+				<CancelButton/>
+			</div>
 		</>
 
 	);

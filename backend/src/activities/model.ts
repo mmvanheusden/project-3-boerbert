@@ -1,3 +1,4 @@
+import { min } from "drizzle-orm";
 import {blob, int, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {t} from "elysia";
 
@@ -10,6 +11,8 @@ export const activitiesTable = sqliteTable("activities", {
     hero: blob({ mode: 'buffer' }).notNull(), // Cover image
     capacity: int().notNull(),
     threshold: int().notNull(),
+    minage: int().notNull(),
+    location: text().notNull(),
 });
 
 
@@ -23,6 +26,8 @@ export const InsertActivityRequestBody = t.Object({
     price: t.Numeric(),
     capacity: t.Numeric(),
     threshold: t.Numeric(),
+    minage: t.Numeric(),
+    location: t.String(),
 })
 
 

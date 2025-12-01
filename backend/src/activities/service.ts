@@ -16,10 +16,12 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
 		subtitle: activity.subtitle,
 		description: activity.description,
 		price: (activity.price as number),
-		hero: buffer,
+        hero: Buffer.from(await activity.hero.arrayBuffer()),
 		capacity: (activity.capacity as number),
 		threshold: (activity.threshold as number),
-	}).returning();
+	    minage: (activity.minage as number),
+        location: activity.location,
+    }).returning();
 
 	// Add image to image storage.
 	fs.writeFileSync(`public/${insertedActivity[0].id}.png`, buffer);
@@ -34,6 +36,8 @@ export async function updateActivity(id: string, activity: Static<typeof InsertA
         hero: Buffer.from(await activity.hero.arrayBuffer()),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
+        minage: (activity.minage as number),
+        location: activity.location,
     }).where(eq(activitiesTable.id, +id));
 }
 
