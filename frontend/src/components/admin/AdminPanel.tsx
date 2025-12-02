@@ -1,7 +1,7 @@
 import { Header } from "../KleineDingetjes";
 import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
-import {Provider, Context, type ContextPayload} from "./Context.ts";
+import {Provider, Context, type ContextPayload} from "./Context.tsx";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
@@ -75,7 +75,7 @@ export default function AdminPanel() {
 }
 
 function Editor() {
-	const {activities, setActivities} = useContext(Context)!;
+	const {activities} = useContext(Context)!;
 
 	return (
 		<div>

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import {useContext, useState} from "react";
+import Context from "./booking/Context.tsx";
 
 export function Slideshow() {
+	const { next } = useContext(Context);
+
 	const images = [
-		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg",
+		"https://images.theconversation.com/files/493905/original/file-20221107-16-ft18fk.jpeg?ixlib=rb-4.1.0&q=45&auto=format&w=1000&fit=clip",
 		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg",
 		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg",
 		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg",
@@ -12,18 +15,17 @@ export function Slideshow() {
 
 	const [index, setIndex] = useState(0);
 
-	const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
-	const next = () => setIndex((i) => (i + 1) % images.length);
+	const prevSlide = () => setIndex((i) => (i - 1 + images.length) % images.length);
+	const nextSlide = () => setIndex((i) => (i + 1) % images.length);
 
 	return (
 		<>
-			<div>
-				Stap 0
-				<h1>In deze stap komt de slideshow!</h1>
-			</div>
-
+			<span className="font-bold text-center text-4xl mb-2 italic">
+				Bekijk en boek hier een activiteit!
+			</span>
+			<hr className="h-[2px] w-[110%] mx-auto border-0 rounded-sm bg-black mb-5"/>
 			<div id="gallery" className="relative w-full" data-carousel="slide">
-				<div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+				<div className="relative overflow-hidden rounded-lg h-[calc(100vh-18rem)]">
 					{/* Slides: alleen actieve slide zichtbaar */}
 					{images.map((src, i) => (
 						<div
@@ -34,7 +36,7 @@ export function Slideshow() {
 							<img
 								src={src}
 								alt={`Slide ${i + 1}`}
-								className="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+								className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
 							/>
 						</div>
 					))}
@@ -44,7 +46,7 @@ export function Slideshow() {
 				<button
 					type="button"
 					className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-					onClick={prev}
+					onClick={prevSlide}
 					aria-label="Previous"
 				>
 					<span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
@@ -64,7 +66,7 @@ export function Slideshow() {
 				<button
 					type="button"
 					className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-					onClick={next}
+					onClick={nextSlide}
 					aria-label="Next"
 				>
 					<span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
@@ -81,6 +83,10 @@ export function Slideshow() {
 					</span>
 				</button>
 			</div>
+
+			<button className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none" onClick={next}>
+				Boeken
+			</button>
 		</>
 	);
 }
