@@ -30,6 +30,22 @@ export const InsertActivityRequestBody = t.Object({
     location: t.String(),
 })
 
+export const UpdateActivityRequestBody = t.Object({
+	title: t.String(),
+	subtitle: t.String(),
+	description: t.String(),
+	hero: t.Optional(
+		t.File({
+			type: "image/*"
+		})
+	),
+	price: t.Numeric(),
+	capacity: t.Numeric(),
+	threshold: t.Numeric(),
+	minage: t.Numeric(),
+	location: t.String(),
+})
+
 
 // Source:  https://www.perplexity.ai/search/typescript-copy-object-type-bu-SVjn90luRVWbGLf8rRYdkg#2
 // Override a field to hold a something else
