@@ -1,8 +1,9 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import Context from "./booking/Context.tsx";
+import {Icon} from "@iconify/react";
 
 export function Slideshow() {
-  const { next } = useContext(Context);
+  const { next,activities } = useContext(Context);
 
 	const images = [
 		"https://images.theconversation.com/files/493905/original/file-20221107-16-ft18fk.jpeg?ixlib=rb-4.1.0&q=45&auto=format&w=1000&fit=clip",
@@ -126,10 +127,10 @@ export function Slideshow() {
 
       <div className="mt-4 flex items-center gap-3">
         <button
-          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none"
+          className={`text-2xl inline-flex items-center border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black  focus:outline-none ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
           onClick={next}
         >
-          Boeken
+          {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : "Boeken"}
         </button>
       </div>
     </>
