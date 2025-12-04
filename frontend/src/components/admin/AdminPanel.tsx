@@ -149,9 +149,6 @@ function Editor() {
 					Hieronder vindt u een lijst met alle activiteiten. met de knoppen kunt U ze aanpassen, verwijderen, of nieuwe aanmaken
 				</p>
 			</Helper>
-
-			<ActivitiesEmptyCheck activities={activities}/>
-
 			{creatingActivity ?
 				<>
 					<button
@@ -172,6 +169,7 @@ function Editor() {
 						<Icon icon="mdi:add-bold" width="24" height="24" />
 						<span>Activiteit aanmaken</span>
 					</button>
+					<ActivitiesEmptyCheck activities={activities}/>
 					<ol>
 						{
 							activities.map((activiteit) => {
