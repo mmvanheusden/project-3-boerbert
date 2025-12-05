@@ -20,15 +20,15 @@ export default function AdminPanel() {
 	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
 	const ActivityPatchMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({id: activity.id}).patch(activity),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityInsertMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities.put(activity),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityDeleteMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).delete(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 
 
@@ -79,9 +79,10 @@ export default function AdminPanel() {
 					return alert("Drempelbezetting kan nooit hoger zijn dan de capaciteit!")
 				}
 
-
-				ActivityInsertMutator.mutate(parsedFormData);
-				setCreatingActivity(false);
+				if (confirm(`Weet je zeker dat je activiteit "${parsedFormData.title}" wilt toevoegen?`)) {
+					ActivityInsertMutator.mutate(parsedFormData);
+					setCreatingActivity(false);
+				}
 			}
 
 			return (<>
@@ -153,9 +154,10 @@ export default function AdminPanel() {
 				location: activiteit.location,
 			};
 
-			ActivityPatchMutator.mutate(updatedActivity);
-			setActivityEditing(null);
-			// location.reload();
+			if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
+				ActivityPatchMutator.mutate(updatedActivity);
+				setActivityEditing(null);
+			}
 		};
 		return (
 			<div>
@@ -339,9 +341,8 @@ export default function AdminPanel() {
 														<button
 															className="bg-red-700 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
 															onClick={async () => {
-																ActivityDeleteMutator.mutate(activiteit);
-																while (ActivityDeleteMutator.isPending) {
-
+																if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
+																	ActivityDeleteMutator.mutate(activiteit);
 																}
 																// await deleteActivity(activiteit, { activities, setActivities })
 																// location.reload();
@@ -439,8 +440,9 @@ function ImageUpload() {
 function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 	if (!props.loading) return null;
 	return (
-		<div className="cursor-progress overscroll-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex opacity-75 backdrop-grayscale fixed">
-			<div className="border-2 border-black bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center">
+		<div className="pointer-events-auto cursor-progress select-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex fixed">
+			<div className="absolute inset-0 bg-black/20 backdrop-grayscale"/> {/*De achtergrond.*/}
+			<div className="border-2 border-black bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center z-10">
 				<Icon icon="line-md:loading-alt-loop" className="mx-auto" width="128" height="128" style={{color: "blue"}} />
 				<p className="text-black text-center text-3xl font-bold">{props.text || "ACTIE VERWERKEN..."}</p>
 			</div>
