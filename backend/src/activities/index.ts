@@ -35,7 +35,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
     .put(
         "/",
         async (context) => {
-            await insertActivity(context.body)
+            return await insertActivity(context.body)
         }, {
             body: InsertActivityRequestBody,
             parse: "multipart/form-data",
