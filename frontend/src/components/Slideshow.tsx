@@ -132,7 +132,7 @@ export function Slideshow() {
           className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none"
           onClick={next}
         >
-          Boeken
+          {t("book")}
         </button>
         
         <button

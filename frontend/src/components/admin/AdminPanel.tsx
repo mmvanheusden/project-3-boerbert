@@ -6,6 +6,7 @@ import {Component, type PropsWithChildren, useContext, useEffect, useState} from
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
 import type * as React from "react";
+import { t } from "i18next";
 
 
 export default function AdminPanel() {
@@ -251,32 +252,32 @@ function Creator() {
 					<ImageUpload/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="minage">Minimumleeftijd</label>
+					<label htmlFor="minage">{t("minage")}</label>
 					<input id="minage" type="number" required placeholder="Bijv. '4+'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="price">Prijs</label>
+					<label htmlFor="price">{t("price")}</label>
 					<input id="price" type="number" required placeholder="Bijv. '€4,50'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="location">Locatie</label>
+					<label htmlFor="location">{t("location")}</label>
 					<input id="location" type="text" required placeholder="Bijv. 'Boerderijplein'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="capacity">Capaciteit</label>
+					<label htmlFor="capacity">{t("capacity")}</label>
 					<input id="capacity" type="number" required placeholder="Bijv. '20'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="threshold">Drempelbezetting</label>
+					<label htmlFor="threshold">{t("threshold")}</label>
 					<input id="threshold" type="number" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<button type="submit" className=" bg-green-700 ml-1 rounded border-1 border-black cursor-pointer px-4 font-small text-[1.2em] hover:ring hover:underline hover:ring-black ">
-					Toevoegen
+					{t("add")}
 				</button>
 			</form>
 		</>

@@ -47,22 +47,69 @@ i18n
         // More details about namespaces shortly.
         translation: {
           hello_world: "Hallo, Wereld!",
-          stap_1: "kies een activiteit"
-          
+          stap_1: "kies een activiteit",
+          book: "Boeken",
+          activity_label: "ACTIVITEIT",
+          view_details: "Bekijken",
+          loading: "Laden...",
+          error_prefix: "Fout: ",
+          cancel: "Afbreken",
+          step2_title: "Stap 2: Bekijk activiteitdetails",
+          price_per_ticket: "€ {{price}} per kaartje",
+          max_participants: "Maximaal aantal deelnemers: {{capacity}}",
+          location_label: "Locatie: {{location}}",
+          min_age_note: "Let op: Vanaf {{minage}} jaar oud",
+          back_to_list: "Terug naar activiteitenlijst",
+          add: "Toevoegen",
+          capacity: "Capaciteit",
+          threshold: "Drempelbezetting",
+          minage: "Minimumleeftijd"
         },
       },
       // German
       de: {
         translation: {
           hello_world: "Hallo, Welt!",
-          stap_1: "Wähle eine Aktivität"
+          stap_1: "Wähle eine Aktivität",
+          book: "Buchen",
+          activity_label: "AKTIVITÄT",
+          view_details: "Ansehen",
+          loading: "Laden...",
+          error_prefix: "Fehler: ",
+          cancel: "Abbrechen",
+          step2_title: "Schritt 2: Aktivitäten-Details ansehen",
+          price_per_ticket: "€ {{price}} pro Ticket",
+          max_participants: "Maximale Teilnehmerzahl: {{capacity}}",
+          location_label: "Ort: {{location}}",
+          min_age_note: "Hinweis: Ab {{minage}} Jahren",
+          back_to_list: "Zurück zur Aktivitätenliste",
+          add: "Hinzufügen",
+          capacity: "Kapazität",
+          threshold: "Schwellenbelegung",
+          minage: "Mindestalter"
         },
       },
       //english
       en: {
         translation: {
             hello_world: "hello, world!",
-            stap_1: "choose an activity"
+            stap_1: "choose an activity",
+            book: "Book",
+            activity_label: "ACTIVITY",
+            view_details: "View",
+            loading: "Loading...",
+            error_prefix: "Error: ",
+            cancel: "Cancel",
+            step2_title: "Step 2: View activity details",
+            price_per_ticket: "€ {{price}} per ticket",
+            max_participants: "Maximum participants: {{capacity}}",
+            location_label: "Location: {{location}}",
+            min_age_note: "Note: From age {{minage}} and up",
+            back_to_list: "Back to activities list",
+            add: "Add",
+            capacity: "Capacity",
+            threshold: "Threshold occupancy",
+            minage: "Minimum age"
         }
       }
     },

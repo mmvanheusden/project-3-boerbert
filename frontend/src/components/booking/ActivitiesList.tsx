@@ -17,12 +17,12 @@ export function ActivitiesList() {
 				     style={{imageRendering: "pixelated"}}
 				></img>
 				<div className="flex-col">
-					<span className="text-gray-600 font-mono font-semibold text-sm select-none">ACTIVITEIT</span>
+					<span className="text-gray-600 font-mono font-semibold text-sm select-none">{t("activity_label")}</span>
 					<ul>
 						<li className="mb-4">
 							<h3 className="text-xl font-semibold">{activiteit.title}</h3>
 							<p className="text-gray-600">{activiteit.subtitle}</p>
-							<p className="text-gray-600">Let op: Vanaf {activiteit.minage} jaar oud</p>
+							<p className="text-gray-600">{t("min_age_note", { minage: activiteit.minage })}</p>
 						</li>
 					</ul>
 					<button onClick={
@@ -33,7 +33,7 @@ export function ActivitiesList() {
 							context.next()
 						}
 					} type="button"
-					        className="border-2 hover:underline hover:cursor-pointer rounded py-2 px-8 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl">Bekijken
+					        className="border-2 hover:underline hover:cursor-pointer rounded py-2 px-8 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl">{t("book")}
 					</button>
 				</div>
 			</div>

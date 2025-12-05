@@ -6,6 +6,7 @@ import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 import { ViewActivity } from "./ViewActivity.tsx";
+import { t } from "i18next";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -73,7 +74,7 @@ export function CancelButton() {
 
 	return (
 		<button className="inline-flex items-center border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-red-500  hover:bg-red-700 focus:outline-none text-2xl" onClick={() => setCurrentStep(0)}>
-			Afbreken
+			{t("cancel")}
 		</button>
 	)
 }
