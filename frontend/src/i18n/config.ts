@@ -81,7 +81,7 @@ i18n
           price_per_ticket: "€ {{price}} pro Ticket",
           max_participants: "Maximale Teilnehmerzahl: {{capacity}}",
           location_label: "Ort: {{location}}",
-          min_age_note: "Hinweis: Ab {{minage}} Jahren",
+          min_age_note: "Achtung: Ab {{minage}} Jahren",
           back_to_list: "Zurück zur Aktivitätenliste",
           add: "Hinzufügen",
           capacity: "Kapazität",
