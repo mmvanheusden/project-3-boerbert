@@ -3,6 +3,7 @@ import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
 import {CancelButton} from "./BookingFlowManager.tsx";
+import { t } from "i18next";
 
 
 export function ActivitiesList() {
@@ -44,7 +45,7 @@ export function ActivitiesList() {
 			<Header>
 					<span
 						className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl">
-						Stap 1: Kies een activiteit
+						{t("stap_1")}
 					</span>
 			</Header>
 			<ul>{activityItems}</ul>

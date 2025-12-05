@@ -1,5 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import Context from "./booking/Context.tsx";
+import { t } from "i18next";
+import i18n from "../i18n/config.ts";
+import { Icon } from "@iconify/react";
 
 export function Slideshow() {
   const { next } = useContext(Context);
@@ -48,7 +51,7 @@ export function Slideshow() {
   return (
     <>
       <span className="font-bold text-center text-4xl mb-2 italic">
-        Bekijk en boek hier een activiteit!
+        {t("hello_world")}
       </span>
       <hr className="h-[2px] w-[110%] mx-auto border-0 rounded-sm bg-black mb-5" />
       {/* onMouseEnter / onMouseLeave pauzeren / hervatten autoplay */}
@@ -130,6 +133,27 @@ export function Slideshow() {
           onClick={next}
         >
           Boeken
+        </button>
+        
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("nl")}
+        >
+          <Icon icon="flag:nl-4x3" width="60" height="40" />
+        </button>
+
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("de")}
+        >
+          <Icon icon="flag:de-4x3" width="60" height="40" />
+        </button>
+
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("en")}
+        >
+          <Icon icon="flagpack:gb-ukm" width="60" height="40" />
         </button>
       </div>
     </>
