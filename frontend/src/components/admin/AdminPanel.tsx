@@ -71,6 +71,11 @@ export default function AdminPanel() {
 					// @ts-ignore
 					hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
 				};
+				if (parsedFormData.threshold > parsedFormData.capacity) {
+
+					return alert("Drempelbezetting kan nooit hoger zijn dan de capaciteit!")
+				}
+
 
 				insertActivityMutation.mutate(parsedFormData);
 				setCreatingActivity(false);
