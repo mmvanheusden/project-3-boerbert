@@ -141,6 +141,24 @@ function Editor() {
 		)
 	}
 
+	const updateActivity = async (activiteit: Treaty.Data<typeof BACKEND.activities.get>[0]) => {
+		const updatedActivity = {
+			title: activiteit.title,
+			subtitle: activiteit.subtitle,
+			description: activiteit.description,
+			price: activiteit.price,
+			// hero: new File([new Blob(["hi"], {type: "image/png"})], "hello.png"),
+			capacity: activiteit.capacity,
+			threshold: activiteit.threshold,
+			minage: activiteit.minage,
+			location: activiteit.location,
+		};
+
+		await BACKEND.activities({id: activiteit.id}).patch(updatedActivity);
+		setActivityEditing(null);
+		location.reload();
+		
+	};
 	return (
 		<div>
 			<Helper>
@@ -284,20 +302,7 @@ function Editor() {
 													<button
 														className="bg-green-700 hover:underline ml-10 rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2 font-bold"
 														onClick={async () => {
-															const updatedActivity = {
-																title: activiteit.title,
-																subtitle: activiteit.subtitle,
-																description: activiteit.description,
-																price: activiteit.price,
-																// hero: new File([new Blob(["hi"], {type: "image/png"})], "hello.png"),
-																capacity: activiteit.capacity,
-																threshold: activiteit.threshold,
-																minage: activiteit.minage,
-																location: activiteit.location,
-															};
-
-															BACKEND.activities({id: activiteit.id}).patch(updatedActivity);
-															setActivityEditing(null);
+															await updateActivity(activityEditing);
 														}}>
 														Opslaan
 													</button>

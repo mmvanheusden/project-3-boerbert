@@ -47,7 +47,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             await updateActivity(id, body)
         }, {
             body: UpdateActivityRequestBody,
-            parse: "multipart/form-data",
+            parse: "application/json",
         }
     )
     .delete(
