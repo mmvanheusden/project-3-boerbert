@@ -1,6 +1,6 @@
 import {Elysia} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {activitiesTable, InsertActivityRequestBody, OverrideField} from "./model";
+import {activitiesTable, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
 import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
 
@@ -46,8 +46,8 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         async ({ params: { id}, body }) => {
             await updateActivity(id, body)
         }, {
-            body: InsertActivityRequestBody,
-            parse: "multipart/form-data",
+            body: UpdateActivityRequestBody,
+            parse: "application/json",
         }
     )
     .delete(

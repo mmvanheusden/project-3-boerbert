@@ -1,4 +1,4 @@
-import {activitiesTable, InsertActivityRequestBody} from './model';
+import {activitiesTable, InsertActivityRequestBody, UpdateActivityRequestBody} from './model';
 import db from "../config/db";
 import {eq} from 'drizzle-orm';
 import {Static} from "elysia";
@@ -22,13 +22,13 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
     });
 }
 
-export async function updateActivity(id: string, activity: Static<typeof InsertActivityRequestBody>) {
+export async function updateActivity(id: string, activity: Static<typeof UpdateActivityRequestBody>) {
     await db.update(activitiesTable).set({
         title: activity.title,
         subtitle: activity.subtitle,
         description: activity.description,
         price: (activity.price as number),
-        hero: Buffer.from(await activity.hero.arrayBuffer()),
+        hero: (activity.hero ? Buffer.from(await activity.hero.arrayBuffer()) : undefined),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
         minage: (activity.minage as number),

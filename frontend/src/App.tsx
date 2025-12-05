@@ -10,7 +10,7 @@ import {Component, type PropsWithChildren} from "react";
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 export function App() {
 	return (
