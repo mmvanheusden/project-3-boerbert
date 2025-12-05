@@ -159,7 +159,7 @@ export default function AdminPanel() {
 				<Helper>
 					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
 					<p>
-						Hieronder vindt u een lijst met alle activiteiten. met de knoppen kunt U ze aanpassen, verwijderen, of nieuwe aanmaken
+						Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze aanpassen, verwijderen, of nieuwe aanmaken
 					</p>
 				</Helper>
 				{creatingActivity ?
