@@ -1,7 +1,7 @@
 import {Header} from "../KleineDingetjes";
 import {BACKEND, queryClient} from "../../App.tsx";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {Provider, Context, type ContextPayload} from "./Context.tsx";
+import {Provider, Context} from "./Context.tsx";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
@@ -17,17 +17,20 @@ export default function AdminPanel() {
 		},
 	});
 
-	const patchActivityMutation = useMutation({
+	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
+	const ActivityPatchMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({id: activity.id}).patch(activity),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
-
-	const insertActivityMutation = useMutation({
+	const ActivityInsertMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities.put(activity),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
+	const ActivityDeleteMutator = useMutation({
+		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).delete(),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+	})
 
-	const [activities, setActivities] = useState<Treaty.Data<typeof BACKEND.activities.get>>([]);
 
 	// Sync query data into local state once fetched
 	useEffect(() => {
@@ -35,13 +38,14 @@ export default function AdminPanel() {
 			setActivities(data);
 		}
 	}, [data]);
+	const [activities, setActivities] = useState<Treaty.Data<typeof BACKEND.activities.get>>([]);
 
-	if (isPending)  return <div className="bg-white p-5 rounded border font-medium">Laden...</div>;
+	if (isPending)  return <LoadingSpinner loading={true} text="ACTIVITEITEN OPHALEN..."/>;
 	if (error) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 
 	function Editor() {
-		const {activities, setActivities} = useContext(Context)!;
+		const {activities} = useContext(Context)!;
 		const [activityEditing, setActivityEditing] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
 		const [creatingActivity, setCreatingActivity] = useState(false);
 
@@ -72,12 +76,11 @@ export default function AdminPanel() {
 					hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
 				};
 				if (parsedFormData.threshold > parsedFormData.capacity) {
-
 					return alert("Drempelbezetting kan nooit hoger zijn dan de capaciteit!")
 				}
 
 
-				insertActivityMutation.mutate(parsedFormData);
+				ActivityInsertMutator.mutate(parsedFormData);
 				setCreatingActivity(false);
 			}
 
@@ -150,7 +153,7 @@ export default function AdminPanel() {
 				location: activiteit.location,
 			};
 
-			patchActivityMutation.mutate(updatedActivity);
+			ActivityPatchMutator.mutate(updatedActivity);
 			setActivityEditing(null);
 			// location.reload();
 		};
@@ -336,7 +339,11 @@ export default function AdminPanel() {
 														<button
 															className="bg-red-700 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
 															onClick={async () => {
-																await deleteActivity(activiteit, { activities, setActivities })
+																ActivityDeleteMutator.mutate(activiteit);
+																while (ActivityDeleteMutator.isPending) {
+
+																}
+																// await deleteActivity(activiteit, { activities, setActivities })
 																// location.reload();
 															}}>
 															Verwijderen
@@ -360,6 +367,7 @@ export default function AdminPanel() {
 
 	return (
 		<Provider value={{activities, setActivities}}>
+			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || isPending}/>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<Header>
 					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
@@ -377,13 +385,6 @@ export default function AdminPanel() {
 			</div>
 		</Provider>
 	)
-}
-
-
-async function deleteActivity(activity: Treaty.Data<typeof BACKEND.activities.get>[0], { setActivities }: ContextPayload) {
-	await BACKEND.activities({ id: activity.id }).delete();
-
-	setActivities(prev => prev.filter(a => a.id !== activity.id));
 }
 
 function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.activities.get> }) {
@@ -430,6 +431,18 @@ function ImageUpload() {
 					}}>
 					</input>
 				</div>
+			</div>
+		</div>
+	)
+}
+
+function LoadingSpinner(props: { loading?: boolean, text?: string }) {
+	if (!props.loading) return null;
+	return (
+		<div className="cursor-progress overscroll-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex opacity-75 backdrop-grayscale fixed">
+			<div className="border-2 border-black bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center">
+				<Icon icon="line-md:loading-alt-loop" className="mx-auto" width="128" height="128" style={{color: "blue"}} />
+				<p className="text-black text-center text-3xl font-bold">{props.text || "ACTIE VERWERKEN..."}</p>
 			</div>
 		</div>
 	)
