@@ -17,6 +17,14 @@ export default function AdminPanel() {
 		},
 	});
 
+	const { isPending: slideshowPending, error: slideshowError, data: slideshowData } = useQuery<Treaty.Data<typeof BACKEND.slideshow.get>>({
+		queryKey: ["slideshow"],
+		queryFn: async () => {
+			const res = await BACKEND.slideshow.get();
+			return res.data as Treaty.Data<typeof BACKEND.slideshow.get>;
+		},
+	});
+
 	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
 	const ActivityPatchMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({id: activity.id}).patch(activity),
@@ -37,6 +45,22 @@ export default function AdminPanel() {
 		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 
+	/* Tanstack Query mutaties voor slideshow */
+	const SlideInsertMutator = useMutation({
+		mutationFn: async (slide: any) => {
+			let response = await BACKEND.slideshow.put(slide)
+			if (response.status == 409) {
+				return Promise.reject("Een slide met dit plaatje bestaat al!")
+			}
+			return response.data
+		},
+		onSuccess: () => queryClient.refetchQueries({ queryKey: ["slideshow"] }),
+	})
+	const SlideDeleteMutator = useMutation({
+		mutationFn: (slide: any) => BACKEND.slideshow({ id: slide.id }).delete(),
+		onSuccess: () => queryClient.refetchQueries({ queryKey: ["slideshow"] }),
+	})
+
 
 	// Sync query data into local state once fetched
 	useEffect(() => {
@@ -46,8 +70,15 @@ export default function AdminPanel() {
 	}, [data]);
 	const [activities, setActivities] = useState<Treaty.Data<typeof BACKEND.activities.get>>([]);
 
-	if (isPending)  return <LoadingSpinner loading={true} text="ACTIVITEITEN OPHALEN..."/>;
-	if (error) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
+	useEffect(() => {
+		if (slideshowData) {
+			setSlides(slideshowData);
+		}
+	}, [slideshowData]);
+	const [slides, setSlides] = useState<Treaty.Data<typeof BACKEND.slideshow.get>>([]);
+
+	if (isPending || slideshowPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
+	if (error || slideshowError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 
 	function Editor() {
@@ -378,9 +409,116 @@ export default function AdminPanel() {
 		)
 	}
 
+	function SlideshowEditor() {
+		const [creatingSlide, setCreatingSlide] = useState(false);
+
+		function SlideCreator() {
+			async function insertSlide(event: React.FormEvent<HTMLFormElement>) {
+				event.preventDefault()
+				const form = event.currentTarget
+
+				const parsedFormData = {
+					// @ts-ignore
+					image: (form.elements["image"] as HTMLInputElement)?.files?.[0] as File,
+					// @ts-ignore
+					alt: String(form.elements["alt"]?.value || ""),
+				};
+
+				if (confirm(`Weet je zeker dat je deze slide wilt toevoegen?`)) {
+					await SlideInsertMutator.mutateAsync(parsedFormData, {
+						onError: () => {
+							return alert("FOUT: Een slide met dit plaatje bestaat al!");
+						},
+						onSuccess: () => {
+							setCreatingSlide(false);
+						}
+					});
+				}
+			}
+
+			return (
+				<form onSubmit={insertSlide}>
+					<div className="mb-2">
+						<label htmlFor="alt">Alt-tekst (beschrijving van de afbeelding)</label>
+						<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
+							   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+					</div>
+					<ImageUpload fieldName="image"/>
+					<button type="submit" className="bg-green-700 hover:underline mt-1 rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2 font-bold">
+						Toevoegen
+					</button>
+				</form>
+			)
+		}
+
+		return (
+			<div className="mt-8">
+				<h2 className="text-2xl font-bold mb-4">Slideshow Beheer</h2>
+				<Helper>
+					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+					<p>
+						Hieronder vindt u een lijst met alle slides in de slideshow. Met de knoppen kunt u ze verwijderen of nieuwe aanmaken.
+					</p>
+				</Helper>
+				{creatingSlide ?
+					<>
+						<button
+							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
+							onClick={() => setCreatingSlide(false)}
+						>
+							<Icon icon="mdi:cancel-bold" width="24" height="24" />
+							<span>Annuleren</span>
+						</button>
+						<SlideCreator/>
+					</>
+					:
+					<>
+						<button
+							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-green-700 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
+							onClick={() => setCreatingSlide(true)}
+						>
+							<Icon icon="mdi:add-bold" width="24" height="24" />
+							<span>Slide aanmaken</span>
+						</button>
+						{slides.length === 0 ?
+							<div className="border-2 border-black h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
+								Er zijn nog geen slides. Maak er een aan met de knop bovenaan!
+							</div>
+							:
+							<ol className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+								{slides.map((slide) => (
+									<div key={slide.id} className="border-2 p-4 rounded bg-white shadow">
+										<div className="mb-2">
+											<img
+												className="w-full h-48 object-cover rounded-lg border-2"
+												src={`data:image/png;base64, ${slide.image}`}
+												alt={slide.alt}
+											/>
+										</div>
+										<p className="text-gray-700 text-base mb-2"><strong>Alt-tekst:</strong> {slide.alt}</p>
+										<p className="text-gray-500 text-sm mb-2">ID: {slide.id}</p>
+										<button
+											className="bg-red-700 hover:underline rounded border-1 cursor-pointer px-4 py-1 font-small text-1xl hover:ring-2 w-full"
+											onClick={async () => {
+												if (confirm(`Weet je zeker dat je deze slide wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
+													SlideDeleteMutator.mutate(slide);
+												}
+											}}>
+											Verwijderen
+										</button>
+									</div>
+								))}
+							</ol>
+						}
+					</>
+				}
+			</div>
+		)
+	}
+
 	return (
 		<Provider value={{activities, setActivities}}>
-			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || isPending}/>
+			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending}/>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<Header>
 					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
@@ -395,6 +533,7 @@ export default function AdminPanel() {
 					</a>
 				</Header>
 				<Editor/>
+				<SlideshowEditor/>
 			</div>
 		</Provider>
 	)
@@ -426,16 +565,17 @@ class Helper extends Component<PropsWithChildren> {
 	}
 }
 
-function ImageUpload() {
+function ImageUpload(props?: { fieldName?: string }) {
+	const fieldName = props?.fieldName || "hero";
 	const [image, setImage] = useState<string | null>(null);
 
 	return (
 		<div>
-			<label htmlFor="hero" className="text-base font-semibold">Plaatje</label>
+			<label htmlFor={fieldName} className="text-base font-semibold">Plaatje</label>
 			<div className="border-2 w-full min-w-[40%] h-[calc(100%-1em)]">
 				<div className={`text-black bg-gray-200/80 w-full h-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"}`}>
 					{image && <img src={image} alt="Preview" className="object-fill"/>}
-					<input id="hero" className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
+					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
 						const file = e.target.files?.[0];
 						if (!file) return;
 						const reader = new FileReader();
