@@ -34,14 +34,22 @@ const BookingFlow = () => {
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 
-	// Haal de activiteiten alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
-	const {isPending, error, data} = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
+	// Haal de activiteiten en slideshow alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
+	const activitiesQuery = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
 		queryKey: ['activities'],
 		queryFn: () =>
 			BACKEND.activities.get().then(r => r.data as Treaty.Data<typeof BACKEND.activities.get>),
 	})
-	if (isPending) return 'Laden...'
-	if (error) return 'Fout: ' + error.message
+
+	const slidesQuery = useQuery<Treaty.Data<typeof BACKEND.slideshow.get>>({
+		queryKey: ['slides'],
+		queryFn: () =>
+			BACKEND.slideshow.get().then(r => r.data as Treaty.Data<typeof BACKEND.slideshow.get>),
+	})
+
+
+	if (activitiesQuery.isPending || slidesQuery.isPending) return 'Laden...'
+	if (activitiesQuery.error || slidesQuery.error) return "Er is iets misgegaan!"
 
 
 	const next = () => {
@@ -59,7 +67,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: data ?? [], selectedActivity, selectActivity }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [] }}>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
 			</div>
