@@ -418,10 +418,8 @@ export default function AdminPanel() {
 				const form = event.currentTarget
 
 				const parsedFormData = {
-					// @ts-ignore
-					image: (form.elements["image"] as HTMLInputElement)?.files?.[0] as File,
-					// @ts-ignore
-					alt: String(form.elements["alt"]?.value || ""),
+					image: (form.elements.namedItem("image") as HTMLInputElement)?.files?.[0] as File,
+					alt: String((form.elements.namedItem("alt") as HTMLInputElement)?.value || ""),
 				};
 
 				if (confirm(`Weet je zeker dat je deze slide wilt toevoegen?`)) {
@@ -485,13 +483,13 @@ export default function AdminPanel() {
 								Er zijn nog geen slides. Maak er een aan met de knop bovenaan!
 							</div>
 							:
-							<ol className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+							<ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 								{slides.map((slide) => (
-									<div key={slide.id} className="border-2 p-4 rounded bg-white shadow">
+									<li key={slide.id} className="border-2 p-4 rounded bg-white shadow">
 										<div className="mb-2">
 											<img
 												className="w-full h-48 object-cover rounded-lg border-2"
-												src={`data:image/png;base64, ${slide.image}`}
+												src={`data:image/jpeg;base64, ${slide.image}`}
 												alt={slide.alt}
 											/>
 										</div>
@@ -506,9 +504,9 @@ export default function AdminPanel() {
 											}}>
 											Verwijderen
 										</button>
-									</div>
+									</li>
 								))}
-							</ol>
+							</ul>
 						}
 					</>
 				}
