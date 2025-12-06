@@ -17,6 +17,7 @@ type ContextPayload = {
 	activities?: Treaty.Data<typeof BACKEND.activities.get>;
 	selectedActivity: Treaty.Data<typeof BACKEND.activities.get>[0] | null;
 	selectActivity: (activity: Treaty.Data<typeof BACKEND.activities.get>[0]) => void;
+	slideshow?: Treaty.Data<typeof BACKEND.slideshow.get>;
 };
 
 
@@ -26,6 +27,7 @@ export const Context = createContext<ContextPayload>({
 	next: () => {},
 	prev: () => {},
 	activities: undefined!,
+	slideshow: undefined!,
 	selectedActivity: undefined!,
 	selectActivity: () => {},
 });

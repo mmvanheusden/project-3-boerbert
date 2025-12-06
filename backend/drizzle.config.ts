@@ -5,6 +5,7 @@ export default defineConfig({
   out: './drizzle',
   schema: [
       './src/activities/model.ts',
+      './src/slideshow/model.ts',
   ],
   dialect: 'turso',
   dbCredentials: {
