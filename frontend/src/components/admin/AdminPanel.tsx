@@ -23,7 +23,13 @@ export default function AdminPanel() {
 		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityInsertMutator = useMutation({
-		mutationFn: (activity: any) => BACKEND.activities.put(activity),
+		mutationFn: async (activity: any) => {
+			let response = await BACKEND.activities.put(activity)
+			if (response.status == 409) {
+				return Promise.reject("Activiteit met deze titel bestaat al!")
+			}
+			return response.data
+		},
 		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityDeleteMutator = useMutation({
@@ -80,8 +86,14 @@ export default function AdminPanel() {
 				}
 
 				if (confirm(`Weet je zeker dat je activiteit "${parsedFormData.title}" wilt toevoegen?`)) {
-					ActivityInsertMutator.mutate(parsedFormData);
-					setCreatingActivity(false);
+					await ActivityInsertMutator.mutateAsync(parsedFormData, {
+						onError: () => {
+							return alert("FOUT: Activiteit met deze titel bestaal al!");
+						},
+						onSuccess: () => {
+							setCreatingActivity(false);
+						}
+					});
 				}
 			}
 
