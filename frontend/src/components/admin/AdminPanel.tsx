@@ -175,7 +175,7 @@ export default function AdminPanel() {
 							<input id="threshold" type="number" required placeholder="Bijv. '5'"
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
-						<button type="submit" className="bg-green-700 hover:underline mt-1 rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2 font-bold">
+						<button type="submit" className="bg-green-700 hover:underline mt-1 rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold">
 							Toevoegen
 						</button>
 					</form>
@@ -343,14 +343,14 @@ export default function AdminPanel() {
 															</div>
 														</li>
 														<button
-															className="bg-green-700 hover:underline ml-10 rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2 font-bold"
+															className="bg-green-700 hover:underline ml-10 rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold"
 															onClick={async () => {
 																await updateActivity(activityEditing);
 															}}>
 															Opslaan
 														</button>
 														<button
-															className="bg-orange-400 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
+															className="bg-orange-400 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 															onClick={() => {
 																setActivityEditing(null);
 															}}>
@@ -377,12 +377,12 @@ export default function AdminPanel() {
 															/>
 														</li>
 														<button
-															className="bg-green-700 hover:underline ml-10  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
+															className="bg-green-700 hover:underline ml-10  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 															onClick={() => {setActivityEditing(activiteit)}}>
 															Bewerken
 														</button>
 														<button
-															className="bg-red-700 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2"
+															className="bg-red-700 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 															onClick={async () => {
 																if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 																	ActivityDeleteMutator.mutate(activiteit);
@@ -441,8 +441,7 @@ export default function AdminPanel() {
 						<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
 							   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 					</div>
-					<ImageUpload fieldName="image"/>
-					<button type="submit" className="bg-green-700 hover:underline mt-1 rounded border-1 cursor-pointer px-4 font-small text-1xl hover:ring-2 font-bold">
+					<button type="submit" className="bg-green-700 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
 						Toevoegen
 					</button>
 				</form>
@@ -496,7 +495,7 @@ export default function AdminPanel() {
 										<p className="text-gray-700 text-base mb-2"><strong>Alt-tekst:</strong> {slide.alt}</p>
 										<p className="text-gray-500 text-sm mb-2">ID: {slide.id}</p>
 										<button
-											className="bg-red-700 hover:underline rounded border-1 cursor-pointer px-4 py-1 font-small text-1xl hover:ring-2 w-full"
+											className="bg-red-700 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 											onClick={async () => {
 												if (confirm(`Weet je zeker dat je deze slide wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 													SlideDeleteMutator.mutate(slide);
