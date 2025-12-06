@@ -30,7 +30,7 @@ export const SlideshowController = new Elysia().group("/slideshow", (app) => app
 
             return {
                 ...slide,
-                hero: Buffer.from(slide.image).toString('base64')
+                image: Buffer.from(slide.image).toString('base64')
             }
         }
     )
