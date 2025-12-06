@@ -28,7 +28,7 @@ export default function AdminPanel() {
 	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
 	const ActivityPatchMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({id: activity.id}).patch(activity),
-		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityInsertMutator = useMutation({
 		mutationFn: async (activity: any) => {
@@ -38,11 +38,11 @@ export default function AdminPanel() {
 			}
 			return response.data
 		},
-		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityDeleteMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).delete(),
-		onSuccess: () => queryClient.refetchQueries({ queryKey: ["activities"] }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
 
 	/* Tanstack Query mutaties voor slideshow */
@@ -54,11 +54,11 @@ export default function AdminPanel() {
 			}
 			return response.data
 		},
-		onSuccess: () => queryClient.refetchQueries({ queryKey: ["slideshow"] }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slideshow"] }),
 	})
 	const SlideDeleteMutator = useMutation({
 		mutationFn: (slide: any) => BACKEND.slideshow({ id: slide.id }).delete(),
-		onSuccess: () => queryClient.refetchQueries({ queryKey: ["slideshow"] }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slideshow"] }),
 	})
 
 
