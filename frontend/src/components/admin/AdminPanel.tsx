@@ -9,6 +9,7 @@ import type * as React from "react";
 
 
 export default function AdminPanel() {
+	const [currentView, setView] = useState("Activiteiten");
 	const { isPending, error, data } = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
 		queryKey: ["activities"],
 		queryFn: async () => {
@@ -81,7 +82,7 @@ export default function AdminPanel() {
 	if (error || slideshowError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 
-	function Editor() {
+	function ActivitiesEditor() {
 		const {activities} = useContext(Context)!;
 		const [activityEditing, setActivityEditing] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
 		const [creatingActivity, setCreatingActivity] = useState(false);
@@ -436,6 +437,7 @@ export default function AdminPanel() {
 
 			return (
 				<form onSubmit={insertSlide}>
+					<ImageUpload fieldName="image"/>
 					<div className="mb-2">
 						<label htmlFor="alt">Alt-tekst (beschrijving van de afbeelding)</label>
 						<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
@@ -449,10 +451,9 @@ export default function AdminPanel() {
 		}
 
 		return (
-			<div className="mt-8">
-				<h2 className="text-2xl font-bold mb-4">Slideshow Beheer</h2>
+			<>
 				<Helper>
-					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+					<Icon icon="material-symbols:info-outline" width="32" height="32"/>
 					<p>
 						Hieronder vindt u een lijst met alle slides in de slideshow. Met de knoppen kunt u ze verwijderen of nieuwe aanmaken.
 					</p>
@@ -475,7 +476,7 @@ export default function AdminPanel() {
 							onClick={() => setCreatingSlide(true)}
 						>
 							<Icon icon="mdi:add-bold" width="24" height="24" />
-							<span>Slide aanmaken</span>
+							<span>Slide toevoegen</span>
 						</button>
 						{slides.length === 0 ?
 							<div className="border-2 border-black h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
@@ -485,6 +486,7 @@ export default function AdminPanel() {
 							<ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 								{slides.map((slide) => (
 									<li key={slide.id} className="border-2 p-4 rounded bg-white shadow">
+										<p className="text-gray-700 font-mono text-sm mb-2">{slide.id}</p>
 										<div className="mb-2">
 											<img
 												className="w-full h-48 object-cover rounded-lg border-2"
@@ -492,8 +494,7 @@ export default function AdminPanel() {
 												alt={slide.alt}
 											/>
 										</div>
-										<p className="text-gray-700 text-base mb-2"><strong>Alt-tekst:</strong> {slide.alt}</p>
-										<p className="text-gray-500 text-sm mb-2">ID: {slide.id}</p>
+										<p className="text-base mb-2">{slide.alt}</p>
 										<button
 											className="bg-red-700 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 											onClick={async () => {
@@ -509,7 +510,7 @@ export default function AdminPanel() {
 						}
 					</>
 				}
-			</div>
+			</>
 		)
 	}
 
@@ -521,6 +522,20 @@ export default function AdminPanel() {
 					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
 						Beheerderspaneel
 					</span>
+					<button
+						onClick={() => setView("Activiteiten")}
+						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200  hover:outline-[2px] ${currentView == "Activiteiten" ? "underline outline-[2px]" : null}`}>
+						<span>
+							Activiteiten
+						</span>
+					</button>
+					<button
+						onClick={() => setView("Slideshow")}
+						className={`select-none rounded-t-lg border-x-1 border-t-1  px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-[2px] ${currentView == "Slideshow" ? "underline outline-[2px] " : null}`}>
+						<span>
+							Slideshow
+						</span>
+					</button>
 					<a href="/">
 						<button
 							className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1  cursor-pointer bg-orange-300 px-2 font-medium text-base py-1  hover:outline-[2px]">
@@ -529,8 +544,8 @@ export default function AdminPanel() {
 						</button>
 					</a>
 				</Header>
-				<Editor/>
-				<SlideshowEditor/>
+				{currentView == "Activiteiten" && <ActivitiesEditor/>}
+				{currentView == "Slideshow" && <SlideshowEditor/>}
 			</div>
 		</Provider>
 	)
@@ -569,8 +584,8 @@ function ImageUpload(props?: { fieldName?: string }) {
 	return (
 		<div>
 			<label htmlFor={fieldName} className="text-base font-semibold">Plaatje</label>
-			<div className="border-2 w-full min-w-[40%] h-[calc(100%-1em)]">
-				<div className={`text-black bg-gray-200/80 w-full h-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"}`}>
+			<div className="border-2 w-full min-w-[40%] h-[100%] min-h-[10em]">
+				<div className={`text-black bg-gray-200/80 w-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"} h-full`}>
 					{image && <img src={image} alt="Preview" className="object-fill"/>}
 					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
 						const file = e.target.files?.[0];
