@@ -61,8 +61,6 @@ i18n
           min_age_note: "Let op: Vanaf {{minage}} jaar oud",
           back_to_list: "Terug naar activiteitenlijst",
           add: "Toevoegen",
-          capacity: "Capaciteit",
-          threshold: "Drempelbezetting",
           minage: "Minimumleeftijd"
         },
       },
@@ -84,8 +82,6 @@ i18n
           min_age_note: "Achtung: Ab {{minage}} Jahren",
           back_to_list: "Zurück zur Aktivitätenliste",
           add: "Hinzufügen",
-          capacity: "Kapazität",
-          threshold: "Schwellenbelegung",
           minage: "Mindestalter"
         },
       },
@@ -107,8 +103,6 @@ i18n
             min_age_note: "Note: From age {{minage}} and up",
             back_to_list: "Back to activities list",
             add: "Add",
-            capacity: "Capacity",
-            threshold: "Threshold occupancy",
             minage: "Minimum age"
         }
       }

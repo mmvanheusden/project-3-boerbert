@@ -267,12 +267,12 @@ function Creator() {
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="capacity">{t("capacity")}</label>
+					<label htmlFor="capacity">capacity</label>
 					<input id="capacity" type="number" required placeholder="Bijv. '20'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="threshold">{t("threshold")}</label>
+					<label htmlFor="threshold">threshold</label>
 					<input id="threshold" type="number" required placeholder="Bijv. '5'"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
