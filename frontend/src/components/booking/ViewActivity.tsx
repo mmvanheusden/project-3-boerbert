@@ -5,7 +5,7 @@ import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
 
 export function ViewActivity() {
-  const { selectedActivity, prev } = useContext(Context);
+    const {selectedActivity, prev, next} = useContext(Context);
 
   return (
     <>
@@ -53,12 +53,17 @@ export function ViewActivity() {
         </div>
 
         <div className="inline-flex w-full items-center justify-between">
-          <button
-            className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
-            onClick={prev}>
-            Terug naar activiteitenlijst
-          </button>
-          <CancelButton />
+            <button
+                className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
+                onClick={prev}>
+                Terug naar activiteitenlijst
+            </button>
+            <button
+                className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
+                onClick={next}>
+                Betalen
+            </button>
+            <CancelButton/>
         </div>
       </div>
     </>
