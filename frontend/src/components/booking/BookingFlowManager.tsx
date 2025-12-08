@@ -7,6 +7,7 @@ import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 import { ViewActivity } from "./ViewActivity.tsx";
 import { t } from "i18next";
+import {useTranslation} from "react-i18next";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -41,6 +42,8 @@ const BookingFlow = () => {
 		queryFn: () =>
 			BACKEND.activities.get().then(r => r.data as Treaty.Data<typeof BACKEND.activities.get>),
 	})
+
+	useTranslation();
 	if (isPending) return 'Laden...'
 	if (error) return 'Fout: ' + error.message
 
