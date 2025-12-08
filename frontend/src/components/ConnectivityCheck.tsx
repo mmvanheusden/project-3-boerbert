@@ -1,5 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {BACKEND} from "../App.tsx";
+import { t } from "i18next";
 
 export function ConnectivityCheck() {
 	const { isPending, error, data } = useQuery({
@@ -14,18 +15,18 @@ export function ConnectivityCheck() {
 				{(() => {
 					if (isPending) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-orange-500 px-4 font-medium text-xl">
-							Laden...
+							{t("loading")}
 						</span>
 					)
 					if (error || (data !== "pong")) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-red-500 px-4 font-medium text-xl">
-							FOUT
+							{t("error_prefix")} {t("error")}
 						</span>
 					)
 
 					if (!error && (data == "pong")) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-green-500 px-4 font-medium text-xl">
-							OK
+							{t("ok")}
 						</span>
 					)})()}
 		</span>

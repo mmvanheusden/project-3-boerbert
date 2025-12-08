@@ -8,6 +8,8 @@ import type {Treaty} from "@elysiajs/eden";
 import { ViewActivity } from "./ViewActivity.tsx";
 import { BetaalMethode } from "./BetaalMethode.tsx";
 import {Payment} from "./Payment.tsx";
+import { t } from "i18next";
+import {useTranslation} from "react-i18next";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -54,7 +56,7 @@ const BookingFlow = () => {
 			BACKEND.slideshow.get().then(r => r.data as Treaty.Data<typeof BACKEND.slideshow.get>),
 	})
 
-
+    useTranslation();
 	if (activitiesQuery.isPending || slidesQuery.isPending) return 'Laden...'
 	if (activitiesQuery.error || slidesQuery.error) return "Er is iets misgegaan!"
 
@@ -88,7 +90,7 @@ export function CancelButton() {
 
 	return (
 		<button className="inline-flex items-center border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-red-500  hover:bg-red-700 focus:outline-none text-2xl" onClick={() => setCurrentStep(0)}>
-			Afbreken
+			{t("cancel")}
 		</button>
 	)
 }

@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
+import { t } from "i18next";
 
 export function ViewActivity() {
     const {selectedActivity, prev, next} = useContext(Context);
@@ -12,7 +13,7 @@ export function ViewActivity() {
       <Header>
         <span
           className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl -translate-y-4">
-          Stap 2: Bekijk activiteitdetails
+          {t("step2_title")}
         </span>
       </Header>
 
@@ -36,13 +37,13 @@ export function ViewActivity() {
 
                 <div className="mb-2">{selectedActivity?.description}</div>
 
-                <div className="mb-1">Maximaal aantal deelnemers: {selectedActivity?.capacity}</div>
+                <div className="mb-1">{t("max_participants", { capacity: selectedActivity?.capacity })}</div>
 
-                <div className="mb-1">Locatie: {selectedActivity?.location}</div>
+                <div className="mb-1">{t("location_label", { location: selectedActivity?.location })}</div>
 
-                <div className="mb-1">Let op: Vanaf {selectedActivity?.minage} jaar oud</div>
+                <div className="mb-1">{t("min_age_note", { minage: selectedActivity?.minage })}</div>
 
-                <div className="mb-1">Prijs: €{selectedActivity?.price} per kaartje</div>
+                <div className="mb-1">{t("price_per_ticket", { price: selectedActivity?.price })}</div>
               </div>
 
               <div className="mt-6 max-w-xs">
@@ -56,7 +57,7 @@ export function ViewActivity() {
             <button
                 className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
                 onClick={prev}>
-                Terug naar activiteitenlijst
+                {t("back_to_list")}
             </button>
             <button
                 className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
@@ -72,6 +73,7 @@ export function ViewActivity() {
 
 function Reserveren({ price }: { price?: number }) {
   const [count, setCount] = useState(1);
+  const context = useContext(Context);
   if (!price) return null;
 
   return (

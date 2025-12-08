@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import Context from "./booking/Context.tsx";
-import {Icon} from "@iconify/react";
+import { t } from "i18next";
+import i18n from "../i18n/config.ts";
+import { Icon } from "@iconify/react";
 
 export function Slideshow() {
   const { next,activities, slideshow } = useContext(Context);
@@ -39,7 +41,7 @@ export function Slideshow() {
   return (
     <>
       <span className="font-bold text-center text-4xl mb-2 italic">
-        Bekijk en boek hier een activiteit!
+        {t("hello_world")}
       </span>
       <hr className="h-[2px] w-[110%] mx-auto border-0 rounded-sm bg-black mb-5" />
       {/* onMouseEnter / onMouseLeave pauzeren / hervatten autoplay */}
@@ -126,7 +128,28 @@ export function Slideshow() {
           className={`text-2xl inline-flex items-center border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black  focus:outline-none ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
           onClick={next}
         >
-          {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : "Boeken"}
+            {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : t("book")}
+        </button>
+
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("nl")}
+        >
+          <Icon icon="flag:nl-4x3" width="60" height="40" />
+        </button>
+
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("de")}
+        >
+          <Icon icon="flag:de-4x3" width="60" height="40" />
+        </button>
+
+        <button
+          className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+          onClick={() => i18n.changeLanguage("en")}
+        >
+          <Icon icon="flagpack:gb-ukm" width="60" height="40" />
         </button>
       </div>
     </>
