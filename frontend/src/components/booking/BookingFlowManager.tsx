@@ -7,6 +7,7 @@ import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 import { ViewActivity } from "./ViewActivity.tsx";
 import { BetaalMethode } from "./BetaalMethode.tsx";
+import {Payment} from "./Payment.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -23,6 +24,8 @@ const renderStep = (step: number) => {
 						return <ViewActivity/>
 					case 3:
 						return <BetaalMethode/>
+					case 4:
+						return <Payment/>
 					default:
 						return null;
 				}})()}
@@ -33,9 +36,10 @@ const renderStep = (step: number) => {
 };
 
 const BookingFlow = () => {
-	const STEPS = 4; // Hoeveel stappen we hebben
+	const STEPS = 5; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
+	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 
 	// Haal de activiteiten en slideshow alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
 	const activitiesQuery = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
@@ -70,7 +74,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [] }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod }}>
 			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
 				<main>{renderStep(currentStep)}</main> {/* <---- Hier staat de stap content.*/}
 			</div>

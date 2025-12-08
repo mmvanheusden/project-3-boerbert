@@ -2,11 +2,10 @@ import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
-import {CancelButton} from "./BookingFlowManager.tsx";
 import { Icon } from "@iconify/react";
 
-export function BetaalMethode() {
-    const {selectedActivity, prev, next} = useContext(Context);
+export function Payment() {
+    const context = useContext(Context);
 
     return (<>
         <Header>
@@ -18,6 +17,7 @@ export function BetaalMethode() {
 
         <div className="w-full overflow-auto">
                 <div className="flex flex-col min-h-screen justify-center items-center bg-white shadow-md rounded-lg p-0 mb-2">
+                    Gekozen betaalmethode: {context.selectedPaymentMethod}
                     <div>
                         <h1 className="text-5xl font-bold mb-30">
                         Scan je betaalpas
@@ -35,7 +35,7 @@ export function BetaalMethode() {
         <div className="inline-flex w-full items-center justify-between">
             <button
                 className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
-                onClick={prev}>
+                onClick={context.prev}>
                 Afbreken
             </button>
         </div>

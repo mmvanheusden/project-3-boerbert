@@ -2,11 +2,10 @@ import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
-import {CancelButton} from "./BookingFlowManager.tsx";
 import { Icon } from "@iconify/react";
 
 export function BetaalMethode() {
-    const {selectedActivity, prev, next} = useContext(Context);
+    const context = useContext(Context);
 
     return (<>
         <Header>
@@ -24,8 +23,15 @@ export function BetaalMethode() {
                         </h1>
                     </div>
                     <div className="inline-flex">
-                        <button onClick={next}><Icon className="mr-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300" /></button>
-                        <button onClick={next}><Icon className="ml-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/></button>
+                        <button onClick={() => {
+                            context.selectPaymentMethod("CONTANT")
+                            context.next()
+                        }}><Icon className="mr-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300" /></button>
+
+                        <button onClick={() => {
+                            context.selectPaymentMethod("PIN")
+                            context.next()
+                        }}><Icon className="ml-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/></button>
                     </div>
                 </div>
         </div>
@@ -33,7 +39,7 @@ export function BetaalMethode() {
         <div className="inline-flex w-full items-center justify-between">
             <button
                 className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
-                onClick={prev}>
+                onClick={context.prev}>
                 Afbreken
             </button>
         </div>
