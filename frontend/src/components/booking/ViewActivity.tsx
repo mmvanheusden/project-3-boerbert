@@ -28,7 +28,7 @@ export function ViewActivity() {
 
                     <div className="mb-2">{selectedActivity?.description}</div>
 
-                    <div className="mb-1">€ {selectedActivity?.price} {t("price_per_ticket", { price: selectedActivity?.price })}</div>
+                    <div className="mb-1">{t("price_per_ticket", { price: selectedActivity?.price })}</div>
                     <div className="mb-1">
                         {t("max_participants", { capacity: selectedActivity?.capacity })}
                     </div>
