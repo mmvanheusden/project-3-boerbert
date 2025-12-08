@@ -5,7 +5,7 @@ import {Header} from "../KleineDingetjes.tsx";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
 export function ViewActivity() {
-    const {selectedActivity, prev} = useContext(Context);
+    const {selectedActivity, prev, next} = useContext(Context);
 
     return (<>
         <Header>
@@ -52,6 +52,11 @@ export function ViewActivity() {
                 className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
                 onClick={prev}>
                 Terug naar activiteitenlijst
+            </button>
+            <button
+                className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl mr-5"
+                onClick={next}>
+                Betalen
             </button>
             <CancelButton/>
         </div>

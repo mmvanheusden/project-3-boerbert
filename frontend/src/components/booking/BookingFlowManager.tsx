@@ -6,6 +6,7 @@ import {BACKEND} from "../../App.tsx";
 import {useQuery} from "@tanstack/react-query";
 import type {Treaty} from "@elysiajs/eden";
 import { ViewActivity } from "./ViewActivity.tsx";
+import { BetaalMethode } from "./BetaalMethode.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -20,6 +21,8 @@ const renderStep = (step: number) => {
 						return <ActivitiesList/>;
 					case 2:
 						return <ViewActivity/>
+					case 3:
+						return <BetaalMethode/>
 					default:
 						return null;
 				}})()}
@@ -30,7 +33,7 @@ const renderStep = (step: number) => {
 };
 
 const BookingFlow = () => {
-	const STEPS = 3; // Hoeveel stappen we hebben
+	const STEPS = 4; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 
