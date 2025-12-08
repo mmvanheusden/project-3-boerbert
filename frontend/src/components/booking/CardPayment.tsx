@@ -20,12 +20,14 @@ export function BetaalMethode() {
                 <div className="flex flex-col min-h-screen justify-center items-center bg-white shadow-md rounded-lg p-0 mb-2">
                     <div>
                         <h1 className="text-5xl font-bold mb-30">
-                        Selecteer betaalmethode
+                        Scan je betaalpas
+                        </h1>
+                        <h1 className="text-3xl font-bold mb-30">
+                        Volg de instructies op de automaat
                         </h1>
                     </div>
                     <div className="inline-flex">
-                        <button onClick={next}><Icon className="mr-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300" /></button>
-                        <button onClick={next}><Icon className="ml-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/></button>
+                        <Icon className="ml-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/>
                     </div>
                 </div>
         </div>
