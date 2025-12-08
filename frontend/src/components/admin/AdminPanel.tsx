@@ -251,8 +251,8 @@ function Creator() {
 					<ImageUpload/>
 				</div>
 				<div className="mb-2">
-					<label htmlFor="minage">Minimumleeftijd</label>
-					<input id="minage" type="number" required placeholder="Bijv. '4+'"
+					<label htmlFor="minage">Minimumleeftijd (optioneel)</label>
+					<input id="minage" type="number" placeholder="Bijv. 4 - leeg laten = alle leeftijden"
 						   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div className="mb-2">
