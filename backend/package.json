@@ -11,13 +11,13 @@
  	 	"@elysiajs/openapi": "^1.4.11",
  	 	"@libsql/client": "^0.15.15",
  	 	"dotenv": "^17.2.3",
- 	 	"drizzle-orm": "^0.44.7",
- 	 	"elysia": "^1.4.16"
+ 	 	"drizzle-orm": "^0.45.0",
+ 	 	"elysia": "^1.4.18"
  	},
  	"devDependencies": {
  	 	"@types/node": "^24.10.1",
- 	 	"drizzle-kit": "^0.31.7",
- 	 	"tsx": "^4.20.6",
+ 	 	"drizzle-kit": "^0.31.8",
+ 	 	"tsx": "^4.21.0",
  	 	"typescript": "^5.9.3"
  	}
 }

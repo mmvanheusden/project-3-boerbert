@@ -3,26 +3,16 @@ import Context from "./booking/Context.tsx";
 import {Icon} from "@iconify/react";
 
 export function Slideshow() {
-  const { next,activities } = useContext(Context);
-
-	const images = [
-		"https://images.theconversation.com/files/493905/original/file-20221107-16-ft18fk.jpeg?ixlib=rb-4.1.0&q=45&auto=format&w=1000&fit=clip",
-		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg",
-		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg",
-		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg",
-		"https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg",
-		"https://wallpapers.com/images/thumbnail/hog-rider-clash-character-uh80006aoilk44dh.webp"
-	];
-
-	const [index, setIndex] = useState(0);
+  const { next,activities, slideshow } = useContext(Context);
+  const [index, setIndex] = useState(0);
 
   // --- NIEUW: autoplay states / refs ---
   const [playing, setPlaying] = useState(true); // true = automatisch wisselen
   const delay = 4000; // tijd per slide in ms (4000 = 4 seconden)
   const timeoutRef = useRef<number | null>(null);
 
-  const prevSlide = () => setIndex((i) => (i - 1 + images.length) % images.length);
-  const nextSlide = () => setIndex((i) => (i + 1) % images.length);
+  const prevSlide = () => setIndex((i) => (i - 1 + slideshow!.length) % slideshow!.length);
+  const nextSlide = () => setIndex((i) => (i + 1) % slideshow!.length);
 
   // --- NIEUW: useEffect die de autoplay regelt met setTimeout ---
   useEffect(() => {
@@ -34,7 +24,7 @@ export function Slideshow() {
     if (playing) {
       // Stel een nieuwe timeout in; na 'delay' ms naar volgende slide
       timeoutRef.current = window.setTimeout(() => {
-        setIndex((i) => (i + 1) % images.length);
+        setIndex((i) => (i + 1) % slideshow!.length);
       }, delay);
     }
 
@@ -44,7 +34,7 @@ export function Slideshow() {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [index, playing, images.length]); // herstart timer als index verandert (bv. door klik) of playing verandert
+  }, [index, playing, slideshow!.length]); // herstart timer als index verandert (bv. door klik) of playing verandert
 
   return (
     <>
@@ -62,19 +52,25 @@ export function Slideshow() {
       >
         <div className="relative overflow-hidden rounded-lg h-[calc(100vh-18rem)]">
           {/* Slides: alleen actieve slide zichtbaar */}
-          {images.map((src, i) => (
-            <div
-              key={src}
-              className={`duration-700 ease-in-out ${i === index ? "block" : "hidden"}`}
-              aria-hidden={i === index ? "false" : "true"}
-            >
-              <img
-                src={src}
-                alt={`Slide ${i + 1}`}
-                className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-              />
-            </div>
-          ))}
+          {slideshow!.length == 0
+              ?
+              <div className="flex flex-row justify-center items-center select-none bottom-0  text-center text-xl font-semibold border-2 border-black p-1 ml-5">
+                <Icon icon="mdi:alert" width="48" height="48" color="red"/> De slideshow is leeg.
+              </div>
+              : <>{slideshow!.map((slide, i) => (
+                    <div
+                        key={i}
+                        className={`duration-700 ease-in-out ${i === index ? "block" : "hidden"}`}
+                        aria-hidden={i === index ? "false" : "true"}
+                    >
+                      <img
+                          src={`data:image/png;base64, ${slide.image}`}
+                          alt={slide.alt}
+                          className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+                      />
+                    </div>
+                ))}</>
+          }
         </div>
 
         {/* Slider controls met handlers */}
