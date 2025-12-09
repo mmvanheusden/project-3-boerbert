@@ -31,3 +31,7 @@ export async function getSlots(activityId: string) {
 export async function getAllSlots() {
     return db.select().from(slotsTable);
 }
+
+export async function deleteSlot(id: string) {
+    return db.select().from(slotsTable);
+}
