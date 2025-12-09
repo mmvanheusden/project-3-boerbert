@@ -1,6 +1,9 @@
 import {Elysia} from "elysia";
-import {InsertActivitySlotRequest} from "./model";
+import {InsertActivitySlotRequest, slotsTable} from "./model";
 import {getAllSlots, getSlots, insertSlot} from "./service";
+import {eq} from 'drizzle-orm';
+import db from "../config/db";
+
 
 export const SlotsController = new Elysia().group("/slots", (app) => app
     .put(
@@ -22,6 +25,12 @@ export const SlotsController = new Elysia().group("/slots", (app) => app
         '/',
         async () => {
             return await getAllSlots()
+        }
+    )
+    .delete(
+        "/:id",
+        async ({params: {id}}) => {
+            await db.delete(slotsTable).where(eq(slotsTable.id, +id));
         }
     )
 )
