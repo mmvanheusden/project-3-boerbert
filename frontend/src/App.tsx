@@ -16,12 +16,12 @@ export function App() {
 	return (
 		<Router>
 			<QueryClientProvider client={queryClient}>
-				<div className="pb-28">
+				<main className="pb-20 h-full">
 					<Switch redirect="/">
 						<Route path="/" component={BookingFlow} />
 						<Route path="/admin" component={AdminPanel} />
 					</Switch>
-				</div>
+				</main>
 			</QueryClientProvider>
 		</Router>
 	)
@@ -37,10 +37,10 @@ export class Footer extends Component<PropsWithChildren> {
 						<span className="text-sm text-body sm:text-center">
 							2025 Squad Skyr™
 						</span>
-						<ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-							<li className="me-4 md:me-6">
+						<span className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
+							<div className="me-4 md:me-6">
 								<ConnectivityCheck/>
-							</li>
+							</div>
 							<nav>
 								<a href="/admin">
 									<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
@@ -48,7 +48,7 @@ export class Footer extends Component<PropsWithChildren> {
 									</button>
 								</a>
 							</nav>
-						</ul>
+						</span>
 					</div>
 				</QueryClientProvider>
 			</Router>

@@ -41,20 +41,20 @@ export function ActivitiesList() {
 	);
 
 	return (
-		<>
+		<div className="flex flex-col gap-3 h-full">
 			<Header>
 					<span
 						className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl">
 						{t("stap_1")}
 					</span>
 			</Header>
-			<ul>{activityItems}</ul>
-
-			<div className="flex justify-end">
+			<div className="flex-1 overflow-auto">
+				<ul>{activityItems}</ul>
+			</div>
+			<div className="flex">
 				<CancelButton/>
 			</div>
-		</>
-
+		</div>
 	);
 
 }
