@@ -20,15 +20,38 @@ export function Payment() {
                 <div
                     className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                     <span>Gekozen betaalmethode: {context.selectedPaymentMethod}</span>
-                    <div className="text-center">
-                        <h1 className="text-5xl font-bold">
+                    
+                    
+                    {(() => {
+                        switch (context.selectedPaymentMethod) {
+                            case "PIN" :
+                                return <div className="text-center">
+                        <h1 className="text-5xl font-bold mb-10 mt-5">
                             Scan je betaalpas
                         </h1>
+                        
+                    </div>
+                            case "CONTANT" :
+                                return <div className="text-center">
+                        <h1 className="text-5xl font-bold mb-10 mt-5">
+                            Ga verder bij de balie
+                        </h1>
                         <h1 className="text-3xl font-bold">
-                            Volg de instructies op de automaat
+                            U krijgt daar uw bon
                         </h1>
                     </div>
-                    <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/>
+                        }
+                    })()}
+                    
+                    
+                    {(() => {
+                        switch (context.selectedPaymentMethod) {
+                            case "PIN":
+                                return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/>
+                            case "CONTANT":
+                                return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300"/>
+                        }
+                    })()}
                 </div>
             </div>
             <div className="flex">

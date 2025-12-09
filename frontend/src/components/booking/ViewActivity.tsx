@@ -63,11 +63,6 @@ export function ViewActivity() {
                         onClick={prev}>
                         {t("back_to_list")}
                     </button>
-                    <button
-                        className="border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black bg-green-600 hover:bg-green-700 focus:outline-none text-2xl"
-                        onClick={next}>
-                        Betalen
-                    </button>
                 </div>
             </div>
         </div>
