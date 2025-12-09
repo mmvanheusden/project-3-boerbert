@@ -206,12 +206,15 @@ export default function AdminPanel() {
 		};
 		return (
 			<div>
-				<Helper>
-					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
-					<p>
-						Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze aanpassen, verwijderen, of nieuwe aanmaken
-					</p>
-				</Helper>
+				<nav className="sticky top-0">
+					<Helper>
+						<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+						<p>
+							Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze aanpassen, verwijderen, of nieuwe aanmaken
+						</p>
+					</Helper>
+				</nav>
+
 				{creatingActivity ?
 					<>
 						<button
@@ -225,31 +228,36 @@ export default function AdminPanel() {
 					</>
 					:
 					<>
-						<button
-							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-green-700 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
-							onClick={() => setCreatingActivity(true)}
-						>
-							<Icon icon="mdi:add-bold" width="24" height="24" />
-							<span>Activiteit aanmaken</span>
-						</button>
-
-						<form onSubmit= {(e) => search((document.getElementById("search") as HTMLInputElement)?.value)} className="relative">
-							<label htmlFor="search"
-							       className="block rounded mb-2.5 text-sm font-medium text-heading sr-only">Search</label>
-							<div className="absolute bottom-3 left-230">
-								<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-									<Icon icon="icon-park-outline:search" width="20" height="20" />
-								</div>
-								<input type="search" id="search"
-								       className="rounded block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
-								       placeholder="Zoek"/>
-
-							</div>
-							<button type="button"
-							        onClick={() => {search((document.getElementById("search") as HTMLInputElement)?.value)}}
-							        className="absolute end-1.5 bottom-3 left-285 w-15 h-11 text-black bg-brand hover:bg-brand-strong box-border border focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Zoek
+						<div className="flex items-center justify-between w-full gap-4">
+							<button
+								className="inline-flex items-center hover:underline hover:ring-2 rounded border cursor-pointer bg-green-700 px-2 font-medium text-xl mb-3 py-1  hover:outline-2"
+								onClick={() => setCreatingActivity(true)}
+							>
+								<Icon icon="mdi:add-bold" width="24" height="24"/>
+								<span>Activiteit aanmaken</span>
 							</button>
-						</form>
+
+							<form
+								onSubmit={() => search((document.getElementById("search") as HTMLInputElement)?.value)}
+								className="mb-3">
+								<label htmlFor="search" className="sr-only">Search</label>
+								<div className="flex items-center gap-2">
+									<div className="relative flex-1">
+										<div
+											className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+											<Icon icon="icon-park-outline:search" width="20" height="20"/>
+										</div>
+										<input type="search" id="search"
+											   className="block w-full pl-10 pr-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+											   placeholder="Zoek"/>
+									</div>
+									<button type="submit"
+											className="whitespace-nowrap px-4 py-2.5 text-black bg-brand hover:bg-brand-strong border focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded text-sm focus:outline-none">
+										Zoek
+									</button>
+								</div>
+							</form>
+						</div>
 
 						<ActivitiesEmptyCheck activities={activities}/>
 						<ol>
@@ -414,12 +422,9 @@ export default function AdminPanel() {
 															}}>
 															Verwijderen
 														</button>
-
 													</>
 												}
 											</div>
-
-
 										</>
 									)
 								})
@@ -538,7 +543,7 @@ export default function AdminPanel() {
 	return (
 		<Provider value={{activities, setActivities}}>
 			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending}/>
-			<div className="bg-white/90 border-2 border-black p-4 rounded-3xl">
+			<div className="flex flex-col gap-3 h-full">
 				<Header>
 					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
 						Beheerderspaneel
@@ -565,8 +570,10 @@ export default function AdminPanel() {
 						</button>
 					</a>
 				</Header>
-				{currentView == "Activiteiten" && <ActivitiesEditor/>}
-				{currentView == "Slideshow" && <SlideshowEditor/>}
+				<div className="flex-1 overflow-auto bg-white/90 border-2 border-black p-4 rounded-3xl">
+					{currentView == "Activiteiten" && <ActivitiesEditor/>}
+					{currentView == "Slideshow" && <SlideshowEditor/>}
+				</div>
 			</div>
 		</Provider>
 	)
@@ -591,7 +598,7 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 class Helper extends Component<PropsWithChildren> {
 	render() {
 		return (
-			<div className="border-2 w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white shadow">
+			<div className="border-2 w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white shadow-xl/20 shadow-black">
 				{this.props.children}
 			</div>
 		)
