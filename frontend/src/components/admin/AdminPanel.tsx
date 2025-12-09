@@ -543,7 +543,7 @@ export default function AdminPanel() {
 	return (
 		<Provider value={{activities, setActivities}}>
 			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending}/>
-			<div className="flex flex-col gap-3 h-full">
+			<div className="flex flex-col gap-3 h-full bg-white/90 border-2 border-black p-4 px-4 rounded-3xl">
 				<Header>
 					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
 						Beheerderspaneel
@@ -570,7 +570,7 @@ export default function AdminPanel() {
 						</button>
 					</a>
 				</Header>
-				<div className="flex-1 overflow-auto bg-white/90 border-2 border-black p-4 rounded-3xl">
+				<div className="flex-1 overflow-auto px-2 pb-8">
 					{currentView == "Activiteiten" && <ActivitiesEditor/>}
 					{currentView == "Slideshow" && <SlideshowEditor/>}
 				</div>
