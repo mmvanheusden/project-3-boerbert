@@ -10,6 +10,7 @@ import type * as React from "react";
 
 export default function AdminPanel() {
 	const [currentView, setView] = useState("Activiteiten");
+	const [searchQuery, search] = useState("");
 	const { isPending, error, data } = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
 		queryKey: ["activities"],
 		queryFn: async () => {
@@ -231,10 +232,30 @@ export default function AdminPanel() {
 							<Icon icon="mdi:add-bold" width="24" height="24" />
 							<span>Activiteit aanmaken</span>
 						</button>
+
+						<form onSubmit= {(e) => search((document.getElementById("search") as HTMLInputElement)?.value)} className="relative">
+							<label htmlFor="search"
+							       className="block rounded mb-2.5 text-sm font-medium text-heading sr-only">Search</label>
+							<div className="absolute bottom-3 left-230">
+								<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+									<Icon icon="icon-park-outline:search" width="20" height="20" />
+								</div>
+								<input type="search" id="search"
+								       className="rounded block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+								       placeholder="Zoek"/>
+
+							</div>
+							<button type="button"
+							        onClick={() => {search((document.getElementById("search") as HTMLInputElement)?.value)}}
+							        className="absolute end-1.5 bottom-3 left-285 w-15 h-11 text-black bg-brand hover:bg-brand-strong box-border border focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Zoek
+							</button>
+						</form>
+
 						<ActivitiesEmptyCheck activities={activities}/>
 						<ol>
 							{
-								activities.map((activiteit) => {
+								activities.filter((activiteit) => activiteit.title.toLowerCase().includes(searchQuery.toLowerCase()))
+								.map((activiteit) => {
 									return (
 										<>
 											<div className="mb-2 border-2 p-4 rounded bg-white shadow">
