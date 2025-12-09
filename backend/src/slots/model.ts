@@ -7,12 +7,12 @@ export const slotsTable = sqliteTable("slots", {
     activityId: int().references((): AnySQLiteColumn => activitiesTable.id),
     date: text().notNull(),
     duration: int().notNull(),
-    startTime: int().notNull(),
+    startTime: text().notNull(),
 });
 
 export const InsertActivitySlotRequest = t.Object({
     activityId: t.Numeric(),
     date: t.String(),
-    startTime: t.Numeric(),
+    startTime: t.String(),
     duration: t.Numeric(),
 })

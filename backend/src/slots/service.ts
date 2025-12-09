@@ -27,3 +27,7 @@ export async function insertSlot(slot: Static<typeof InsertActivitySlotRequest>)
 export async function getSlots(activityId: string) {
     return ((await db.select().from(slotsTable).where(eq(slotsTable.activityId, +activityId))));
 }
+
+export async function getAllSlots() {
+    return db.select().from(slotsTable);
+}

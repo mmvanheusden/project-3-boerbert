@@ -6,6 +6,8 @@ import {Component, type PropsWithChildren, useContext, useEffect, useState} from
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
 import type * as React from "react";
+import "dayjs/locale/nl"
+import dayjs from "dayjs";
 
 
 export default function AdminPanel() {
@@ -24,6 +26,14 @@ export default function AdminPanel() {
 		queryFn: async () => {
 			const res = await BACKEND.slideshow.get();
 			return res.data as Treaty.Data<typeof BACKEND.slideshow.get>;
+		},
+	});
+
+	const { isPending: slotsPending, error: slotsError, data: slotsData } = useQuery<Treaty.Data<typeof BACKEND.slots.get>>({
+		queryKey: ["slots"],
+		queryFn: async () => {
+			const res = await BACKEND.slots.get();
+			return res.data as Treaty.Data<typeof BACKEND.slots.get>;
 		},
 	});
 
@@ -64,6 +74,12 @@ export default function AdminPanel() {
 	})
 
 
+	const SlotInsertMutator = useMutation({
+		mutationFn: (slot: any) => BACKEND.slots.put(slot),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+	})
+
+
 	// Sync query data into local state once fetched
 	useEffect(() => {
 		if (data) {
@@ -79,13 +95,22 @@ export default function AdminPanel() {
 	}, [slideshowData]);
 	const [slides, setSlides] = useState<Treaty.Data<typeof BACKEND.slideshow.get>>([]);
 
-	if (isPending || slideshowPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
-	if (error || slideshowError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
+	useEffect(() => {
+		if (slotsData) {
+			setSlots(slotsData);
+		}
+	}, [slotsData]);
+	const [slots, setSlots] = useState<Treaty.Data<typeof BACKEND.slots.get>>([]);
+
+	if (isPending || slideshowPending || slotsPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
+	if (error || slideshowError || slotsError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 
 	function ActivitiesEditor() {
 		const {activities} = useContext(Context)!;
 		const [activityEditing, setActivityEditing] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
+		const [activityScheduling, setActivityScheduling] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
+		const [slotPlanning, setSlotPlanning] = useState(false);
 		const [creatingActivity, setCreatingActivity] = useState(false);
 
 		function Creator() {
@@ -267,7 +292,98 @@ export default function AdminPanel() {
 									return (
 										<>
 											<div className="mb-2 p-4 rounded bg-white shadow">
-												{activityEditing && activityEditing.id == activiteit.id
+												{
+													activityScheduling && activityScheduling.id == activiteit.id ?
+														<>
+
+															<div className="flex-1">
+																<div className="min-h-50">
+																	{slotPlanning ?
+																		<>
+																			<form onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+																				event.preventDefault();
+																				const form = event.currentTarget
+																				// Zet de formdata om naar een JSON object. TODO: Deserialiseer naar een voorgedefineerd model: https://www.epicreact.dev/how-to-type-a-react-form-on-submit-handler
+
+																				const parsedFormData = {
+																					// @ts-ignore
+																					startTime: String(form.elements["slotTime"]?.value || ""),
+																					// @ts-ignore
+																					duration: String(form.elements["slotDuration"]?.value || ""),
+																					// @ts-ignore
+																					date: String(form.elements["slotDate"]?.value || ""),
+																					// @ts-ignore
+																					activityId: activiteit.id,
+																				};
+
+																				SlotInsertMutator.mutate(parsedFormData);
+																			}}>
+
+																				<div>
+																					<label htmlFor="slotTime">Start</label>
+																					<input required id="slotTime" type="time"></input>
+																				</div>
+																				<div>
+																					<label
+																						htmlFor="slotDate">Datum</label>
+																					<input required id="slotDate"
+																						   type="date"></input>
+																				</div>
+																				<div>
+																					<label
+																						htmlFor="slotDuration">Lengte</label>
+																					<input required id="slotDuration"
+																						   type="number"></input>
+																				</div>
+																				<button className="mt-8 border bg-gray-400 hover:underline" type="submit">Verstuur slot</button>
+																			</form>
+																		</>
+																		: <>
+																			<div className="flex-col">
+																				<b>{activiteit.title}</b>
+																			</div>
+																			<table className="table-fixed w-full">
+																				<thead className="bg-gray-400">
+																				<tr>
+																					<th>Datum</th>
+																					<th>Starttijd</th>
+																					<th>Duur</th>
+																				</tr>
+																				</thead>
+																				<tbody className="overflow-y-auto">
+																				<tr className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
+																					onClick={() => setSlotPlanning(true)}
+																				>
+																					<td>Toevoegen</td>
+																				</tr>
+																				{slots.map((slot) => {
+																					console.trace(slot);
+																					return (<>
+																						<tr>
+																							<td>{dayjs(slot.date).locale("nl").format("D[ ]MMMM")}</td>
+																							<td>{slot.startTime}</td>
+																							<td>{slot.duration} u</td>
+																						</tr>
+																					</>)
+																				})}
+																				</tbody>
+																			</table>
+																		</>
+																	}
+
+
+																</div>
+															</div>
+
+															<button
+																className="flex bg-orange-400 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
+																onClick={() => {
+																	setActivityScheduling(null);
+																}}>
+																Annuleren
+															</button>
+														</>
+													: activityEditing && activityEditing.id == activiteit.id
 													? <>
 														<li key={activiteit.id} className="flex">
 															<span className="text-gray-700 text-lg font-medium mr-4 font-mono">{activiteit.id}</span>
@@ -410,6 +526,11 @@ export default function AdminPanel() {
 															className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={() => {setActivityEditing(activiteit)}}>
 															Bewerken
+														</button>
+														<button
+															className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-4  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
+															onClick={() => {setActivityScheduling(activiteit)}}>
+															Plannen
 														</button>
 														<button
 															className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
