@@ -43,10 +43,9 @@ export function Slideshow() {
   return (
     <>
       <div className="flex flex-col h-full">
-        <span className="font-bold text-center text-4xl mb-2 italic">
-          {t("hello_world")}
+        <span className="font-bold text-center text-7xl mb-2 italic bg-green-600 text-white rounded-xl p-4">
+          {t("Welkom bij Boer Bert's Camping!")}
         </span>
-        <hr className="h-[2px] w-full mx-auto border-0 rounded-sm bg-black mb-5" />
         <div className="flex-1">
           <div
               id="gallery"
@@ -125,36 +124,36 @@ export function Slideshow() {
           </span>
           </button>
         </div>
-        <div className="flex">
-          <div className="mt-4 flex items-center gap-3">
+        <div className="h-[20%] flex items-center justify-between px-6 gap-3">
+          <div className="flex items-center gap-3">
             <button
-                className={`text-2xl inline-flex items-center border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black  focus:outline-none ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
-                onClick={next}
-            >
-              {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : t("book")}
-            </button>
-
-            <button
-                className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="text-5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("nl")}
             >
-              <Icon icon="flag:nl-4x3" width="60" height="40" />
+              <Icon icon="flag:nl-4x3" width="60" height="h-full" />
             </button>
 
             <button
-                className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="text-5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("de")}
             >
-              <Icon icon="flag:de-4x3" width="60" height="40" />
+              <Icon icon="flag:de-4x3" width="60" height="h-full" />
             </button>
 
             <button
-                className="text-3xl border-2 hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="text 5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("en")}
             >
-              <Icon icon="flagpack:gb-ukm" width="60" height="40" />
+              <Icon icon="flagpack:gb-ukm" width="60" height="h-full" />
             </button>
           </div>
+
+          <button
+              className={`text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+              onClick={next}
+          >
+            {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : t("book")}
+          </button>
         </div>
       </div>
 
