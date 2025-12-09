@@ -76,7 +76,7 @@ const BookingFlow = () => {
 
 	return (
 		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod }}>
-			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl">
+			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>
 		</Provider>

@@ -18,7 +18,7 @@ export function App() {
 			<QueryClientProvider client={queryClient}>
 				<main className="pb-20 h-full">
 					<Switch redirect="/">
-						<div className="select-none"><Route path="/" component={BookingFlow} /></div>
+						<Route path="/" component={BookingFlow} />
 						<Route path="/admin" component={AdminPanel} />
 					</Switch>
 				</main>
