@@ -1,6 +1,6 @@
 import {Elysia} from "elysia";
 import {InsertActivitySlotRequest} from "./model";
-import {getSlots, insertSlot} from "./service";
+import {getAllSlots, getSlots, insertSlot} from "./service";
 
 export const SlotsController = new Elysia().group("/slots", (app) => app
     .put(
@@ -9,13 +9,19 @@ export const SlotsController = new Elysia().group("/slots", (app) => app
             return await insertSlot(context.body)
         }, {
             body: InsertActivitySlotRequest,
-            parse: "multipart/form-data",
+            parse: "json",
         }
     )
     .get(
         '/:id',
         async ({params: {id}}) => {
             return await getSlots(id)
+        }
+    )
+    .get(
+        '/',
+        async () => {
+            return await getAllSlots()
         }
     )
 )
