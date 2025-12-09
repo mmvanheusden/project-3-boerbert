@@ -78,6 +78,10 @@ export default function AdminPanel() {
 		mutationFn: (slot: any) => BACKEND.slots.put(slot),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
 	})
+	const SlotDeleteMutator = useMutation({
+		mutationFn: (slot: any) => BACKEND.slots({ id: slot.id }).delete(),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+	})
 
 
 	// Sync query data into local state once fetched
@@ -351,21 +355,34 @@ export default function AdminPanel() {
 																				</tr>
 																				</thead>
 																				<tbody className="overflow-y-auto">
-																				<tr className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
-																					onClick={() => setSlotPlanning(true)}
-																				>
-																					<td>Toevoegen</td>
-																				</tr>
-																				{slots.map((slot) => {
-																					console.trace(slot);
-																					return (<>
-																						<tr>
-																							<td>{dayjs(slot.date).locale("nl").format("D[ ]MMMM")}</td>
-																							<td>{slot.startTime}</td>
-																							<td>{slot.duration} u</td>
-																						</tr>
-																					</>)
-																				})}
+																					<tr className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
+																						onClick={() => setSlotPlanning(true)}
+																					>
+																						<td>Toevoegen</td>
+																					</tr>
+																					{slots.map((slot) => {
+																						console.trace(slot);
+																						return (<>
+																							<tr key={slot.id}>
+																								<td className="flex flex-row items-center mb-2">
+																									<button
+																										className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
+																										onClick={(e) => {
+																											e.stopPropagation();
+																											if (confirm(`Weet je zeker dat je dit tijdslot wilt verwijderen?`)) {
+																												SlotDeleteMutator.mutate(slot);
+																											}
+																										}}
+																									>
+																										<Icon icon="line-md:trash" width="32" height="32" color="black"/>
+																									</button>
+																									{dayjs(slot.date).locale("nl").format("D[ ]MMMM")}
+																								</td>
+																								<td>{slot.startTime}</td>
+																								<td>{slot.duration} u</td>
+																							</tr>
+																						</>)
+																					})}
 																				</tbody>
 																			</table>
 																		</>
