@@ -397,7 +397,7 @@ export default function AdminPanel() {
 																onClick={() => {
 																	setActivityScheduling(null);
 																}}>
-																Annuleren
+																{slotPlanning ? "Annuleren" : "Sluiten"}
 															</button>
 														</>
 													: activityEditing && activityEditing.id == activiteit.id
