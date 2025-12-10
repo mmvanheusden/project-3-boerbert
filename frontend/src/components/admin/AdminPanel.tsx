@@ -154,7 +154,7 @@ export default function AdminPanel() {
 						</div>
 						<div className="mb-2">
 							<label htmlFor="minage">Minimumleeftijd</label>
-							<input id="minage" type="number" placeholder="0 - leeg laten = alle leeftijden"
+							<input id="minage" type="number" placeholder="Bijv. 4 - leeg laten = alle leeftijden"
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
 						<div className="mb-2">
