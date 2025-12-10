@@ -10,7 +10,7 @@ export function Slideshow() {
 
   // --- NIEUW: autoplay states / refs ---
   const [playing, setPlaying] = useState(true); // true = automatisch wisselen
-  const delay = 10000; // tijd per slide in ms (1000 = 10 seconden)
+  const delay = 7500; // tijd per slide in ms (1000 = 10 seconden)
   const timeoutRef = useRef<number | null>(null);
 
   const prevSlide = () => setIndex((i) => (i - 1 + slideshow!.length) % slideshow!.length);
@@ -44,10 +44,10 @@ export function Slideshow() {
         <span className="font-bold text-center text-7xl mb-2 italic bg-green-600 text-white rounded-xl p-4">
           {t("Welkom bij Boer Bert's Camping!")}
         </span>
-        <div className="h-[80%] flex-1">
+        <div className="flex-1 bg-white/50 max-h-[75%]">
           <div
               id="gallery"
-              className="relative w-full h-[90%] overflow-hidden rounded-2xl"
+              className="relative w-full max-h-full overflow-hidden rounded-2xl"
               data-carousel="slide"
               onMouseEnter={() => setPlaying(false)}
               onMouseLeave={() => setPlaying(true)}
@@ -121,38 +121,39 @@ export function Slideshow() {
             <span className="sr-only">Next</span>
           </span>
           </button>
-        </div>
-        <div className="flex items-center justify-between px-1 gap-3 h-full">
-          <div className="flex items-center gap-3">
-            <button
+          <div className="flex items-center justify-between px-1 gap-3 my-5">
+            <div className="flex items-center gap-3">
+              <button
                 className="h-full text-5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("nl")}
-            >
-              <Icon icon="flag:nl-4x3" width="250" height="h-full" />
-            </button>
+              >
+                <Icon icon="flag:nl-4x3" width="250" height="h-full" />
+              </button>
 
-            <button
+              <button
                 className="h-full text-5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("de")}
-            >
-              <Icon icon="flag:de-4x3" width="250" height="h-full" />
-            </button>
+              >
+                <Icon icon="flag:de-4x3" width="250" height="h-full" />
+              </button>
 
-            <button
+              <button
                 className="h-full text 5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("en")}
-            >
-              <Icon icon="flagpack:gb-ukm" width="250" height="h-full" />
-            </button>
-          </div>
+              >
+                <Icon icon="flagpack:gb-ukm" width="250" height="h-full" />
+              </button>
+            </div>
 
-          <button
+           <button
               className={`h-full text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
               onClick={next}
-          >
+           >
             {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : t("book")}
           </button>
         </div>
+        </div>
+        
       </div>
 
 

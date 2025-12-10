@@ -177,7 +177,7 @@ export default function AdminPanel() {
 							<input id="threshold" type="number" required placeholder="Bijv. '5'"
 								   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 						</div>
-						<button type="submit" className="bg-green-700 hover:underline mt-1 rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold">
+						<button type="submit" className="text-white bg-green-600 hover:bg-green-700 mt-1 rounded cursor-pointer px-4 font-small text-xl hover:ring-2">
 							Toevoegen
 						</button>
 					</form>
@@ -218,7 +218,7 @@ export default function AdminPanel() {
 				{creatingActivity ?
 					<>
 						<button
-							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
+							className="text-white inline-flex items-center hover:bg-orange-500 hover:ring-2 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
 							onClick={() => setCreatingActivity(false)}
 						>
 							<Icon icon="mdi:cancel-bold" width="24" height="24" />
@@ -230,7 +230,7 @@ export default function AdminPanel() {
 					<>
 						<div className="flex items-center justify-between w-full gap-4">
 							<button
-								className="inline-flex items-center hover:underline hover:ring-2 rounded border cursor-pointer bg-green-700 px-2 font-medium text-xl mb-3 py-1  hover:outline-2"
+								className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
 								onClick={() => setCreatingActivity(true)}
 							>
 								<Icon icon="mdi:add-bold" width="24" height="24"/>
@@ -248,11 +248,11 @@ export default function AdminPanel() {
 											<Icon icon="icon-park-outline:search" width="20" height="20"/>
 										</div>
 										<input type="search" id="search"
-											   className="block w-full pl-10 pr-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+											   className="bg-white border -full pl-10 pr-3 py-2.5 bg-neutral-secondary-medium text-heading text-sm rounded focus:ring-brand shadow-xs placeholder:text-body"
 											   placeholder="Zoek"/>
 									</div>
 									<button type="submit"
-											className="whitespace-nowrap px-4 py-2.5 text-black bg-brand hover:bg-brand-strong border focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded text-sm focus:outline-none">
+											className="bg-white border whitespace-nowrap px-4 py-2.5 text-black bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded text-sm focus:outline-none">
 										Zoek
 									</button>
 								</div>
@@ -266,7 +266,7 @@ export default function AdminPanel() {
 								.map((activiteit) => {
 									return (
 										<>
-											<div className="mb-2 border-2 p-4 rounded bg-white shadow">
+											<div className="mb-2 p-4 rounded bg-white shadow">
 												{activityEditing && activityEditing.id == activiteit.id
 													? <>
 														<li key={activiteit.id} className="flex">
@@ -373,14 +373,14 @@ export default function AdminPanel() {
 															</div>
 														</li>
 														<button
-															className="bg-green-700 hover:underline ml-10 rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold"
+															className="text-white bg-green-500 hover:bg-green-600 ml-10 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={async () => {
 																await updateActivity(activityEditing);
 															}}>
 															Opslaan
 														</button>
 														<button
-															className="bg-orange-400 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
+															className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={() => {
 																setActivityEditing(null);
 															}}>
@@ -391,28 +391,28 @@ export default function AdminPanel() {
 														<li key={activiteit.id} className="flex">
 															<span className="text-gray-700 text-lg font-medium mr-4 font-mono">{activiteit.id}</span>
 															<div className="flex-1 mb-1">
-																<h3 className="text-lg font-medium text-gray-800">{activiteit.title}</h3>
-																<p className="text-gray-600 text-base mb-1">{activiteit.subtitle}</p>
-																<p className="text-gray-700 text-base">Capaciteit: {activiteit.capacity}</p>
-																<p className="text-gray-700 text-base">Drempelwaarde: {activiteit.threshold}</p>
-																<p className="text-gray-700 text-base">Prijs: €{activiteit.price}</p>
-																<p className="text-gray-700 text-base">Leeftijd: {activiteit.minage}</p>
-																<p className="text-gray-700 text-base">Locatie: {activiteit.location}</p>
+																<h3 className="text-4xl font-medium text-gray-800">{activiteit.title}</h3>
+																<p className="text-2xl text-gray-600 mb-1">{activiteit.subtitle}</p>
+																<p className="text-xl text-gray-700">Capaciteit: {activiteit.capacity}</p>
+																<p className="text-xl text-gray-700">Drempelwaarde: {activiteit.threshold}</p>
+																<p className="text-xl text-gray-700">Prijs: €{activiteit.price}</p>
+																<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage}</p>
+																<p className="text-xl text-gray-700">Locatie: {activiteit.location}</p>
 															</div>
 															<img
-																className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl border-2 ml-auto"
+																className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
 																src={`data:image/png;base64, ${activiteit?.hero}`}
 																style={{imageRendering: "pixelated"}}
 																alt={activiteit?.title ?? "activity image"}
 															/>
 														</li>
 														<button
-															className="bg-green-700 hover:underline ml-10  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
+															className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={() => {setActivityEditing(activiteit)}}>
 															Bewerken
 														</button>
 														<button
-															className="bg-red-700 hover:underline ml-4  rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
+															className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={async () => {
 																if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 																	ActivityDeleteMutator.mutate(activiteit);
@@ -469,7 +469,7 @@ export default function AdminPanel() {
 						<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
 							   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
 					</div>
-					<button type="submit" className="bg-green-700 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
+					<button type="submit" className="bg-green-700 hover:underline rounded cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
 						Toevoegen
 					</button>
 				</form>
@@ -487,42 +487,42 @@ export default function AdminPanel() {
 				{creatingSlide ?
 					<>
 						<button
-							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-orange-300 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
+							className="text-white inline-flex items-center hover:bg-orange-500 hover:ring-2 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
 							onClick={() => setCreatingSlide(false)}
 						>
 							<Icon icon="mdi:cancel-bold" width="24" height="24" />
-							<span>Annuleren</span>
+							<span >Annuleren</span>
 						</button>
 						<SlideCreator/>
 					</>
 					:
 					<>
 						<button
-							className="inline-flex items-center hover:underline hover:ring-2 rounded border-1 cursor-pointer bg-green-700 px-2 font-medium text-xl mb-3 py-1  hover:outline-[2px]"
+							className="text-white inline-flex items-center hover:underline hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
 							onClick={() => setCreatingSlide(true)}
 						>
 							<Icon icon="mdi:add-bold" width="24" height="24" />
 							<span>Slide toevoegen</span>
 						</button>
 						{slides.length === 0 ?
-							<div className="border-2 border-black h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
+							<div className="h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
 								Er zijn nog geen slides. Maak er een aan met de knop bovenaan!
 							</div>
 							:
 							<ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 								{slides.map((slide) => (
-									<li key={slide.id} className="border-2 p-4 rounded bg-white shadow">
+									<li key={slide.id} className="p-4 rounded bg-white shadow">
 										<p className="text-gray-700 font-mono text-sm mb-2">{slide.id}</p>
 										<div className="mb-2">
 											<img
-												className="w-full h-48 object-cover rounded-lg border-2"
+												className="w-full h-48 object-cover rounded-lg"
 												src={`data:image/jpeg;base64, ${slide.image}`}
 												alt={slide.alt}
 											/>
 										</div>
 										<p className="text-base mb-2">{slide.alt}</p>
 										<button
-											className="bg-red-700 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
+											className="text-white bg-red-500 hover:underline rounded cursor-pointer px-4 font-small text-xl hover:ring-2"
 											onClick={async () => {
 												if (confirm(`Weet je zeker dat je deze slide wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 													SlideDeleteMutator.mutate(slide);
@@ -543,28 +543,28 @@ export default function AdminPanel() {
 	return (
 		<Provider value={{activities, setActivities}}>
 			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending}/>
-			<div className="flex flex-col gap-3 h-full bg-white/90 border-2 border-black p-4 px-4 rounded-3xl">
+			<div className="flex flex-col gap-3 h-full bg-white/90 p-4 px-4 rounded-3xl">
 				<Header>
-					<span className="select-none rounded-t-lg border-x-2 border-t-1 bg-red-800 px-4 mr-1 font-semibold text-3xl">
+					<span className="text-white select-none rounded-t-lg bg-blue-500 px-4 mr-1 font-semibold text-4xl">
 						Beheerderspaneel
 					</span>
 					<button
 						onClick={() => setView("Activiteiten")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1 px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200  hover:outline-[2px] ${currentView == "Activiteiten" ? "underline outline-[2px]" : null}`}>
+						className={`text-white select-none rounded-t-lg px-4 py-0 font-medium text-xl ml-1 hover:bg-green-600 cursor-pointer bg-green-500  ${currentView == "Activiteiten" ? "bg-green-700" : null}`}>
 						<span>
 							Activiteiten
 						</span>
 					</button>
 					<button
 						onClick={() => setView("Slideshow")}
-						className={`select-none rounded-t-lg border-x-1 border-t-1  px-4 py-0 font-medium text-xl hover:underline ml-1 hover:ring-2 cursor-pointer bg-green-200 hover:outline-[2px] ${currentView == "Slideshow" ? "underline outline-[2px] " : null}`}>
+						className={`text-white select-none rounded-t-lg px-4 py-0 font-medium text-xl ml-1 hover:bg-green-600 cursor-pointer bg-green-500 ${currentView == "Slideshow" ? "bg-green-700" : null}`}>
 						<span>
 							Slideshow
 						</span>
 					</button>
 					<a href="/">
 						<button
-							className="inline-flex items-center hover:underline ml-4 hover:ring-2 rounded border-1  cursor-pointer bg-orange-300 px-2 font-medium text-base py-1  hover:outline-[2px]">
+							className="text-white inline-flex items-center hover:underline ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
 							<Icon icon="ion:arrow-back" width="24" height="24"/>
 							<span>Terug naar hoofdpagina</span>
 						</button>
@@ -586,7 +586,7 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 		<>
 			{(() => {if (activities.length == 0) {
 				return (
-					<div className="border-2 border-black h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
+					<div className="h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
 						Er zijn nog geen activiteiten. Maak er een aan met de knop bovenaan!
 					</div>
 				)
@@ -598,7 +598,7 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 class Helper extends Component<PropsWithChildren> {
 	render() {
 		return (
-			<div className="border-2 w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white shadow-xl/20 shadow-black">
+			<div className="w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white">
 				{this.props.children}
 			</div>
 		)
@@ -612,7 +612,7 @@ function ImageUpload(props?: { fieldName?: string }) {
 	return (
 		<div>
 			<label htmlFor={fieldName} className="text-base font-semibold">Plaatje</label>
-			<div className="border-2 w-full min-w-[40%] h-[100%] min-h-[10em]">
+			<div className="w-full min-w-[40%] h-[100%] min-h-[10em]">
 				<div className={`text-black bg-gray-200/80 w-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"} h-full`}>
 					{image && <img src={image} alt="Preview" className="object-fill"/>}
 					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
@@ -634,7 +634,7 @@ function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 	return (
 		<div className="pointer-events-auto cursor-progress select-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex fixed">
 			<div className="absolute inset-0 bg-black/20 backdrop-grayscale"/> {/*De achtergrond.*/}
-			<div className="border-2 border-black bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center z-10">
+			<div className="bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center z-10">
 				<Icon icon="line-md:loading-alt-loop" className="mx-auto" width="128" height="128" style={{color: "blue"}} />
 				<p className="text-black text-center text-3xl font-bold">{props.text || "ACTIE VERWERKEN..."}</p>
 			</div>

@@ -77,20 +77,20 @@ function Reserveren({ price }: { price?: number }) {
         Voor hoeveel mensen wil u reserveren?
       </h1>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-evenly">
         <button
           type="button"
-          className="w-full h-30 flex items-center justify-center bg-red-500 text-white rounded-2xl shadow hover:bg-red-600 transition-colors text-6xl"
+          className="w-full h-40 flex items-center justify-center bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-colors text-6xl"
           onClick={() => setCount(c => Math.max(1, c - 1))}
         >
           -
         </button>
 
-        <div className="ml-5 mr-5 text-center text-6xl font-bold text-gray-800">{count}</div>
+        <div className="mx-15 abolute min-w-10 text-center flex items-center justify-center text-6xl font-bold text-gray-800">{count}</div>
 
         <button
           type="button"
-          className="w-full h-30 flex items-center justify-center bg-green-600 text-white rounded-2xl shadow hover:bg-green-700 transition-colors text-6xl"
+          className="w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl"
           onClick={() => setCount(c => c + 1)}
         >
           +
@@ -98,11 +98,11 @@ function Reserveren({ price }: { price?: number }) {
 
       </div>
       
-      <div className="flex items-center justify-center gap-4">
-        <div className="text-5xl mt-5 text-center font-bold text-gray-800">Totaalprijs € {count * price}</div>
+      <div className="flex items-center justify-center">
+        <div className="text-5xl mt-5 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{count * price}</div>
         <button
           type="button"
-          className="mt-3 w-full h-30 flex items-center justify-center bg-blue-600 text-white rounded-2xl shadow hover:bg-blue-700 transition-colors text-6xl"
+          className="mt-3 w-full h-40 flex items-center justify-center bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-6xl"
           onClick={
             () => {
               context.next()
