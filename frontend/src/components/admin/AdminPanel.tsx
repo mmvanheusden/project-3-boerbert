@@ -346,7 +346,7 @@ export default function AdminPanel() {
 																			<div className="flex-col">
 																				<b>{activiteit.title}</b>
 																			</div>
-																			<table className="table-fixed w-full">
+																			<table className="table-fixed text-left w-full">
 																				<thead className="bg-gray-400">
 																				<tr>
 																					<th>Datum</th>
@@ -360,7 +360,9 @@ export default function AdminPanel() {
 																					>
 																						<td>Toevoegen</td>
 																					</tr>
-																					{slots.map((slot) => {
+																					{slots
+																						.filter((slot) => (slot.activityId == activiteit.id))
+																						.map((slot) => {
 																						console.trace(slot);
 																						return (<>
 																							<tr key={slot.id}>
