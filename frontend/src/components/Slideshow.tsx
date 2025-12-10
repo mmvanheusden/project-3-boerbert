@@ -3,8 +3,6 @@ import Context from "./booking/Context.tsx";
 import { t } from "i18next";
 import i18n from "../i18n/config.ts";
 import { Icon } from "@iconify/react";
-import {Header} from "./KleineDingetjes.tsx";
-import {CancelButton} from "./booking/BookingFlowManager.tsx";
 
 export function Slideshow() {
   const { next,activities, slideshow } = useContext(Context);
@@ -12,7 +10,7 @@ export function Slideshow() {
 
   // --- NIEUW: autoplay states / refs ---
   const [playing, setPlaying] = useState(true); // true = automatisch wisselen
-  const delay = 4000; // tijd per slide in ms (4000 = 4 seconden)
+  const delay = 10000; // tijd per slide in ms (1000 = 10 seconden)
   const timeoutRef = useRef<number | null>(null);
 
   const prevSlide = () => setIndex((i) => (i - 1 + slideshow!.length) % slideshow!.length);
@@ -46,10 +44,10 @@ export function Slideshow() {
         <span className="font-bold text-center text-7xl mb-2 italic bg-green-600 text-white rounded-xl p-4">
           {t("Welkom bij Boer Bert's Camping!")}
         </span>
-        <div className="flex-1">
+        <div className="h-[80%] flex-1">
           <div
               id="gallery"
-              className="relative w-full"
+              className="relative w-full h-[90%] overflow-hidden rounded-2xl"
               data-carousel="slide"
               onMouseEnter={() => setPlaying(false)}
               onMouseLeave={() => setPlaying(true)}
@@ -58,7 +56,7 @@ export function Slideshow() {
               {/* Slides: alleen actieve slide zichtbaar */}
               {slideshow!.length == 0
                   ?
-                  <div className="flex flex-row justify-center items-center select-none bottom-0  text-center text-xl font-semibold border-2 border-black">
+                  <div className="flex flex-row justify-center items-center select-none bottom-0  text-center text-xl font-semibold">
                     <Icon icon="mdi:alert" width="48" height="48" color="red"/> De slideshow is leeg.
                   </div>
                   : <>{slideshow!.map((slide, i) => (
@@ -124,32 +122,32 @@ export function Slideshow() {
           </span>
           </button>
         </div>
-        <div className="h-[20%] flex items-center justify-between px-6 gap-3">
+        <div className="flex items-center justify-between px-1 gap-3 h-full">
           <div className="flex items-center gap-3">
             <button
-                className="text-5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="h-full text-5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("nl")}
             >
-              <Icon icon="flag:nl-4x3" width="60" height="h-full" />
+              <Icon icon="flag:nl-4x3" width="250" height="h-full" />
             </button>
 
             <button
-                className="text-5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="h-full text-5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("de")}
             >
-              <Icon icon="flag:de-4x3" width="60" height="h-full" />
+              <Icon icon="flag:de-4x3" width="250" height="h-full" />
             </button>
 
             <button
-                className="text 5xl hover:underline hover:cursor-pointer rounded py-3 px-5 border-black hover:bg-green-600 focus:outline-none"
+                className="h-full text 5xl hover:underline hover:cursor-pointer rounded py-1 px-1 border-black hover:bg-green-600 focus:outline-none"
                 onClick={() => i18n.changeLanguage("en")}
             >
-              <Icon icon="flagpack:gb-ukm" width="60" height="h-full" />
+              <Icon icon="flagpack:gb-ukm" width="250" height="h-full" />
             </button>
           </div>
 
           <button
-              className={`text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+              className={`h-full text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
               onClick={next}
           >
             {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24" />Momenteel geen activiteiten beschikbaar!</> : t("book")}
