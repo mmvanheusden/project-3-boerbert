@@ -160,3 +160,7 @@ fabric.properties
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+# Bun
+**/*.bun
+backend/package-lock.json
