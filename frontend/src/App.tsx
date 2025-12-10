@@ -6,6 +6,7 @@ import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
 import Router, {Route, Switch} from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
 import {Component, type PropsWithChildren} from "react";
+import { Login } from './components/admin/Login.tsx';
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")
@@ -20,6 +21,7 @@ export function App() {
 					<Switch redirect="/">
 						<Route path="/" component={BookingFlow} />
 						<Route path="/admin" component={AdminPanel} />
+						<Route path="/inloggen" component={Login} />
 					</Switch>
 				</main>
 			</QueryClientProvider>
