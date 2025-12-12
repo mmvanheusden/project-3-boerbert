@@ -401,6 +401,8 @@ export default function AdminPanel() {
 																className="flex bg-orange-400 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
 																onClick={() => {
 																	setActivityScheduling(null);
+																	setSlotPlanning(false);
+																	useState(false);
 																}}>
 																{slotPlanning ? "Annuleren" : "Sluiten"}
 															</button>
@@ -520,7 +522,8 @@ export default function AdminPanel() {
 														<button
 															className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={() => {
-																setActivityEditing(null);
+																setSlotPlanning(false);
+																useState(false);
 															}}>
 															Annuleren
 														</button>
