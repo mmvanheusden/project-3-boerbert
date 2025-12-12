@@ -319,6 +319,9 @@ export default function AdminPanel() {
 																					// @ts-ignore
 																					activityId: activiteit.id,
 																				};
+																				if (parsedFormData.date < String(2025) ) {
+																					return alert("Kan niet. We level in 2025")
+																				}
 
 																				SlotInsertMutator.mutate(parsedFormData);
 																			}}>
