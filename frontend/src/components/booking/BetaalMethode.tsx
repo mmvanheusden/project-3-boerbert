@@ -12,8 +12,8 @@ export function BetaalMethode() {
         <div className="flex flex-col gap-3 h-full">
             <Header>
             <span
-                className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl -translate-y-4">
-              Stap 3: Selecteer betaalmethode
+                className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
+              Selecteer betaalmethode
             </span>
             </Header>
             <div className="flex-1 overflow-auto">

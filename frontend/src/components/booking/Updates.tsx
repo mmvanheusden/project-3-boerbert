@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
 
-export function PaymentStatus() {
+export function Updates() {
     const context = useContext(Context);
 
     return (
@@ -20,9 +20,19 @@ export function PaymentStatus() {
             <div className="flex-1 overflow-auto">
                 <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                         <h1 className="text-5xl font-bold mb-10 mt-5">
-                            Betaling is gelukt
+                            Wilt u updates ontvangen?
                         </h1>
-                        <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="300" height="300"/>
+
+                        <h1 className="text-2xl  mt-2">
+                            Voer hier uw mail in om updates te ontvangen over de activiteiten
+                        </h1>
+                        <Icon className="mt-5  cursor-pointer" icon="lucide:calendar-clock" width="300" height="300"/>
+
+                        <form>
+                            <label>
+                                Mail: <input type="text" className="outline mt-10"/>
+                            </label>
+                        </form>
                 </div>
 
                 
