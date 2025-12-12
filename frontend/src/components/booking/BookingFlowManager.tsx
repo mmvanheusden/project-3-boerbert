@@ -10,6 +10,7 @@ import { BetaalMethode } from "./BetaalMethode.tsx";
 import {Payment} from "./Payment.tsx";
 import { t } from "i18next";
 import {useTranslation} from "react-i18next";
+import { PaymentStatus } from "./Paymentstatus.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -28,6 +29,8 @@ const renderStep = (step: number) => {
 						return <BetaalMethode/>
 					case 4:
 						return <Payment/>
+					case 5:
+						return <PaymentStatus/>
 					default:
 						return null;
 				}
@@ -37,7 +40,7 @@ const renderStep = (step: number) => {
 };
 
 const BookingFlow = () => {
-	const STEPS = 5; // Hoeveel stappen we hebben
+	const STEPS = 6; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.

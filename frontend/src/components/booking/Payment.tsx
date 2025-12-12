@@ -5,6 +5,7 @@ import {Header} from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
+
 export function Payment() {
     const context = useContext(Context);
 
@@ -55,7 +56,13 @@ export function Payment() {
                 </div>
             </div>
             <div className="flex">
-                <CancelButton/>
+                <CancelButton/> 
+
+                <button
+                              className={`text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                              onClick={context.next}
+                          >
+                          </button>
             </div>
         </div>
     );
