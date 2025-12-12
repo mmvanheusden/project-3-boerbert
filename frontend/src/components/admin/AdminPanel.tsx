@@ -342,7 +342,7 @@ export default function AdminPanel() {
 																					<input required id="slotDuration"
 																						   type="number"></input>
 																				</div>
-																				<button className="mt-8 border bg-gray-400 hover:underline" type="submit">Verstuur slot</button>
+																				<button className="rounded mt-8 border bg-green-400 hover:underline" type="submit">Verstuur slot</button>
 																			</form>
 																		</>
 																		: <>
