@@ -320,7 +320,7 @@ export default function AdminPanel() {
 																					activityId: activiteit.id,
 																				};
 																				if (parsedFormData.date < String(2025) ) {
-																					return alert("Kan niet. We level in 2025!")
+																					return alert("Kan niet. We leven in 2025!")
 																				}
 
 																				SlotInsertMutator.mutate(parsedFormData);
