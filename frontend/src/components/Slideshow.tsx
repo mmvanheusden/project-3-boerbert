@@ -42,7 +42,7 @@ export function Slideshow() {
     <>
       <div className="flex flex-col h-full">
         <span className="font-bold text-center text-7xl mb-2 italic bg-green-600 text-white rounded-xl p-4">
-          {t("Welkom bij Boer Bert's Camping!")}
+          {t("welcome_message")}
         </span>
         <div className="h-[80%] flex-1">
           <div

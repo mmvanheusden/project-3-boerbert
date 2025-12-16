@@ -74,7 +74,7 @@ function Reserveren({ price }: { price?: number }) {
     return (
       <div className="p-4 w-full">
       <h1 className="text-center text-5xl font-semibold mb-3">
-        Voor hoeveel mensen wil u reserveren?
+        {t("how_many_people")}
       </h1>
 
       <div className="flex items-center justify-center gap-4">
@@ -99,7 +99,7 @@ function Reserveren({ price }: { price?: number }) {
       </div>
       
       <div className="flex items-center justify-center gap-4">
-        <div className="text-5xl mt-5 text-center font-bold text-gray-800">Totaalprijs € {count * price}</div>
+        <div className="text-5xl mt-5 text-center font-bold text-gray-800">{t("total_price")} € {count * price}</div>
         <button
           type="button"
           className="mt-3 w-full h-30 flex items-center justify-center bg-blue-600 text-white rounded-2xl shadow hover:bg-blue-700 transition-colors text-6xl"
@@ -109,7 +109,7 @@ function Reserveren({ price }: { price?: number }) {
             }
           }
         >
-          Reserveer nu!
+          {t("reserve_now")}
         </button>
         
       </div>
