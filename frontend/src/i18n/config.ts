@@ -65,8 +65,7 @@ i18n
           totaal_price: "Totaalprijs",
           reserve_now: "reserveer nu",
           how_many_people: "Voor hoeveel personen wilt u reserveren?",
-          welcome_message: "Welkom bij Boer Bert's camping!",
-          step3_title: "Stap 3: Selecteer betaalmethode"
+          welcome_message: "Welkom bij Boer Bert's camping!"
         },
       },
       // German
@@ -91,8 +90,7 @@ i18n
           total_price: "Gesamtpreis",
           reserve_now: "jetzt reservieren",
           how_many_people: "Für wie viele Personen möchten Sie reservieren?",
-          welcome_message: "Willkommen auf dem Campingplatz von Bauer Bert!",
-          step3_title: "Schritt 3: Zahlungsmethode auswählen"
+          welcome_message: "Willkommen auf dem Campingplatz von Bauer Bert!"
         },
       },
       //english
@@ -117,8 +115,7 @@ i18n
             total_price: "Total price",
             reserve_now: "Reserve now",
             how_many_people: "For how many people would you like to reserve?",
-            welcome_message: "Welcome to Boer Bert's camping!",
-            step3_title: "Step 3: Select payment method"
+            welcome_message: "Welcome to Boer Bert's camping!"
         }
       }
     },
