@@ -105,7 +105,7 @@ function Reserveren({ price }: { price?: number }) {
           className="mt-3 w-full h-40 flex items-center justify-center bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-6xl"
           onClick={
             () => {
-                context.selectAmount(count * price);
+                context.selectPrice(count * price);
                 context.next()
             }
           }

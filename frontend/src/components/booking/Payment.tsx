@@ -32,7 +32,7 @@ export function Payment() {
                             Scan De QR Code AUB
                         </h1>
                                     <div className="ml-32">
-                                    <Girocode recipient="Camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedAmount}/>
+                                    <Girocode recipient="Camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedPrice}/>
                                     </div>
 
 
@@ -55,7 +55,7 @@ export function Payment() {
                             case "PIN":
                                 return <div>
                                     <h1 className="ml-16 mt-4 font-bold text-3xl">
-                                       TOT {context.selectedAmount}.00 EUR
+                                       TOT {context.selectedPrice}.00 EUR
                                     </h1>
                                     <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="200"/>
                                     </div>

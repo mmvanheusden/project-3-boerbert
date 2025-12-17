@@ -53,7 +53,7 @@ const BookingFlow = () => {
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
-	const [selectedAmount, selectAmount] = useState(1); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
+	const [selectedPrice, selectPrice] = useState(1); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 
 	// Haal de activiteiten en slideshow alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
 	const activitiesQuery = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
@@ -88,7 +88,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedAmount, selectAmount }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice }}>
 			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>
