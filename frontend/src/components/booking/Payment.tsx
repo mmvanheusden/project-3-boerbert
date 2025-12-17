@@ -2,6 +2,7 @@ import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
+import { Girocode } from "react-girocode";
 import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
@@ -30,8 +31,10 @@ export function Payment() {
                         <h1 className="text-5xl font-bold mb-10 mt-5">
                             Scan je betaalpas
                         </h1>
-                        
-                    </div>
+                                    <Girocode recipient="Boer camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedAmount}/>
+
+
+                                </div>
                             case "CONTANT" :
                                 return <div className="text-center">
                         <h1 className="text-5xl font-bold mb-10 mt-5">

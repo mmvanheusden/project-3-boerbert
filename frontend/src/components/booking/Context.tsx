@@ -19,6 +19,8 @@ type ContextPayload = {
 	selectActivity: (activity: Treaty.Data<typeof BACKEND.activities.get>[0]) => void;
 	selectedPaymentMethod?: "PIN" | "CONTANT" | null;
 	selectPaymentMethod: (paymentMethod: "PIN" | "CONTANT" | null) => void;
+	selectedAmount?: number;
+	selectAmount: (amount: number) => void;
 	slideshow?: Treaty.Data<typeof BACKEND.slideshow.get>;
 };
 
@@ -34,6 +36,8 @@ export const Context = createContext<ContextPayload>({
 	selectedPaymentMethod: undefined!,
 	selectPaymentMethod: () => {},
 	selectActivity: () => {},
+	selectAmount: () => {},
+	selectedAmount: undefined!,
 });
 
 
