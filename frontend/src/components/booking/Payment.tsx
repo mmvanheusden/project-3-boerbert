@@ -29,9 +29,11 @@ export function Payment() {
                             case "PIN" :
                                 return <div className="text-center">
                         <h1 className="text-5xl font-bold mb-10 mt-5">
-                            Scan je betaalpas
+                            Scan De QR Code AUB
                         </h1>
-                                    <Girocode recipient="Boer camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedAmount}/>
+                                    <div className="ml-32">
+                                    <Girocode recipient="Camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedAmount}/>
+                                    </div>
 
 
                                 </div>
@@ -51,7 +53,12 @@ export function Payment() {
                     {(() => {
                         switch (context.selectedPaymentMethod) {
                             case "PIN":
-                                return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/>
+                                return <div>
+                                    <h1 className="ml-16 mt-4 font-bold text-3xl">
+                                       TOT {context.selectedAmount}.00 EUR
+                                    </h1>
+                                    <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="200"/>
+                                    </div>
                             case "CONTANT":
                                 return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300"/>
                         }
