@@ -2,6 +2,7 @@ import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
+import { Girocode } from "react-girocode";
 import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
@@ -27,11 +28,15 @@ export function Payment() {
                         switch (context.selectedPaymentMethod) {
                             case "PIN" :
                                 return <div className="text-center">
-                        <h1 className="text-5xl font-bold mb-10 mt-5">
-                            Scan je betaalpas
+                        <h1 className="text-5xl font-bold mb-10">
+                            Scan De QR Code AUB
                         </h1>
-                        
-                    </div>
+                                    <div className="inline-flex">
+                                    <Girocode recipient="Camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedPrice}/>
+                                    </div>
+
+
+                                </div>
                             case "CONTANT" :
                                 return <div className="text-center">
                         <h1 className="text-5xl font-bold mb-10 mt-5">
@@ -48,7 +53,12 @@ export function Payment() {
                     {(() => {
                         switch (context.selectedPaymentMethod) {
                             case "PIN":
-                                return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="300"/>
+                                return <>
+                                    <h1 className="font-bold text-3xl">
+                                       TOT {context.selectedPrice}.00 EUR
+                                    </h1>
+                                    <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="iconoir:hand-card" width="300" height="200"/>
+                                    </>
                             case "CONTANT":
                                 return <Icon className="mt-10 border-7 rounded-full border-black cursor-pointer" icon="streamline-cyber:cash-hand-4" width="300" height="300"/>
                         }

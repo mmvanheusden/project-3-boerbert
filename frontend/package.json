@@ -14,9 +14,10 @@
     "@tanstack/react-query": "^5.90.12",
     "crossroad": "^2.0.0",
     "i18next": "^25.7.1",
-    "react-i18next": "^16.3.5",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
+    "react-girocode": "^2.0.1",
+    "react-i18next": "^16.3.5",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
