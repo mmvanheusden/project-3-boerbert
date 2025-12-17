@@ -4,6 +4,7 @@ import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
+import { t } from "i18next";
 
 export function BetaalMethode() {
     const context = useContext(Context);
@@ -13,14 +14,14 @@ export function BetaalMethode() {
             <Header>
             <span
                 className="select-none rounded-t-lg border-2 border-black bg-green-600 px-4 mb-1 font-semibold text-3xl -translate-y-4">
-              Stap 3: Selecteer betaalmethode
+              {t("stap_3")}
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
                     <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                             <div>
                                 <h1 className="text-5xl font-bold mb-30">
-                                    Selecteer betaalmethode
+                                    {t("select_payment_method")}
                                 </h1>
                             </div>
                             <div className="inline-flex">

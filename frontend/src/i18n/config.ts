@@ -5,6 +5,7 @@ import i18n from "i18next";
 // Bindings for React: allow components to
 // re-render when language changes.
 import { initReactI18next, Translation } from "react-i18next";
+import { select } from "react-i18next/icu.macro";
 
 i18n
   // Add React bindings as a plugin.
@@ -65,7 +66,13 @@ i18n
           totaal_price: "Totaalprijs",
           reserve_now: "reserveer nu",
           how_many_people: "Voor hoeveel personen wilt u reserveren?",
-          welcome_message: "Welkom bij Boer Bert's camping!"
+          welcome_message: "Welkom bij Boer Bert's camping!",
+          stap_3: "Selecteer betaalmethode",
+          select_payment_method: "Selecteer betaalmethode",
+          scan_payment_card: "Scan uw betaalkaart",
+          proceed_to_counter: "Ga verder bij de balie",
+          receipt_at_counter: "U krijgt daar uw bon",
+          selected_payment_method: "Gekozen betaalmethode: {{selectedPaymentMethod}}"
         },
       },
       // German
@@ -90,7 +97,13 @@ i18n
           total_price: "Gesamtpreis",
           reserve_now: "jetzt reservieren",
           how_many_people: "Für wie viele Personen möchten Sie reservieren?",
-          welcome_message: "Willkommen auf dem Campingplatz von Bauer Bert!"
+          welcome_message: "Willkommen auf dem Campingplatz von Bauer Bert!",
+          stap_3: "Zahlungsmethode auswählen",
+          select_payment_method: "Zahlungsmethode auswählen",
+          scan_payment_card: "Scannen Sie Ihre Zahlungskarte",
+          proceed_to_counter: "Gehen Sie zur Kasse",
+          receipt_at_counter: "Sie erhalten dort Ihre Quittung",
+          selected_payment_method: "Ausgewählte Zahlungsmethode: {{selectedPaymentMethod}}"
         },
       },
       //english
@@ -115,7 +128,13 @@ i18n
             total_price: "Total price",
             reserve_now: "Reserve now",
             how_many_people: "For how many people would you like to reserve?",
-            welcome_message: "Welcome to Boer Bert's camping!"
+            welcome_message: "Welcome to Boer Bert's camping!",
+            stap_3: "Select payment method",
+            select_payment_method: "Select payment method",
+            scan_payment_card: "Scan your payment card",
+            proceed_to_counter: "Proceed to the counter",
+            receipt_at_counter: "You will receive your receipt there",
+            selected_payment_method: "Selected payment method: {{selectedPaymentMethod}}"
         }
       }
     },
