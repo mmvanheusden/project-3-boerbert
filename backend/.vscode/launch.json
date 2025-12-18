@@ -3,13 +3,11 @@
     "configurations": [
         {
             "name": "Test Backend",
-            "type": "node",
+            "type": "bun",
             "request": "launch",
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run-script", "dev"
-            ]
+            "cwd": "${workspaceFolder}",
+            "program": "src/index.ts",
+            "watchMode": true
         }
     ]
 }
