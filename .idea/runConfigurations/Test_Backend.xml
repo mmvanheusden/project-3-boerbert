@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Test Backend" type="BunRunConfiguration" nameIsGenerated="true">
-    <option name="program" value="src/index.ts" />
-    <option name="runtimeParameters" value="--watch" />
-    <option name="workingDirectory" value="$PROJECT_DIR$/backend" />
-    <method v="2" />
-  </configuration>
-</component>
