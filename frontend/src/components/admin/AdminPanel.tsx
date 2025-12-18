@@ -401,7 +401,6 @@ export default function AdminPanel() {
 																onClick={() => {
 																	setActivityScheduling(null);
 																	setSlotPlanning(false);
-																	useState(false);
 																}}>
 																{slotPlanning ? "Annuleren" : "Sluiten"}
 															</button>
