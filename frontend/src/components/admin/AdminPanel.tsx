@@ -8,6 +8,7 @@ import {Icon} from "@iconify/react";
 import type * as React from "react";
 import "dayjs/locale/nl"
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 
 export default function AdminPanel() {
@@ -319,8 +320,10 @@ export default function AdminPanel() {
 																					// @ts-ignore
 																					activityId: activiteit.id,
 																				};
-																				if (parsedFormData.date < String(2025) ) {
-																					return alert("Kan niet. We leven in 2025!")
+																				dayjs.extend(customParseFormat);
+
+																				if (dayjs(`${parsedFormData.date} ${parsedFormData.startTime}`, 'YYYY-MM-DD HH:mm', true).isBefore(dayjs())) {
+																					return alert("Kan niet. Wij leven niet in het verleden!")
 																				}
 
 																				SlotInsertMutator.mutate(parsedFormData);
