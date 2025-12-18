@@ -1,11 +1,11 @@
 import {Header} from "../KleineDingetjes";
 import {BACKEND, queryClient} from "../../App.tsx";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {Provider, Context} from "./Context.tsx";
+import {Context, Provider} from "./Context.tsx";
+import type * as React from "react";
 import {Component, type PropsWithChildren, useContext, useEffect, useState} from "react";
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
-import type * as React from "react";
 import "dayjs/locale/nl"
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
