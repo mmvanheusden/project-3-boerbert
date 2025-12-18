@@ -366,7 +366,6 @@ export default function AdminPanel() {
 																					{slots
 																						.filter((slot) => (slot.activityId == activiteit.id))
 																						.map((slot) => {
-																						console.trace(slot);
 																						return (<>
 																							<tr key={slot.id}>
 																								<td className="flex flex-row items-center mb-2">
@@ -522,8 +521,7 @@ export default function AdminPanel() {
 														<button
 															className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
 															onClick={() => {
-																setSlotPlanning(false);
-																useState(false);
+																setActivityEditing(null);
 															}}>
 															Annuleren
 														</button>
