@@ -32,7 +32,7 @@ export function Payment() {
                             Scan De QR Code AUB
                         </h1>
                                     <div className="inline-flex">
-                                    <Girocode recipient="Camping Boer Bert" iban="DE23 3702 0500 0008 0901 00" amount={context.selectedPrice}/>
+                                    <Girocode recipient="Camping Boer Bert" iban="NL50 INGB 0756 5719 60" amount={context.selectedPrice}/>
                                     </div>
 
 
