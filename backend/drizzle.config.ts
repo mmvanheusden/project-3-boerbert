@@ -6,6 +6,8 @@ export default defineConfig({
   schema: [
       './src/activities/model.ts',
       './src/slideshow/model.ts',
+      './src/slots/model.ts',
+      './src/bookings/model.ts',
   ],
   dialect: 'turso',
   dbCredentials: {
