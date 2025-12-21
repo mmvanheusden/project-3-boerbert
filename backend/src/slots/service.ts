@@ -39,7 +39,7 @@ export async function insertSlot(slot: Static<typeof InsertActivitySlotRequest>)
             if (e.cause?.message.includes('FOREIGN KEY constraint failed')) return status(404, "Activiteit bestaat niet.")
 
             console.log(e.cause?.message)
-            return status(500, "Er is iets misgegaan!: ")
+            return status(500, "Er is iets misgegaan!")
         }
     }
 }

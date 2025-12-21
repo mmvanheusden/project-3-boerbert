@@ -4,7 +4,7 @@ import {t} from "elysia";
 
 export const slotsTable = sqliteTable("slots", {
     id: int().primaryKey({autoIncrement: true}),
-    activityId: int().references((): AnySQLiteColumn => activitiesTable.id),
+    activityId: int().references((): AnySQLiteColumn => activitiesTable.id).notNull(),
     date: text().notNull(),
     duration: int().notNull(),
     startTime: text().notNull(),
