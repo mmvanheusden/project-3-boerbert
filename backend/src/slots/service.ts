@@ -13,25 +13,20 @@ export async function insertSlot(slot: Static<typeof InsertActivitySlotRequest>)
     dayjs.extend(customParseFormat)
     dayjs.extend(relativeTime)
 
-    // Probeer de ontvangen datum en begintijd te parsen naar een dayjs object. Als dit niet lukt, weten we dat de client ongeldige data heeft gestuurd en keur dit request dan af.
-    if (!dayjs(slot.date, 'YYYY-MM-DD', true).isValid()) {
+    // Probeer de ontvangen datum met begintijd te parsen naar een dayjs object. Als dit niet lukt, weten we dat de client ongeldige data heeft gestuurd en keur dit request dan af.
+    if (!dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).isValid()) {
         return status(400, "Datum ongeldig.")
     }
 
-    if (!dayjs(slot.startTime, 'HH:mm', true).isValid()) {
-        return status(400, "Starttijd ongeldig.")
-    }
-
     // Check of de startdatum in de toekomst ligt
-    if (!dayjs(`${slot.date} ${slot.startTime}`, 'YYYY-MM-DD HH:mm', true).isAfter(dayjs())) {
-        return status(409, "De datum en tijd van het tijdslot liggen niet in de toekomst.")
+    if (!dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).isAfter(dayjs())) {
+        return status(409, "De datum en begintijd van het tijdslot liggen niet in de toekomst.")
     }
 
     try {
         await db.insert(slotsTable).values({
             activityId: slot.activityId,
-            date: slot.date,
-            startTime: slot.startTime,
+            date: dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).toDate().toString(),
             duration: slot.duration,
         })
     } catch (e) {

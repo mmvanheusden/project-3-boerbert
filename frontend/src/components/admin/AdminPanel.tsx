@@ -312,8 +312,6 @@ export default function AdminPanel() {
 
 																				const parsedFormData = {
 																					// @ts-ignore
-																					startTime: String(form.elements["slotTime"]?.value || ""),
-																					// @ts-ignore
 																					duration: String(form.elements["slotDuration"]?.value || ""),
 																					// @ts-ignore
 																					date: String(form.elements["slotDate"]?.value || ""),
@@ -322,26 +320,21 @@ export default function AdminPanel() {
 																				};
 																				dayjs.extend(customParseFormat);
 
-																				if (dayjs(`${parsedFormData.date} ${parsedFormData.startTime}`, 'YYYY-MM-DD HH:mm', true).isBefore(dayjs())) {
+																				if (dayjs(`${parsedFormData.date}`, 'YYYY-MM-DDTHH:mm', true).isBefore(dayjs())) {
 																					return alert("Kan niet. Wij leven niet in het verleden!")
 																				}
 
 																				SlotInsertMutator.mutate(parsedFormData);
 																			}}>
-
-																				<div>
-																					<label htmlFor="slotTime">Start</label>
-																					<input required id="slotTime" type="time"></input>
-																				</div>
 																				<div>
 																					<label
-																						htmlFor="slotDate">Datum</label>
+																						htmlFor="slotDate">Datum + begintijd</label>
 																					<input required id="slotDate"
-																						   type="date"></input>
+																						   type="datetime-local"></input>
 																				</div>
 																				<div>
 																					<label
-																						htmlFor="slotDuration">Lengte</label>
+																						htmlFor="slotDuration">Lengte in uren (hoelang de activiteit duurt)</label>
 																					<input required id="slotDuration"
 																						   type="number"></input>
 																				</div>
@@ -383,9 +376,8 @@ export default function AdminPanel() {
 																									>
 																										<Icon icon="line-md:trash" width="32" height="32" color="black"/>
 																									</button>
-																									{dayjs(slot.date).locale("nl").format("D[ ]MMMM")}
+																									{dayjs(slot.date).locale("nl").format("D[ ]MMMM[, om ]HH:mm")}
 																								</td>
-																								<td>{slot.startTime}</td>
 																								<td>{slot.duration} u</td>
 																							</tr>
 																						</>)
