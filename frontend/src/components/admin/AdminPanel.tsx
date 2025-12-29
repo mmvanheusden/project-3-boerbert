@@ -348,23 +348,17 @@ export default function AdminPanel() {
 																			<table className="table-fixed text-left w-full">
 																				<thead className="bg-gray-400">
 																				<tr>
-																					<th>Datum</th>
-																					<th>Starttijd</th>
+																					<th>Datum en begintijd</th>
 																					<th>Duur</th>
 																				</tr>
 																				</thead>
 																				<tbody className="overflow-y-auto">
-																					<tr className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
-																						onClick={() => setSlotPlanning(true)}
-																					>
-																						<td>Toevoegen</td>
-																					</tr>
 																					{slots
 																						.filter((slot) => (slot.activityId == activiteit.id))
 																						.map((slot) => {
 																						return (<>
 																							<tr key={slot.id}>
-																								<td className="flex flex-row items-center mb-2">
+																								<td className="flex flex-row items-center mb-1">
 																									<button
 																										className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
 																										onClick={(e) => {
@@ -376,12 +370,17 @@ export default function AdminPanel() {
 																									>
 																										<Icon icon="line-md:trash" width="32" height="32" color="black"/>
 																									</button>
-																									{dayjs(slot.date).locale("nl").format("D[ ]MMMM[, om ]HH:mm")}
+																									{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm")}
 																								</td>
 																								<td>{slot.duration} u</td>
 																							</tr>
 																						</>)
 																					})}
+																					<tr className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
+																						onClick={() => setSlotPlanning(true)}
+																					>
+																						<td className="text-blue-700">Toevoegen</td>
+																					</tr>
 																				</tbody>
 																			</table>
 																		</>
