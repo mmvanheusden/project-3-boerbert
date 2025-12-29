@@ -1,4 +1,3 @@
-import { min } from "drizzle-orm";
 import {blob, int, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {t} from "elysia";
 
@@ -61,6 +60,7 @@ export const GetActivitiesResponseBody = t.Array(t.Object({
 		id: t.Numeric(),
 		date: t.Date(),
 		duration: t.Numeric(),
+		bookings: t.Numeric(),
 	})),
 }))
 
