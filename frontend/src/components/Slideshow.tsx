@@ -52,20 +52,25 @@ export function Slideshow() {
           >
             <div className="relative overflow-hidden h-[calc(100vh-20rem)]">
               {/* Slides: alleen actieve slide zichtbaar */}
-              {slideshow!.length == 0 ? <div
-                  className="flex flex-row justify-center items-center select-none bottom-0  text-center text-xl font-semibold">
-                <Icon icon="mdi:alert" width="48" height="48" color="red"/> De slideshow is leeg.
-              </div> : <>{slideshow!.map((slide, i) => (<div
-                  key={i}
-                  className={`duration-700 ease-in-out ${i === index ? "block" : "hidden"}`}
-                  aria-hidden={i === index ? "false" : "true"}
-              >
-                <img
-                    src={`data:image/png;base64, ${slide.image}`}
-                    alt={slide.alt}
-                    className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-                />
-              </div>))}</>}
+              {slideshow!.length == 0 ?
+                  <div
+                      className="flex flex-row justify-center items-center select-none bottom-0 text-center text-xl font-semibold italic">
+                    <Icon icon="mdi:alert" width="32" height="32"/> De slideshow is leeg.
+                  </div> :
+                  <>
+                    {
+                      slideshow!.map((slide, i) => (
+                          <div key={i}
+                               className={`duration-700 ease-in-out ${i === index ? "block" : "hidden"}`}
+                               aria-hidden={i === index ? "false" : "true"}
+                          >
+                            <img
+                                src={`data:image/png;base64, ${slide.image}`}
+                                alt={slide.alt}
+                                className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+                            />
+                          </div>))
+                    }</>}
             </div>
             {/* Slider controls met handlers */}
             <button
@@ -145,10 +150,10 @@ export function Slideshow() {
             {/*Deze div wordt aan het einde verspreid (er staat 1 knopje in)*/}
             <div>
               <button
-                  className={`h-full text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                  className={`h-full inline-flex text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
-                {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert" width="24" height="24"/>Momenteel
+                {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>Momenteel
                   geen activiteiten beschikbaar!</> : t("book")}
               </button>
             </div>
