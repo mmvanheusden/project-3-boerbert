@@ -1,4 +1,3 @@
-import { min } from "drizzle-orm";
 import {blob, int, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {t} from "elysia";
 
@@ -45,6 +44,25 @@ export const UpdateActivityRequestBody = t.Object({
 	minage: t.Numeric(),
 	location: t.String(),
 })
+
+export const GetActivitiesResponseBody = t.Array(t.Object({
+	id: t.Numeric(),
+	title: t.String(),
+	subtitle: t.String(),
+	description: t.String(),
+	price: t.Numeric(),
+	hero: t.String(), // Plaatje als base64, zodat 'ie makkelijk verstuurbaar is.
+	capacity: t.Numeric(),
+	threshold: t.Numeric(),
+	minage: t.Numeric(),
+	location: t.String(),
+	slots: t.Array(t.Object({
+		id: t.Numeric(),
+		date: t.Date(),
+		duration: t.Numeric(),
+		bookings: t.Numeric(),
+	})),
+}))
 
 
 // Source:  https://www.perplexity.ai/search/typescript-copy-object-type-bu-SVjn90luRVWbGLf8rRYdkg#2
