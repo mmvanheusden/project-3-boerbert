@@ -1,8 +1,9 @@
-import {Elysia} from "elysia";
+import {Elysia, Static} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {activitiesTable, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
-import {eq, InferSelectModel} from "drizzle-orm";
+import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, UpdateActivityRequestBody} from "./model";
+import {eq} from "drizzle-orm";
 import db from "../config/db";
+import {getAllSlots} from "../slots/service";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -10,11 +11,17 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         async () => {
             // Before sending, we're base64 encoding the hero field so the requests are smaller.
             const activites = await getActivities();
-            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'hero', string>[] = [];
+            const modifiedActivities: Static<typeof GetActivitiesResponseBody> = [];
+            const slots = await getAllSlots();
             activites.forEach((activity) => {
                 modifiedActivities.push({
                     ...activity,
-                    hero: Buffer.from(activity.hero).toString('base64')
+                    hero: Buffer.from(activity.hero).toString('base64'),
+                    slots: slots.filter((slot) => slot.activityId == activity.id).map((slot) => ({
+                        id: slot.id,
+                        date: new Date(slot.date), // Zet de datum met begintijd om van een string naar een Date object. Dit zou nooit fout moeten gaan. (Anders valideren we inkomende data niet goed)
+                        duration: slot.duration,
+                    }))
                 });
             })
 
