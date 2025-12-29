@@ -4,6 +4,7 @@ import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, U
 import {eq} from "drizzle-orm";
 import db from "../config/db";
 import {getAllSlots} from "../slots/service";
+import {getActivityBookings} from "../bookings/service";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -13,17 +14,29 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             const activites = await getActivities();
             const modifiedActivities: Static<typeof GetActivitiesResponseBody> = [];
             const slots = await getAllSlots();
-            activites.forEach((activity) => {
+
+            for (const activity of activites) {
+                const activitySlots = await Promise.all(
+                    slots.filter((slot) => slot.activityId == activity.id).map(async (slot) => {
+                        const bookings = (
+                            await getActivityBookings(activity.id.toString()))
+                                  .filter((booking) => booking.slotId == slot.id); // Haal alle boekingen op voor deze activiteit, filter ze daarna op specifiek dit slot.
+
+                        return {
+                            id: slot.id,
+                            date: new Date(slot.date), // Zet de datum met begintijd om van een string naar een Date object. Dit zou nooit fout moeten gaan. (Anders valideren we inkomende data niet goed)
+                            duration: slot.duration,
+                            bookings: bookings.length, // Tel hoeveel boekingen er staan voor dit slot.
+                        };
+                    }),
+                );
+
                 modifiedActivities.push({
                     ...activity,
                     hero: Buffer.from(activity.hero).toString('base64'),
-                    slots: slots.filter((slot) => slot.activityId == activity.id).map((slot) => ({
-                        id: slot.id,
-                        date: new Date(slot.date), // Zet de datum met begintijd om van een string naar een Date object. Dit zou nooit fout moeten gaan. (Anders valideren we inkomende data niet goed)
-                        duration: slot.duration,
-                    }))
+                    slots: activitySlots,
                 });
-            })
+            }
 
             return modifiedActivities
         }
