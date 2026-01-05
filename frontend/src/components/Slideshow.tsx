@@ -131,19 +131,19 @@ export function Slideshow() {
                   className="text-5xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("nl")}
               >
-                <Icon icon="circle-flags:lang-nl" className=""/>
+                <Icon icon="circle-flags:lang-nl" />
               </button>
               <button
                   className="text-5xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("de")}
               >
-                <Icon icon="circle-flags:lang-de" className=""/>
+                <Icon icon="circle-flags:lang-de" />
               </button>
               <button
                   className="text-5xl hover:underline hover:cursor-pointer rounded-full p-px ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("en")}
               >
-                <Icon icon="circle-flags:lang-en" className=""/>
+                <Icon icon="circle-flags:lang-en" />
               </button>
             </div>
 
