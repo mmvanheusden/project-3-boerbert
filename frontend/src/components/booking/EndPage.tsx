@@ -3,6 +3,7 @@ import {useContext} from "react";
 import Context from "./Context.tsx";
 import {BookingDetails, Header} from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
+import {BACKEND} from "../../App.tsx";
 
 
 
@@ -23,6 +24,17 @@ export function Endpage() {
                         <h1 className="text-5xl font-bold">
                             Uw boeking is successvol!
                         </h1>
+                        <button
+                            className="text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
+                            onClick={async () => {
+                                // HIER BOEKEN WE DE ACTIVITEIT FR!!1!1!!1!!
+                                await BACKEND.bookings.put({
+                                    slotId: context.selectedSlot!.id,
+                                    amount: context.selectedAmount,
+                                    campingSpot: 0
+                                })
+                            }}
+                            > Boeken</button>
                         <b className="text-center">Boekingsdetails:</b>
                         <hr></hr>
                         <BookingDetails/>
@@ -34,7 +46,7 @@ export function Endpage() {
             </div>
             <div className="flex">
                 <button
-                    className={`text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                    className="text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
                     onClick={context.next}
                 > Terug naar start
                 </button>

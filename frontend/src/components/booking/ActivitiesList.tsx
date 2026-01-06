@@ -4,10 +4,16 @@ import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
 import {CancelButton} from "./BookingFlowManager.tsx";
 import { t } from "i18next";
+import useFirstRender from "../../App.tsx";
 
 
 export function ActivitiesList() {
 	const context = useContext(Context);
+
+	useFirstRender(() => {
+		// Elke x dat we naar deze stap gaan, moeten we even de data uit de backend op de achtergrond opnieuw ophalen. Zo is alles up-to-date.
+		context.refetchData();
+	})
 
 	// De kaarten met activiteiten.
 	const activityItems = context.activities!.map((activiteit) => (

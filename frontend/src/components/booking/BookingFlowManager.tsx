@@ -94,7 +94,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount, refetchData: () => { activitiesQuery.refetch(); slidesQuery.refetch(); } }}>
 			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>
