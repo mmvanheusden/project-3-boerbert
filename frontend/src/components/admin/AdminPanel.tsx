@@ -6,6 +6,7 @@ import {Component, type PropsWithChildren, useContext, useEffect, useState} from
 import type {Treaty} from "@elysiajs/eden";
 import {Icon} from "@iconify/react";
 import type * as React from "react";
+import {UpdateActivityRequestBody} from "../../../../backend/src/activities/model.ts";
 
 
 export default function AdminPanel() {
@@ -24,6 +25,14 @@ export default function AdminPanel() {
 		queryFn: async () => {
 			const res = await BACKEND.slideshow.get();
 			return res.data as Treaty.Data<typeof BACKEND.slideshow.get>;
+		},
+	});
+
+	const {isPending: compactActivitiesPending, error: compactActivitiesError, data: compactActivitiesData} = useQuery<Treaty.Data<typeof BACKEND.activities.compact.get>>({
+		queryKey: ["compactActivities"],
+		queryFn: async () => {
+			const res = await BACKEND.activities.compact.get();
+			return res.data as Treaty.Data<typeof BACKEND.activities.compact.get>;
 		},
 	});
 
@@ -79,13 +88,20 @@ export default function AdminPanel() {
 	}, [slideshowData]);
 	const [slides, setSlides] = useState<Treaty.Data<typeof BACKEND.slideshow.get>>([]);
 
-	if (isPending || slideshowPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
-	if (error || slideshowError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
+	useEffect(() => {
+		if (compactActivitiesData) {
+			setCompactActivities(compactActivitiesData);
+		}
+	}, [compactActivitiesData]);
+	const [compactActivities, setCompactActivities] = useState<Treaty.Data<typeof BACKEND.activities.compact.get>>([]);
+
+	if (isPending || slideshowPending || compactActivitiesPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
+	if (error || slideshowError || compactActivitiesError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 
 	function ActivitiesEditor() {
 		const {activities} = useContext(Context)!;
-		const [activityEditing, setActivityEditing] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
+		const [activityEditing, setActivityEditing] = useState<typeof UpdateActivityRequestBody | null>(null);
 		const [creatingActivity, setCreatingActivity] = useState(false);
 
 		function Creator() {
@@ -185,21 +201,21 @@ export default function AdminPanel() {
 			)
 		}
 
-		const updateActivity = async (activiteit: Treaty.Data<typeof BACKEND.activities.get>[0]) => {
+		const updateActivity = async (activiteit: typeof activityEditing) => {
 			const updatedActivity = {
-				id: activiteit.id,
-				title: activiteit.title,
-				subtitle: activiteit.subtitle,
-				description: activiteit.description,
-				price: activiteit.price,
+				id: activiteit?.id,
+				title: activiteit?.title,
+				subtitle: activiteit?.subtitle,
+				description: activiteit?.description,
+				price: activiteit?.price,
 				// hero: new File([new Blob(["hi"], {type: "image/png"})], "hello.png"),
-				capacity: activiteit.capacity,
-				threshold: activiteit.threshold,
-				minage: activiteit.minage,
-				location: activiteit.location,
+				capacity: activiteit?.capacity,
+				threshold: activiteit?.threshold,
+				minage: activiteit?.minage,
+				location: activiteit?.location,
 			};
 
-			if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
+			if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
 				ActivityPatchMutator.mutate(updatedActivity);
 				setActivityEditing(null);
 			}
@@ -262,8 +278,14 @@ export default function AdminPanel() {
 						<ActivitiesEmptyCheck activities={activities}/>
 						<ol>
 							{
-								activities.filter((activiteit) => activiteit.title.toLowerCase().includes(searchQuery.toLowerCase()))
+								compactActivities.filter((activiteit) => activiteit.title.toLowerCase().includes(searchQuery.toLowerCase()))
 								.map((activiteit) => {
+									console.trace(compactActivities);
+
+									const isEditing = activityEditing && activityEditing.id === activiteit.id;
+									// Use the editing state if available, otherwise fallback to original data
+									const displayData = isEditing ? activityEditing : activiteit;
+
 									return (
 										<>
 											<div className="mb-2 p-4 rounded bg-white shadow">
@@ -278,9 +300,9 @@ export default function AdminPanel() {
 																		<input
 																			id="title"
 																			type="text"
-																			value={activityEditing.title}
+																			value={displayData.title}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, title: e.target.value } : { ...activiteit, title: e.target.value });
+																				setActivityEditing(prev => ({ ...prev!, title: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -289,9 +311,9 @@ export default function AdminPanel() {
 																		<label htmlFor="description">Beschrijving</label>
 																		<textarea
 																			id="description"
-																			value={activityEditing?.description ?? activiteit.description}
+																			value={displayData.description}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, description: e.target.value } : { ...activiteit, description: e.target.value });
+																				setActivityEditing(prev => ({ ...prev!, description: e.target.value }));
 																			}}
 																			required
 																			placeholder="Bijv. 'In deze activiteit leer je boogschieten onder begeleiding van onze ervaren instructeurs...'"
@@ -302,9 +324,9 @@ export default function AdminPanel() {
 																		<input
 																			id="subtitle"
 																			type="text"
-																			value={activiteit.subtitle}
+																			value={displayData.subtitle}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, subtitle: e.target.value } : { ...activiteit, subtitle: e.target.value });
+																				setActivityEditing(prev => ({ ...prev!, subtitle: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -314,9 +336,9 @@ export default function AdminPanel() {
 																		<input
 																			id="capacity"
 																			type="number"
-																			value={activiteit.capacity}
+																			value={displayData.capacity}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, capacity: Number(e.target.value) } : { ...activiteit, capacity: Number(e.target.value) });
+																				setActivityEditing(prev => ({ ...prev!, capacity: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -326,9 +348,9 @@ export default function AdminPanel() {
 																		<input
 																			id="threshold"
 																			type="number"
-																			value={activiteit.threshold}
+																			value={displayData.threshold}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, threshold: Number(e.target.value) } : { ...activiteit, threshold: Number(e.target.value) });
+																				setActivityEditing(prev => ({ ...prev!, threshold: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -338,9 +360,9 @@ export default function AdminPanel() {
 																		<input
 																			id="price"
 																			type="number"
-																			value={activiteit.price}
+																			value={displayData.price}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, price: Number(e.target.value) } : { ...activiteit, price: Number(e.target.value) });
+																				setActivityEditing(prev => ({ ...prev!, price: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -350,9 +372,9 @@ export default function AdminPanel() {
 																		<input
 																			id="minage"
 																			type="number"
-																			value={activiteit.minage}
+																			value={displayData.minage}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, minage: Number(e.target.value) } : { ...activiteit, minage: Number(e.target.value) });
+																				setActivityEditing(prev => ({ ...prev!, minage: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -362,9 +384,9 @@ export default function AdminPanel() {
 																		<input
 																			id="location"
 																			type="text"
-																			value={activiteit.location}
+																			value={displayData.location}
 																			onChange={(e) => {
-																				setActivityEditing(prev => prev ? { ...prev, location: e.target.value } : { ...activiteit, location: e.target.value });
+																				setActivityEditing(prev => ({ ...prev!, location: e.target.value }));
 																			}}
 																			className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 																		/>
@@ -408,7 +430,8 @@ export default function AdminPanel() {
 														</li>
 														<button
 															className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
-															onClick={() => {setActivityEditing(activiteit)}}>
+															onClick={() => { // @ts-ignore
+																setActivityEditing(activiteit)}}>
 															Bewerken
 														</button>
 														<button
@@ -416,6 +439,7 @@ export default function AdminPanel() {
 															onClick={async () => {
 																if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 																	ActivityDeleteMutator.mutate(activiteit);
+																	compactActivities.splice(compactActivities.findIndex(a => a.id === activiteit.id), 1);
 																}
 																// await deleteActivity(activiteit, { activities, setActivities })
 																// location.reload();

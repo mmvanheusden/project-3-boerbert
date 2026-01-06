@@ -28,7 +28,6 @@ const renderStep = (step: number) => {
 					case 1:
 						return <ActivitiesList />;
 					case 2:
-						 -9
 						return <ViewActivity />;
 					case 3:
 						return <LogIn />;
