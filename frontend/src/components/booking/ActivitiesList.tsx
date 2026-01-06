@@ -3,7 +3,7 @@ import {useContext} from "react";
 import Context from "./Context.tsx";
 import {Header} from "../KleineDingetjes.tsx";
 import {CancelButton} from "./BookingFlowManager.tsx";
-import { t } from "i18next";
+import i18n, { t } from "i18next";
 
 
 export function ActivitiesList() {
@@ -11,7 +11,7 @@ export function ActivitiesList() {
 
 	// De kaarten met activiteiten.
 	const activityItems = context.activities!.map((activiteit) => (
-        <li key={activiteit.id ?? activiteit.title} className="mb-2">
+        <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
             <div className="bg-white shadow-md rounded-lg p-6 w-full">
                 <div className="w-full grid grid-cols-3 gap-6 items-center">
                     <div>
@@ -19,14 +19,14 @@ export function ActivitiesList() {
                             className="w-95 h-100 object-cover rounded-xl"
                             src={`data:image/png;base64, ${activiteit.hero}`}
                             style={{ imageRendering: "pixelated" }}
-                            alt={activiteit.title}
+                            alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                         />
                     </div>
 
                     <div>
                         <span className="text-2xl text-gray-600 font-mono font-semibold select-none">{t("activity_label")}</span>
-                        <h3 className="text-6xl font-semibold mt-2 mb-8">{activiteit.title}</h3>
-                        <p className="text-4xl text-gray-600 mt-3">{activiteit.subtitle}</p>
+                        <h3 className="text-6xl font-semibold mt-2 mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+                        <p className="text-4xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
                         <p className="text-4xl text-gray-600 mt-3">{t("min_age_note", { minage: activiteit.minage })}</p>
                         <p className="text-4xl text-gray-600 mt-3">€{activiteit.price} per persoon</p>
                     </div>

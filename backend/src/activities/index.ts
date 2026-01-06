@@ -21,6 +21,41 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             return modifiedActivities
         }
     )
+    .get('/compact',
+        async () => {
+            const activites = await getActivities();
+            // Only send the dutch fields
+            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'title' | 'subtitle' | 'description' | 'location' | 'hero', string>[] = [];
+            activites.forEach((activity) => {
+                modifiedActivities.push({
+                    ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64'),
+                    title: activity!.title.nl,
+                    subtitle: activity!.subtitle.nl,
+                    description: activity.description.nl,
+                    location: activity.location.nl,
+                });
+            })
+
+            return modifiedActivities
+        }
+    )
+    .get(
+        '/',
+        async () => {
+            // Before sending, we're base64 encoding the hero field so the requests are smaller.
+            const activites = await getActivities();
+            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'hero', string>[] = [];
+            activites.forEach((activity) => {
+                modifiedActivities.push({
+                    ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64')
+                });
+            })
+
+            return modifiedActivities
+        }
+    )
     .get(
         '/:id',
         async ({params: {id}}) => {

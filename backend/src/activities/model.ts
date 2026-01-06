@@ -1,18 +1,17 @@
-import { min } from "drizzle-orm";
 import {blob, int, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {t} from "elysia";
 
 export const activitiesTable = sqliteTable("activities", {
     id: int().primaryKey({autoIncrement: true}),
-    title: text().notNull().unique(),
-    subtitle: text().notNull(),
-    description: text().notNull(),
+    title: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull().unique(),
+    subtitle: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
+    description: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
     price: int().notNull(),
     hero: blob({ mode: 'buffer' }).notNull(), // Cover image
     capacity: int().notNull(),
     threshold: int().notNull(),
     minage: int().notNull(),
-    location: text().notNull(),
+    location: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
 });
 
 
