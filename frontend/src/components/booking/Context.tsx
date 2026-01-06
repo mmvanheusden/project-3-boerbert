@@ -11,6 +11,7 @@ import type {Treaty} from "@elysiajs/eden";
 // De structuur die de context aanhoudt.
 type ContextPayload = {
 	refetchData: () => void;
+	clearPreviousSession: () => void;
 	currentStep: number;
 	setCurrentStep: (step: number) => void;
 	next: () => void;
@@ -32,6 +33,7 @@ type ContextPayload = {
 
 export const Context = createContext<ContextPayload>({
 	refetchData: () => {},
+	clearPreviousSession: () => {},
 	currentStep: undefined!,
 	setCurrentStep: () => {},
 	next: () => {},

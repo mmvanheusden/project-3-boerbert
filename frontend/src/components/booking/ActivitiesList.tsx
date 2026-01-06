@@ -4,9 +4,17 @@ import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
+import useFirstRender from "../../App.tsx";
 
 export function ActivitiesList() {
     const context = useContext(Context);
+    useFirstRender(() => {
+        // Elke x dat we naar deze stap gaan, moeten we even de data uit de backend op de achtergrond opnieuw ophalen. Zo is alles up-to-date.
+        context.refetchData();
+
+        // Wis de context, zodat we geen data van de vorige sessie hebben.
+        context.clearPreviousSession();
+    })
 
     // De kaarten met activiteiten.
     const activityItems = context.activities!.map((activiteit) => (
