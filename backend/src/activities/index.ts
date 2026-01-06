@@ -26,7 +26,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
                             id: slot.id,
                             date: new Date(slot.date), // Zet de datum met begintijd om van een string naar een Date object. Dit zou nooit fout moeten gaan. (Anders valideren we inkomende data niet goed)
                             duration: slot.duration,
-                            bookings: bookings.length, // Tel hoeveel boekingen er staan voor dit slot.
+                            bookings: bookings.reduce((accumulator, booking) => {return accumulator += booking.amount},0), // Tel alle personen die in de boekingen staan op.
                         };
                     }),
                 );
