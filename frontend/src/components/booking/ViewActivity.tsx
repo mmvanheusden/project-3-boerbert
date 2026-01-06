@@ -1,5 +1,5 @@
 import "../../index.css";
-import {Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext } from "react";
 import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
@@ -7,10 +7,7 @@ import { t } from "i18next";
 import dayjs from "dayjs";
 
 export function ViewActivity() {
-    const [selectedSlot, selectSlot] = useState<number>(0); // Hier bewaren we de ID van het slot dat we hebben gekozen zodat we die kunnen gebruiken
-    const [selectedAmount, setAmount] = useState<number>(1); // Hier bewaren we voor hoeveel personen we de activiteit gaan boeken
-    const {selectedActivity, prev} = useContext(Context);
-
+    const {selectedActivity, prev, selectedAmount} = useContext(Context);
 
     return (
         <div className="flex flex-col gap-3 h-full">
@@ -45,13 +42,13 @@ export function ViewActivity() {
                         </div>
 
                         <div className="mt-6">
-                            <Reserveren price={selectedActivity?.price!} selectedAmount={selectedAmount} setAmount={setAmount}/>
+                            <Reserveren price={selectedActivity?.price!} />
                         </div>
 
                         <div>
                             <div className="text-5xl font-semibold text-gray-700">Selecteer een tijdslot</div>
                             <hr></hr>
-                            <SlotSelector selectedSlot={selectedSlot} selectSlot={selectSlot} selectedAmount={selectedAmount}/>
+                            <SlotSelector selectedAmount={selectedAmount}/>
                         </div>
                     </div>
                 </div>
@@ -70,8 +67,8 @@ export function ViewActivity() {
     );
 }
 
-function SlotSelector({selectedSlot, selectSlot, selectedAmount}: {selectedSlot: number, selectSlot: Dispatch<SetStateAction<number>>, selectedAmount: number}) {
-    const {selectedActivity} =  useContext(Context);
+function SlotSelector({selectedAmount}: {selectedAmount: number}) {
+    const {selectedActivity, selectSlot, selectedSlot} =  useContext(Context);
 
     return (
         <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-xl scroll-py-5">
@@ -80,8 +77,13 @@ function SlotSelector({selectedSlot, selectSlot, selectedAmount}: {selectedSlot:
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`border-2 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot == slot.id) && "bg-green-500 scale-103"}`}
-                    onClick={() => selectSlot(slot.id)}
+                    className={`border-2 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"}`}
+                    onClick={() => selectSlot({
+                        id: slot.id,
+                        activityId: selectedActivity?.id,
+                        date: slot.date,
+                        duration: slot.duration
+                    })}
                 >
                     <div className="flex-1">
                         <div className="h-full w-full">
@@ -94,7 +96,7 @@ function SlotSelector({selectedSlot, selectSlot, selectedAmount}: {selectedSlot:
                         </div>
                     </div>
                     <div className="">
-                        {(selectedSlot == slot.id) && <p className="text-blue-700">Na reserveren nog {selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
+                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">Na reserveren nog {selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
                         <p className="text-3xl flex justify-end font-bold">
                             {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity}
                         </p>
@@ -106,7 +108,7 @@ function SlotSelector({selectedSlot, selectSlot, selectedAmount}: {selectedSlot:
     )
 }
 
-function Reserveren({ price, selectedAmount, setAmount }: { price: number, selectedAmount: number, setAmount: Dispatch<SetStateAction<number>> }) {
+function Reserveren({ price }: { price: number | undefined }) {
   const context = useContext(Context);
   if (!price) return null;
 
@@ -120,17 +122,17 @@ function Reserveren({ price, selectedAmount, setAmount }: { price: number, selec
         <button
           type="button"
           className="w-full h-40 flex items-center justify-center bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-colors text-6xl"
-          onClick={() => setAmount(c => Math.max(1, c - 1))}
+          onClick={() => context.selectAmount(Math.max(1, context.selectedAmount! - 1))}
         >
           -
         </button>
 
-        <div className="mx-15 abolute min-w-10 text-center flex items-center justify-center text-6xl font-bold text-gray-800">{selectedAmount}</div>
+        <div className="mx-15 abolute min-w-10 text-center flex items-center justify-center text-6xl font-bold text-gray-800">{context.selectedAmount}</div>
 
         <button
           type="button"
           className="w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl"
-          onClick={() => setAmount(c => c + 1)}
+          onClick={() => context.selectAmount(context.selectedAmount! + 1)}
         >
           +
         </button>
@@ -138,13 +140,13 @@ function Reserveren({ price, selectedAmount, setAmount }: { price: number, selec
       </div>
       
       <div className="flex items-center justify-center">
-        <div className="text-5xl mt-5 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{selectedAmount * price}</div>
+        <div className="text-5xl mt-5 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{context.selectedAmount * price}</div>
         <button
           type="button"
           className="mt-3 w-full h-40 flex items-center justify-center bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-6xl"
           onClick={
             () => {
-                context.selectPrice(selectedAmount * price);
+                context.selectPrice(context.selectedAmount * price);
                 context.next()
             }
           }

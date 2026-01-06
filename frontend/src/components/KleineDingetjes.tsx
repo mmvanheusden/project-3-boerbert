@@ -1,4 +1,6 @@
-import {Component, type PropsWithChildren} from "react";
+import {Component, type PropsWithChildren, useContext} from "react";
+import Context from "./booking/Context.tsx";
+import dayjs from "dayjs";
 
 // Source - https://stackoverflow.com/a/77764153
 // Posted by Victor Zamanian, modified by community. See post 'Timeline' for change history
@@ -31,4 +33,16 @@ export class Header extends Component<PropsWithChildren> {
 			</>
 		)
 	}
+}
+
+
+export function BookingDetails() {
+	const context = useContext(Context);
+	return(
+		<>
+			<p><b>Activiteit: </b> {context.selectedActivity?.title} @ {context.selectedActivity?.location}</p>
+			<p><b>Tijdslot: </b> {dayjs(context.selectedSlot!.date).locale("nl").format("dddd D[ ]MMMM[ om ]HH:mm")} voor {context.selectedAmount} personen</p>
+			<p><b>Totaalprijs: </b> € {context.selectedPrice}</p>
+		</>
+	)
 }

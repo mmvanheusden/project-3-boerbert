@@ -22,6 +22,10 @@ type ContextPayload = {
 	selectedPrice?: number;
 	selectPrice: (amount: number) => void;
 	slideshow?: Treaty.Data<typeof BACKEND.slideshow.get>;
+	selectSlot: (activity: Treaty.Data<typeof BACKEND.slots.get>[0]) => void;
+	selectedSlot: Treaty.Data<typeof BACKEND.slots.get>[0] | null,
+	selectedAmount: number;
+	selectAmount: (amount: number) => void;
 };
 
 
@@ -38,6 +42,10 @@ export const Context = createContext<ContextPayload>({
 	selectActivity: () => {},
 	selectPrice: () => {},
 	selectedPrice: undefined!,
+	selectedSlot: undefined!,
+	selectSlot: () => {},
+	selectedAmount: undefined!,
+	selectAmount: () => {},
 });
 
 
