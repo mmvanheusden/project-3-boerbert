@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 import { BACKEND } from "../../App.tsx";
 import { useQuery } from "@tanstack/react-query";
-
+import { Treaty } from "@elysiajs/eden";
 import { Slideshow } from "../Slideshow.tsx";
 import { ActivitiesList } from "./ActivitiesList.tsx";
 import { ViewActivity } from "./ViewActivity.tsx";
@@ -14,6 +14,7 @@ import { PaymentMethod } from "./PaymentMethod.tsx";
 import { Payment } from "./Payment.tsx";
 import { PaymentStatus } from "./PaymentStatus.tsx";
 import { Endpage } from "./EndPage.tsx";
+
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -27,6 +28,7 @@ const renderStep = (step: number) => {
 					case 1:
 						return <ActivitiesList />;
 					case 2:
+						 -9
 						return <ViewActivity />;
 					case 3:
 						return <LogIn />;

@@ -103,7 +103,8 @@ i18n
             min_age_note: "Note: From age {{minage}} and up",
             back_to_list: "Back to activities list",
             add: "Add",
-            minage: "Minimum age"
+            minage: "Minimum age",
+
         }
       }
     },

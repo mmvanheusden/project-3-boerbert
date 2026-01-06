@@ -56,7 +56,7 @@ export function ViewActivity() {
                 <CancelButton/>
                 <div>
                     <button
-                        className="hover:underline hover:cursor-pointer rounded-xl py-3 px-5 bg-green-600 hover:bg-green-700 focus:outline-none text-4xl mr-3 text-white"
+                        className="hover:underline hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
                         onClick={prev}>
                         {t("back_to_list")}
                     </button>
