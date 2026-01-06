@@ -18,13 +18,19 @@ export const SlotsController = new Elysia().group("/slots", (app) => app
     .get(
         '/:id',
         async ({params: {id}}) => {
-            return await getSlots(id)
+            return (await getSlots(id)).map((slot) => ({
+                ...slot,
+                date: new Date(slot.date)
+            }))
         }
     )
     .get(
         '/',
         async () => {
-            return await getAllSlots()
+            return (await getAllSlots()).map((slot) => ({
+                ...slot,
+                date: new Date(slot.date)
+            }));
         }
     )
     .delete(
