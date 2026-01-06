@@ -10,6 +10,11 @@ import {activitiesTable} from "../activities/model";
 
 
 export async function insertBooking(request: Static<typeof InsertBookingRequest>) {
+    // Valideer of we wel minstens 1 plek willen boeken
+    if (request.amount < 1) {
+        return status(400, "Je moet minstens 1 plek boeken.")
+    }
+
     // Check of het slot wel bestaat
     const slot = await db.select().from(slotsTable).where(eq(slotsTable.id, request.slotId)).get();
     if (!slot) { // Geen slot met dit id, dus een ongeldig request
@@ -22,10 +27,12 @@ export async function insertBooking(request: Static<typeof InsertBookingRequest>
         return status(400, "Er is geen activiteit met dit slot.")
     }
 
-    // Tel de hoeveelheid bestaande boekingen voor dit slot
-    let bookingsAmount = await db.$count(bookingsTable, eq(bookingsTable.slotId, request.slotId));
-    if (bookingsAmount >= activity.capacity) { // Slot is op of over (illegaal) de capaciteit
+    // Tel de hoeveelheid bestaande boekingen (met amounts) voor dit slot
+    let bookingsAmount = (await db.select().from(bookingsTable).where(eq(bookingsTable.slotId, request.slotId)).all()).reduce((accumulator, booking) => {return accumulator += booking.amount},0);
+    if (bookingsAmount >= activity.capacity) { // Slot is op of over capaciteit
         return status(409, "Dit slot is volgeboekt.")
+    } else if (bookingsAmount + request.amount > activity.capacity) { // Slot zou over de capaciteit heen gaan met deze boeking
+        return status(409, `Er zijn nog maar ${activity.capacity - bookingsAmount} plekken vrij voor dit slot, je probeert er ${request.amount} te boeken.`)
     }
 
     try {
