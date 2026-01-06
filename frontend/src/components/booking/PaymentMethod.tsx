@@ -5,7 +5,7 @@ import {Header} from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
-export function BetaalMethode() {
+export function PaymentMethod() {
     const context = useContext(Context);
 
     return (

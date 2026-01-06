@@ -1,18 +1,18 @@
-import {useContext, useState} from "react";
+import { useContext, useState } from "react";
 import Context, { Provider } from "./Context.tsx";
-import {Slideshow} from "../Slideshow.tsx";
-import {ActivitiesList} from "./ActivitiesList.tsx";
-import {BACKEND} from "../../App.tsx";
-import {useQuery} from "@tanstack/react-query";
-import type {Treaty} from "@elysiajs/eden";
-import { ViewActivity } from "./ViewActivity.tsx";
-import { BetaalMethode } from "./BetaalMethode.tsx";
-import {Payment} from "./Payment.tsx";
+import { useTranslation } from "react-i18next";
 import { t } from "i18next";
-import {useTranslation} from "react-i18next";
-import { PaymentStatus } from "./Paymentstatus.tsx";
-import { Updates } from "./Updates.tsx";
+import { BACKEND } from "../../App.tsx";
+import { useQuery } from "@tanstack/react-query";
+
+import { Slideshow } from "../Slideshow.tsx";
+import { ActivitiesList } from "./ActivitiesList.tsx";
+import { ViewActivity } from "./ViewActivity.tsx";
+import { LogIn } from "./LogIn.tsx";
 import { RememberMail } from "./RememberMail.tsx";
+import { PaymentMethod } from "./PaymentMethod.tsx";
+import { Payment } from "./Payment.tsx";
+import { PaymentStatus } from "./PaymentStatus.tsx";
 import { Endpage } from "./EndPage.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
@@ -23,23 +23,23 @@ const renderStep = (step: number) => {
 			{(() => {
 				switch (step) {
 					case 0:
-						return <Slideshow/>;
+						return <Slideshow />;
 					case 1:
-						return <ActivitiesList/>;
+						return <ActivitiesList />;
 					case 2:
-						return <ViewActivity/>
+						return <ViewActivity />;
 					case 3:
-						return <BetaalMethode/>
+						return <LogIn />;
 					case 4:
-						return <Payment/>
+						return <RememberMail />;
 					case 5:
-						return <PaymentStatus/>
-					case 6: 
-						return <Updates/>
-					case 7: 
-						return <RememberMail/>
+						return <PaymentMethod />;
+					case 6:
+						return <Payment />;
+					case 7:
+						return <PaymentStatus />;
 					case 8:
-						return <Endpage/>
+						return <Endpage />;
 					default:
 						return null;
 				}
@@ -68,13 +68,13 @@ const BookingFlow = () => {
 			BACKEND.slideshow.get().then(r => r.data as Treaty.Data<typeof BACKEND.slideshow.get>),
 	})
 
-    useTranslation();
+	useTranslation();
 	if (activitiesQuery.isPending || slidesQuery.isPending) return 'Laden...'
 	if (activitiesQuery.error || slidesQuery.error) return "Er is iets misgegaan!"
 
 
 	const next = () => {
-		if (currentStep === STEPS-1) {
+		if (currentStep === STEPS - 1) {
 			// Naar volgende stap bij laatste stap -> terug naar stap 0
 			setCurrentStep(0);
 			return;

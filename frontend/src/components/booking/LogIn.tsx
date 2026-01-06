@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import {CancelButton} from "./BookingFlowManager.tsx";
 
 
-export function Updates() {
+export function LogIn() {
     const context = useContext(Context);
 
     return (
@@ -14,7 +14,7 @@ export function Updates() {
             <Header>
             <span
                 className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-              Betalingsstatus
+              Geef uw campingplaats door
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
