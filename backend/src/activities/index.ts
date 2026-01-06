@@ -1,7 +1,7 @@
 import {Elysia, Static} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, UpdateActivityRequestBody} from "./model";
-import {eq} from "drizzle-orm";
+import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
+import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
 import {getAllSlots} from "../slots/service";
 import {getActivityBookings} from "../bookings/service";
@@ -37,6 +37,25 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
                     slots: activitySlots,
                 });
             }
+
+            return modifiedActivities
+        }
+    )
+    .get('/compact',
+        async () => {
+            const activites = await getActivities();
+            // Only send the dutch fields
+            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'title' | 'subtitle' | 'description' | 'location' | 'hero', string>[] = [];
+            activites.forEach((activity) => {
+                modifiedActivities.push({
+                    ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64'),
+                    title: activity!.title.nl,
+                    subtitle: activity!.subtitle.nl,
+                    description: activity.description.nl,
+                    location: activity.location.nl,
+                });
+            })
 
             return modifiedActivities
         }

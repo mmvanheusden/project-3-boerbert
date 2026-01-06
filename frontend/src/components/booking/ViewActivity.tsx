@@ -4,6 +4,7 @@ import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
 import { t } from "i18next";
+import i18n from "../../i18n/config.ts";
 import dayjs from "dayjs";
 
 export function ViewActivity() {
@@ -26,17 +27,17 @@ export function ViewActivity() {
                                     className="w-full h-full object-cover object-center"
                                     src={`data:image/png;base64, ${selectedActivity?.hero}`}
                                     style={{ imageRendering: "pixelated" }}
-                                    alt={selectedActivity?.title ?? "activity image"}
+                                    alt={selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
                                 />
                             </div>
                         </div>
 
                         <div className="text-gray-800">
-                            <h1 className="text-8xl font-semibold mb-5">{selectedActivity?.title}</h1>
-                            <div className="text-5xl font-semibold text-gray-700 mb-5">{selectedActivity?.subtitle}</div>
-                            <div className="text-4xl mb-5">{selectedActivity?.description}</div>
+                            <h1 className="text-8xl font-semibold mb-5">{selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</h1>
+                            <div className="text-5xl font-semibold text-gray-700 mb-5">{selectedActivity?.subtitle[i18n.language as "en" | "de" | "nl"]}</div>
+                            <div className="text-4xl mb-5">{selectedActivity?.description[i18n.language as "en" | "de" | "nl"]}</div>
                             <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
-                            <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location})}</div>
+                            <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
                             <div className="text-4xl mb-5">{t("min_age_note", {minage: selectedActivity?.minage})}</div>
                             <div className="text-4xl mb-1">{t("price_per_ticket", {price: selectedActivity?.price})}</div>
                         </div>
