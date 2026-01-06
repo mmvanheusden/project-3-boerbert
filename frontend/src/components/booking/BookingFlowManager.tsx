@@ -12,7 +12,7 @@ import { LogIn } from "./LogIn.tsx";
 import { RememberMail } from "./RememberMail.tsx";
 import { PaymentMethod } from "./PaymentMethod.tsx";
 import { Payment } from "./Payment.tsx";
-import { PaymentStatus } from "./PaymentStatus.tsx";
+import { PaymentStatus } from "./Paymentstatus.tsx";
 import { Endpage } from "./EndPage.tsx";
 
 
