@@ -19,29 +19,20 @@ export function LogIn() {
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                <div className="w-full h-full not-first-of-type:overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
-                        <h1 className="text-8xl font-bold mb-10 mt-5 mx-15 justify-center text-center">
+                <div className="w-full h-full flex flex-col justify-start items-center bg-white shadow-md rounded-lg p-6">
+                        <h1 className="text-6xl font-bold mb-10 mt-5 mx-15 text-center">
                             Geef hier uw campingplaatsnummer door
                         </h1>
-
-                        <Icon className="" icon="fluent:tent-16-regular" width="300" height="300"/>
-
+                        <Icon icon="fluent:tent-16-regular" className="flex-none size-[10em]"/>
                         <form>
-                            <label className="text-8xl mt-5 mb-10 flex justify-center text-center">
-                                <input type="number" placeholder="" className="outline mt-10 text-center"/>
-                            </label>
+                            <input type="number" className="outline focus:ring-4 text-7xl mx-5 mt-5 mb-5 flex justify-center text-center caret-green-800 py-2"/>
                         </form>
                         <button
-                              className={`mt-10 text-8xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                              className={`text-7xl hover:cursor-pointer px-6 py-7 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                               onClick={context.next}
-                          > Doorgaan          
+                          > Doorgaan
                         </button>
-
-                        
                 </div>
-
-                
-
             </div>
                         <div className="flex-row flex w-full items-center justify-between">
                             <CancelButton/>
@@ -53,9 +44,6 @@ export function LogIn() {
                                 </button>
                             </div>
                         </div>
-
-
-                     
         </div>
     );
 }
