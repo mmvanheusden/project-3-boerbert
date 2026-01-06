@@ -55,19 +55,3 @@ export class Footer extends Component<PropsWithChildren> {
 		)
 	}
 }
-<<<<<<< HEAD
-
-// Source - https://stackoverflow.com/a/79257253
-// Posted by Maksim I. Kuzmin
-// Retrieved 2026-01-06, License - CC BY-SA 4.0
-export default function useFirstRender(callback: () => void) {
-	const ref = useRef(true);
-
-	if (ref.current) {
-		callback();
-	}
-
-	ref.current = false;
-}
-=======
->>>>>>> refs/remotes/origin/main
