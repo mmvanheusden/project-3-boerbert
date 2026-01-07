@@ -61,7 +61,9 @@ i18n
           min_age_note: "Let op: Vanaf {{minage}} jaar oud",
           back_to_list: "Terug naar activiteitenlijst",
           add: "Toevoegen",
-          minage: "Minimumleeftijd"
+          minage: "Minimumleeftijd",
+          continue_bookingflow: "Bevestig details en ga door met boeken",
+          boeking_samenvatting: "Bevestig details van uw boeking",
         },
       },
       // German
@@ -82,7 +84,9 @@ i18n
           min_age_note: "Achtung: Ab {{minage}} Jahren",
           back_to_list: "Zurück zur Aktivitätenliste",
           add: "Hinzufügen",
-          minage: "Mindestalter"
+          minage: "Mindestalter",
+          continue_bookingflow: "Details bestätigen und mit der Buchung fortfahren",
+          boeking_samenvatting: "Bestätigen Sie die Details Ihrer Buchung",
         },
       },
       //english
@@ -104,6 +108,8 @@ i18n
             back_to_list: "Back to activities list",
             add: "Add",
             minage: "Minimum age",
+            continue_bookingflow: "Confirm details and continue booking",
+            boeking_samenvatting: "Confirm details of your booking",
 
         }
       }

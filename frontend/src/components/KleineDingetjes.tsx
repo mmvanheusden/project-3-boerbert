@@ -41,9 +41,14 @@ export function BookingDetails() {
 	const context = useContext(Context);
 	return(
 		<>
-			<p><b>Activiteit: </b> {context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"]} @ {context.selectedActivity?.location[i18n.language as "en" | "de" | "nl"]}</p>
-			<p><b>Tijdslot: </b> {dayjs(context.selectedSlot!.date).locale("nl").format("dddd D[ ]MMMM[ om ]HH:mm")} voor {context.selectedAmount} personen</p>
+		<div className="text-5xl flex flex-col gap-3 my-10">
+			<p><b>Activiteit: </b> {context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</p>
+			<p><b>Datum en tijd: </b> {dayjs(context.selectedSlot!.date).locale("nl").format("dddd D[ ]MMMM[ om ]HH:mm")}</p>
+			<p><b>Locatie: </b>{context.selectedActivity?.location[i18n.language as "en" | "de" | "nl"]}</p>
+			<p><b>Leeftijd: </b>{context.selectedActivity?.minage}</p>
+			<p><b>Aantal personen: </b> {context.selectedAmount}</p>
 			<p><b>Totaalprijs: </b> € {context.selectedPrice}</p>
+		</div>
 		</>
 	)
 }
