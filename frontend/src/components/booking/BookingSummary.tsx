@@ -1,5 +1,5 @@
 import {BookingDetails, Header} from "../KleineDingetjes.tsx";
-import {t} from "i18next";
+import i18n, {t} from "i18next";
 import {useContext} from "react";
 import Context from "./Context.tsx";
 
@@ -20,7 +20,7 @@ export function BookingSummary() {
 						className="object-contain size-full"
 						src={`data:image/png;base64, ${context.selectedActivity?.hero}`}
 						style={{ imageRendering: "pixelated" }}
-						alt={context.selectedActivity?.title ?? "activity image"}
+						alt={context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
 					/>
 				</div>
 				<h1 className="text-4xl font-semibold mb-10 text-center">Weet je zeker dat je deze activiteit wil boeken?</h1>
