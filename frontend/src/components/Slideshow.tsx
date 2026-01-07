@@ -83,9 +83,9 @@ export function Slideshow() {
                 aria-label="Previous"
             >
           <span
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
             <svg
-                className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+                className="w-4 h-8 text-white dark:text-gray-800 rtl:rotate-180"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -107,9 +107,9 @@ export function Slideshow() {
                 aria-label="Next"
             >
           <span
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
             <svg
-                className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+                className="w-4 h-8 text-white dark:text-gray-800 rtl:rotate-180"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -128,19 +128,19 @@ export function Slideshow() {
             {/*Deze div wordt aan het begin verspreid (er staat 3 vlaggetjes in)*/}
             <div className="inline-flex gap-3">
               <button
-                  className="text-5xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
+                  className="text-8xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("nl")}
               >
                 <Icon icon="circle-flags:lang-nl" />
               </button>
               <button
-                  className="text-5xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
+                  className="text-8xl hover:underline hover:cursor-pointer rounded-full ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("de")}
               >
                 <Icon icon="circle-flags:lang-de" />
               </button>
               <button
-                  className="text-5xl hover:underline hover:cursor-pointer rounded-full p-px ring-green-600 hover:ring-3"
+                  className="text-8xl hover:underline hover:cursor-pointer rounded-full p-px ring-green-600 hover:ring-3"
                   onClick={() => i18n.changeLanguage("en")}
               >
                 <Icon icon="circle-flags:lang-en" />
@@ -150,7 +150,7 @@ export function Slideshow() {
             {/*Deze div wordt aan het einde verspreid (er staat 1 knopje in)*/}
             <div>
               <button
-                  className={`h-full inline-flex text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                  className={`h-full inline-flex text-8xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
                 {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>Momenteel
