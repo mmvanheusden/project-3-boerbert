@@ -14,7 +14,7 @@ import { PaymentMethod } from "./PaymentMethod.tsx";
 import { Payment } from "./Payment.tsx";
 import { PaymentStatus } from "./Paymentstatus.tsx";
 import { Endpage } from "./EndPage.tsx";
-
+import { BookingSummary } from "./BookingSummary.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -28,19 +28,21 @@ const renderStep = (step: number) => {
 					case 1:
 						return <ActivitiesList />;
 					case 2:
-						return <ViewActivity />;
+						return <ViewActivity />
 					case 3:
-						return <LogIn />;
+						return <BookingSummary />
 					case 4:
-						return <RememberMail />;
+						return <LogIn />;
 					case 5:
-						return <PaymentMethod />;
+						return <RememberMail />
 					case 6:
-						return <Payment />;
+						return <PaymentMethod />
 					case 7:
-						return <PaymentStatus />;
+						return <Payment />
 					case 8:
-						return <Endpage />;
+						return <PaymentStatus />
+					case 9:
+						return <Endpage />
 					default:
 						return null;
 				}
@@ -50,11 +52,13 @@ const renderStep = (step: number) => {
 };
 
 const BookingFlow = () => {
-	const STEPS = 9; // Hoeveel stappen we hebben
+	const STEPS = 10; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
-	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
-	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
-	const [selectedPrice, selectPrice] = useState(1); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
+	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
+	const [selectedSlot, selectSlot] = useState<Treaty.Data<typeof BACKEND.slots.get>[0] | null>(null);
+	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null);
+	const [selectedPrice, selectPrice] = useState(1);
+	const [selectedAmount, selectAmount] = useState(1);
 
 	// Haal de activiteiten en slideshow alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
 	const activitiesQuery = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
@@ -89,7 +93,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount, refetchData: () => { activitiesQuery.refetch(); slidesQuery.refetch(); } }}>
 			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>
@@ -102,7 +106,7 @@ export function CancelButton() {
 	const { setCurrentStep } = useContext(Context);
 
 	return (
-		<button className="inline-flex items-center hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-700 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
+		<button className="inline-flex items-center hover:underline hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-700 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
 			{t("cancel")}
 		</button>
 	)

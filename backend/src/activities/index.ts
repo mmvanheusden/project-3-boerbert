@@ -1,8 +1,10 @@
-import {Elysia} from "elysia";
+import {Elysia, Static} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {activitiesTable, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
+import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
 import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
+import {getAllSlots} from "../slots/service";
+import {getActivityBookings} from "../bookings/service";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -10,13 +12,31 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         async () => {
             // Before sending, we're base64 encoding the hero field so the requests are smaller.
             const activites = await getActivities();
-            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'hero', string>[] = [];
-            activites.forEach((activity) => {
+            const modifiedActivities: Static<typeof GetActivitiesResponseBody> = [];
+            const slots = await getAllSlots();
+
+            for (const activity of activites) {
+                const activitySlots = await Promise.all(
+                    slots.filter((slot) => slot.activityId == activity.id).map(async (slot) => {
+                        const bookings = (
+                            await getActivityBookings(activity.id.toString()))
+                                  .filter((booking) => booking.slotId == slot.id); // Haal alle boekingen op voor deze activiteit, filter ze daarna op specifiek dit slot.
+
+                        return {
+                            id: slot.id,
+                            date: new Date(slot.date), // Zet de datum met begintijd om van een string naar een Date object. Dit zou nooit fout moeten gaan. (Anders valideren we inkomende data niet goed)
+                            duration: slot.duration,
+                            bookings: bookings.reduce((accumulator, booking) => {return accumulator += booking.amount},0), // Tel alle personen die in de boekingen staan op.
+                        };
+                    }),
+                );
+
                 modifiedActivities.push({
                     ...activity,
-                    hero: Buffer.from(activity.hero).toString('base64')
+                    hero: Buffer.from(activity.hero).toString('base64'),
+                    slots: activitySlots,
                 });
-            })
+            }
 
             return modifiedActivities
         }
@@ -34,22 +54,6 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
                     subtitle: activity!.subtitle.nl,
                     description: activity.description.nl,
                     location: activity.location.nl,
-                });
-            })
-
-            return modifiedActivities
-        }
-    )
-    .get(
-        '/',
-        async () => {
-            // Before sending, we're base64 encoding the hero field so the requests are smaller.
-            const activites = await getActivities();
-            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'hero', string>[] = [];
-            activites.forEach((activity) => {
-                modifiedActivities.push({
-                    ...activity,
-                    hero: Buffer.from(activity.hero).toString('base64')
                 });
             })
 

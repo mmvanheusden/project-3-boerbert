@@ -45,6 +45,41 @@ export const UpdateActivityRequestBody = t.Object({
 	location: t.String(),
 })
 
+export const GetActivitiesResponseBody = t.Array(t.Object({
+	id: t.Numeric(),
+	title: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	subtitle: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	description: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	price: t.Numeric(),
+	hero: t.String(), // Plaatje als base64, zodat 'ie makkelijk verstuurbaar is.
+	capacity: t.Numeric(),
+	threshold: t.Numeric(),
+	minage: t.Numeric(),
+	location: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	slots: t.Array(t.Object({
+		id: t.Numeric(),
+		date: t.Date(),
+		duration: t.Numeric(),
+		bookings: t.Numeric(),
+	})),
+}))
+
 
 // Source:  https://www.perplexity.ai/search/typescript-copy-object-type-bu-SVjn90luRVWbGLf8rRYdkg#2
 // Override a field to hold a something else

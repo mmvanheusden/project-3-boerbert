@@ -1,8 +1,9 @@
 import "../../index.css";
 import {useContext} from "react";
 import Context from "./Context.tsx";
-import {Header} from "../KleineDingetjes.tsx";
+import {BookingDetails, Header} from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
+import {BACKEND} from "../../App.tsx";
 
 
 
@@ -18,22 +19,37 @@ export function Endpage() {
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
-                        <h1 className="text-5xl font-bold mb-10 mt-5">
+                <div
+                    className="w-full h-full overflow-auto flex flex-col items-center bg-white shadow-md rounded-lg">
+                    <div className="mb-10 mt-5">
+                        <h1 className="text-5xl font-bold">
                             Uw boeking is successvol!
                         </h1>
-                        <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="300" height="300"/>
+                        <button
+                            className="text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
+                            onClick={async () => {
+                                // HIER BOEKEN WE DE ACTIVITEIT FR!!1!1!!1!!
+                                await BACKEND.bookings.put({
+                                    slotId: context.selectedSlot!.id,
+                                    amount: context.selectedAmount,
+                                    campingSpot: 0
+                                })
+                            }}
+                            > Boeken</button>
+                        <b className="text-center">Boekingsdetails:</b>
+                        <hr></hr>
+                        <BookingDetails/>
+                    </div>
+                    <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="300" height="300"/>
                 </div>
-
-                
 
             </div>
             <div className="flex justify-end">
                 <button
-                              className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl mr-3 ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
-                              onClick={context.next}
-                          > Terug naar start
-                          </button>
+                    className="text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
+                    onClick={context.next}
+                > Terug naar start
+                </button>
             </div>
         </div>
     );
