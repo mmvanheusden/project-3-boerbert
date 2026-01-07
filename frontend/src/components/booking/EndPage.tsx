@@ -28,9 +28,9 @@ export function Endpage() {
                 
 
             </div>
-            <div className="flex">
+            <div className="flex justify-end">
                 <button
-                              className={`text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                              className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl mr-3 ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                               onClick={context.next}
                           > Terug naar start
                           </button>

@@ -102,7 +102,7 @@ export function CancelButton() {
 	const { setCurrentStep } = useContext(Context);
 
 	return (
-		<button className="inline-flex items-center hover:underline hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-700 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
+		<button className="inline-flex items-center hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-700 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
 			{t("cancel")}
 		</button>
 	)
