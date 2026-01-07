@@ -232,21 +232,21 @@ export default function AdminPanel() {
 			)
 		}
 
-		const updateActivity = async (activiteit: Treaty.Data<typeof BACKEND.activities.get>[0]) => {
+		const updateActivity = async (activiteit: typeof activityEditing) => {
 			const updatedActivity = {
-				id: activiteit.id,
-				title: activiteit.title,
-				subtitle: activiteit.subtitle,
-				description: activiteit.description,
-				price: activiteit.price,
+				id: activiteit?.id,
+				title: activiteit?.title,
+				subtitle: activiteit?.subtitle,
+				description: activiteit?.description,
+				price: activiteit?.price,
 				// hero: new File([new Blob(["hi"], {type: "image/png"})], "hello.png"),
-				capacity: activiteit.capacity,
-				threshold: activiteit.threshold,
-				minage: activiteit.minage,
-				location: activiteit.location,
+				capacity: activiteit?.capacity,
+				threshold: activiteit?.threshold,
+				minage: activiteit?.minage,
+				location: activiteit?.location,
 			};
 
-			if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
+			if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
 				ActivityPatchMutator.mutate(updatedActivity);
 				setActivityEditing(null);
 			}
@@ -309,11 +309,14 @@ export default function AdminPanel() {
 						<ActivitiesEmptyCheck activities={activities}/>
 						<ol>
 							{
-								compactActivities.filter((activiteit) => activiteit.title.toString().toLowerCase().includes(searchQuery.toLowerCase()))
+								compactActivities.filter((activiteit) => activiteit.title.toLowerCase().includes(searchQuery.toLowerCase()))
 								.map((activiteit) => {
+									console.trace(compactActivities);
+
 									const isEditing = activityEditing && activityEditing.id === activiteit.id;
 									// Use the editing state if available, otherwise fallback to original data
 									const displayData = isEditing ? activityEditing : activiteit;
+
 									return (
 										<>
 											<div className="mb-2 p-4 rounded bg-white shadow">
@@ -561,7 +564,8 @@ export default function AdminPanel() {
 														</li>
 														<button
 															className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
-															onClick={() => {setActivityEditing(activiteit)}}>
+															onClick={() => { // @ts-ignore
+																setActivityEditing(activiteit)}}>
 															Bewerken
 														</button>
 														<button
@@ -574,6 +578,7 @@ export default function AdminPanel() {
 															onClick={async () => {
 																if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 																	ActivityDeleteMutator.mutate(activiteit);
+																	compactActivities.splice(compactActivities.findIndex(a => a.id === activiteit.id), 1);
 																}
 																// await deleteActivity(activiteit, { activities, setActivities })
 																// location.reload();

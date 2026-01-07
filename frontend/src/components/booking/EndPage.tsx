@@ -44,7 +44,7 @@ export function Endpage() {
                 </div>
 
             </div>
-            <div className="flex">
+            <div className="flex justify-end">
                 <button
                     className="text-5xl hover:underline hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
                     onClick={context.next}
