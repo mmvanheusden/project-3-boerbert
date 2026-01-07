@@ -47,15 +47,31 @@ export const UpdateActivityRequestBody = t.Object({
 
 export const GetActivitiesResponseBody = t.Array(t.Object({
 	id: t.Numeric(),
-	title: t.String(),
-	subtitle: t.String(),
-	description: t.String(),
+	title: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	subtitle: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
+	description: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
 	price: t.Numeric(),
 	hero: t.String(), // Plaatje als base64, zodat 'ie makkelijk verstuurbaar is.
 	capacity: t.Numeric(),
 	threshold: t.Numeric(),
 	minage: t.Numeric(),
-	location: t.String(),
+	location: t.Object({
+		nl: t.String(),
+		en: t.String(),
+		de: t.String()
+	}),
 	slots: t.Array(t.Object({
 		id: t.Numeric(),
 		date: t.Date(),
