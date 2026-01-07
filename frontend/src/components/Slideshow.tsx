@@ -3,16 +3,10 @@ import Context from "./booking/Context.tsx";
 import { t } from "i18next";
 import i18n from "../i18n/config.ts";
 import { Icon } from "@iconify/react";
-import useFirstRender from "../App.tsx";
 
 export function Slideshow() {
-  const { next,activities, slideshow, refetchData } = useContext(Context);
+  const { next,activities, slideshow } = useContext(Context);
   const [index, setIndex] = useState(0);
-
-  useFirstRender(() => {
-    // Elke x dat we naar deze stap gaan, moeten we even de data uit de backend op de achtergrond opnieuw ophalen. Zo is alles up-to-date.
-    refetchData();
-  })
 
   // --- NIEUW: autoplay states / refs ---
   const [playing, setPlaying] = useState(true); // true = automatisch wisselen

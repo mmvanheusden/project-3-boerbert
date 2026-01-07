@@ -6,7 +6,6 @@ import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
 import Router, {Route, Switch} from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
 import {Component, type PropsWithChildren} from "react";
-import { useRef } from 'react';
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")
@@ -55,17 +54,4 @@ export class Footer extends Component<PropsWithChildren> {
 			</Router>
 		)
 	}
-}
-
-// Source - https://stackoverflow.com/a/79257253
-// Posted by Maksim I. Kuzmin
-// Retrieved 2026-01-06, License - CC BY-SA 4.0
-export default function useFirstRender(callback: () => void) {
-	const ref = useRef(true);
-
-	if (ref.current) {
-		callback();
-	}
-
-	ref.current = false;
 }

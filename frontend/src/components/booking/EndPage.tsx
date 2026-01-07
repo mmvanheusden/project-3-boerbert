@@ -10,7 +10,8 @@ import {BACKEND} from "../../App.tsx";
 export function Endpage() {
     const context = useContext(Context);
 
-    return (<div className="flex flex-col gap-3 h-full">
+    return (
+        <div className="flex flex-col gap-3 h-full">
             <Header>
             <span
                 className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
@@ -41,7 +42,6 @@ export function Endpage() {
                     </div>
                     <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="300" height="300"/>
                 </div>
-
 
             </div>
             <div className="flex">
