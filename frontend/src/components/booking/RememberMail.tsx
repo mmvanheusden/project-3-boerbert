@@ -33,12 +33,12 @@ export function RememberMail() {
                         </form>
                         <div className="flex items-center justify-evenly">
                           <button
-                              className={`w-50% mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
+                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
                               onClick={context.next}
                           > Doorgaan zonder emailupdates
                         </button>
                          <button
-                              className={`w-50% mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
+                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
                               onClick={context.next}
                           > Ik ontvang graag updates via de mail
                         </button>

@@ -26,7 +26,7 @@ export function PaymentMethod() {
                             </div>
                             <div className="inline-flex">
                                 <div>
-                                <Icon className="mr-20" icon="bi:cash-coin" width="450" height="450" />
+                                <Icon className=" ml-20" icon="bi:cash-coin" width="450" height="450" />
                                 <button className="ml-10 mr-10 mt-10 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer" onClick={() => {
                                     context.selectPaymentMethod("CONTANT")
                                     context.next()

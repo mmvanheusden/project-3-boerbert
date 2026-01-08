@@ -150,7 +150,7 @@ export function Slideshow() {
             {/*Deze div wordt aan het einde verspreid (er staat 1 knopje in)*/}
             <div>
               <button
-                  className={`h-full inline-flex text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                  className={`h-full inline-flex mt-5 text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
                 {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>Momenteel

@@ -26,10 +26,10 @@ export function Payment() {
                         switch (context.selectedPaymentMethod) {
                             case "PIN":
                                 return <div className="text-center">
-                                    <h1 className="text-7xl font-bold mb-20">
+                                    <h1 className="text-7xl font-bold mb-70">
                                         U kunt nu de QR-code scannen via uw telefooncamera
                                     </h1>
-                                    <div className="inline-flex">
+                                    <div className="scale-250 inline-flex">
                                         <Girocode recipient="Camping Boer Bert" iban="NL50 INGB 0756 5719 60" amount={context.selectedPrice} />
                                     </div>
 
@@ -37,10 +37,10 @@ export function Payment() {
                                 </div>
                             case "CONTANT":
                                 return <div className="text-center">
-                                    <h1 className="text-7xl font-bold mb-10 mt-5">
+                                    <h1 className="text-8xl font-bold mb-10 mt-5">
                                         Ga verder bij de balie
                                     </h1>
-                                    <h1 className="text-6xl font-bold mb-20">
+                                    <h1 className="text-7xl font-bold mb-20">
                                         U krijgt daar uw bon
                                     </h1>
                                 </div>
@@ -52,12 +52,12 @@ export function Payment() {
                         switch (context.selectedPaymentMethod) {
                             case "PIN":
                                 return <>
-                                    <h1 className="font-bold text-6xl mt-20">
+                                    <h1 className="font-bold text-6xl mt-60">
                                         Totaalprijs: €{context.selectedPrice},00
                                     </h1>
                                 </>
                             case "CONTANT":
-                                return <><Icon className="mt-10" icon="bi:cash-coin" width="300" height="300" />
+                                return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />
                                     <h1 className="font-bold text-6xl mt-20">
                                         Totaalprijs: €{context.selectedPrice},00
                                     </h1>

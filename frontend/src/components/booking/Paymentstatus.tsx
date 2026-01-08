@@ -19,10 +19,10 @@ export function PaymentStatus() {
             </Header>
             <div className="flex-1 overflow-auto">
                 <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
-                        <h1 className="text-5xl font-bold mb-10 mt-5">
+                        <h1 className="text-8xl font-bold mb-10 mt-5">
                             Betaling is gelukt
                         </h1>
-                        <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="300" height="300"/>
+                        <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="800" height="800"/>
                 </div>
 
                 
