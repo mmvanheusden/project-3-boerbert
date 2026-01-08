@@ -10,7 +10,7 @@ export const activitiesTable = sqliteTable("activities", {
     hero: blob({ mode: 'buffer' }).notNull(), // Cover image
     capacity: int().notNull(),
     threshold: int().notNull(),
-    minage: int().notNull(),
+    minage: text({ enum: ["0", "3", "7", "12"] }).notNull(),
     location: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
 });
 
@@ -25,7 +25,7 @@ export const InsertActivityRequestBody = t.Object({
     price: t.Numeric(),
     capacity: t.Numeric(),
     threshold: t.Numeric(),
-    minage: t.Numeric(),
+    minage: t.UnionEnum(["0", "3", "7", "12"]),
     location: t.String(),
 })
 
@@ -41,7 +41,7 @@ export const UpdateActivityRequestBody = t.Object({
 	price: t.Numeric(),
 	capacity: t.Numeric(),
 	threshold: t.Numeric(),
-	minage: t.Numeric(),
+	minage: t.UnionEnum(["0", "3", "7", "12"]),
 	location: t.String(),
 })
 

@@ -38,7 +38,7 @@ export function ViewActivity() {
                             <div className="text-4xl mb-5">{selectedActivity?.description[i18n.language as "en" | "de" | "nl"]}</div>
                             <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
                             <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
-                            <div className="text-4xl mb-5">{t("min_age_note", {minage: selectedActivity?.minage})}</div>
+                            <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age_note", {minage: selectedActivity?.minage})}</div>
                             <div className="text-4xl mb-1">{t("price_per_ticket", {price: selectedActivity?.price})}</div>
                         </div>
 

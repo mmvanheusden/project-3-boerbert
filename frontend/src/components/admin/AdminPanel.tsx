@@ -397,9 +397,13 @@ function ActivityCreator(props: {
 				<ImageUpload/>
 			</div>
 			<div className="mb-2">
-				<label htmlFor="minage">Minimumleeftijd</label>
-				<input id="minage" type="number" placeholder="Bijv. 4 - leeg laten = alle leeftijden"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				<label htmlFor="minage">Leeftijdscategorie</label>
+				<select id="minage" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+					<option value="0">Alle leeftijden</option>
+					<option value="3">Vanaf 3 jaar</option>
+					<option value="7">Vanaf 7 jaar</option>
+					<option value="12">Vanaf 12 jaar</option>
+				</select>
 			</div>
 			<div className="mb-2">
 				<label htmlFor="price">Prijs</label>
