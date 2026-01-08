@@ -27,7 +27,7 @@ export function ActivitiesList() {
                         <span className="text-2xl text-gray-600 font-mono font-semibold select-none">{t("activity_label")}</span>
                         <h3 className="text-6xl font-semibold mt-2 mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
                         <p className="text-4xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-                        <p className="text-4xl text-gray-600 mt-3">{t("min_age_note", { minage: activiteit.minage })}</p>
+                        <p className="text-4xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age_note", { minage: activiteit.minage })}</p>
                         <p className="text-4xl text-gray-600 mt-3">€{activiteit.price} per persoon</p>
                     </div>
 
