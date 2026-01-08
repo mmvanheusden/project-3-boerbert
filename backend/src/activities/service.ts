@@ -52,8 +52,9 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             hero: Buffer.from(await activity.hero.arrayBuffer()),
             capacity: (activity.capacity as number),
             threshold: (activity.threshold as number),
-            minage: (activity.minage as number),
+            minage: activity.minage,
             location: await vertaal(activity.location),
+            type: (activity.type),
         })
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
@@ -74,8 +75,9 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         hero: (activity.hero ? Buffer.from(await activity.hero.arrayBuffer()) : undefined),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
-        minage: (activity.minage as number),
+        minage: activity.minage,
         location: await vertaal(activity.location),
+        type: activity.type,
     }).where(eq(activitiesTable.id, +id));
 }
 

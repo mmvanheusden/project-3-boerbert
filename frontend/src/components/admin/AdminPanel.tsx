@@ -232,8 +232,9 @@ function ActivitiesEditor(props: {
 			price: activiteit?.price,
 			capacity: activiteit?.capacity,
 			threshold: activiteit?.threshold,
-			minage: activiteit?.minage,
+			minage: activiteit?.minage.toString(),
 			location: activiteit?.location,
+			type: activiteit?.type,
 		};
 
 		if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
@@ -353,7 +354,7 @@ function ActivityCreator(props: {
 			// @ts-ignore
 			description: String(form.elements["description"]?.value || ""),
 			// @ts-ignore
-			type: String(form.elements["type"]?.value || ""),
+			type: String(form.elements["type"]?.value || "Overig"),
 			// @ts-ignore
 			price: Number(form.elements["price"]?.value || 0),
 			// @ts-ignore
@@ -402,29 +403,28 @@ function ActivityCreator(props: {
 			<div className="mb-2">
 				<label htmlFor="type">Type activiteit</label>
 				<select id="type" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="sport/spel">Sport/Spel</option>
-					<option value="educatief">Educatief</option>
-					<option value="eten">Eten</option>
-					<option value="overig">Overig</option>
+					<option value="Sport/Spel">Sport/Spel</option>
+					<option value="Educatief">Educatief</option>
+					<option value="Eten">Eten</option>
+					<option value="Overig" selected>Overig</option>
 				</select>
-
 			</div>
 			<div className="mb-2">
 				<label htmlFor="minage">Minimumleeftijd</label>
 				<select id="minage" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="al">Alle leeftijden</option>
-					<option value="3+">Vanaf 3 jaar</option>
-					<option value="7+">Vanaf 7 jaar</option>
-					<option value="12+">Vanaf 12 jaar</option>
+					<option value="0">Alle leeftijden</option>
+					<option value="3">Vanaf 3 jaar</option>
+					<option value="7" selected>Vanaf 7 jaar</option>
+					<option value="12">Vanaf 12 jaar</option>
 				</select>
 			</div>
 			<div className="mb-2">
 				<label htmlFor="location">Locatie</label>
 				<select id="location" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="gp">Grote Plein</option>
-					<option value="ds">De Schuur</option>
-					<option value="kb">Kleine Bos</option>
-					<option value="hw">Het Weiland</option>
+					<option value="Grote Plein">Grote Plein</option>
+					<option value="De Schuur">De Schuur</option>
+					<option value="Kleine Bos">Kleine Bos</option>
+					<option value="Het Weiland">Het Weiland</option>
 				</select>
 			</div>
 			<div className="mb-2">
@@ -675,14 +675,15 @@ function ActivityListItem(props: {
 									id="type"
 									value={displayData.type}
 									onChange={(e) => {
-										props.setActivityEditing(prev => ({ ...prev!, type: e.target.value }));
+										// @ts-ignore (type is string maar moet een TUnionEnum ofzo zijn)
+										props.setActivityEditing(prev => ({ ...prev!, type: e.target.value}));
 									}}
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								>
-									<option value="sport/spel">Sport/Spel</option>
-									<option value="educatief">Educatief</option>
-									<option value="eten">Eten</option>
-									<option value="overig">Overig</option>
+									<option value="Sport/Spel">Sport/Spel</option>
+									<option value="Educatief">Educatief</option>
+									<option value="Eten">Eten</option>
+									<option value="Overig">Overig</option>
 								</select>
 							</div>
 							<div className="mb-2">
@@ -711,10 +712,10 @@ function ActivityListItem(props: {
 									}}
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								>
-									<option value="gp">Grote Plein</option>
-									<option value="ds">De Schuur</option>
-									<option value="kb">Kleine Bos</option>
-									<option value="hw">Het Weiland</option>
+									<option value="Grote Plein">Grote Plein</option>
+									<option value="De Schuur">De Schuur</option>
+									<option value="Kleine Bos">Kleine Bos</option>
+									<option value="Het Weiland">Het Weiland</option>
 								</select>
 							</div>
 							<div className="mb-2">
@@ -786,7 +787,7 @@ function ActivityListItem(props: {
 					<p className="text-xl text-gray-700">Capaciteit: {activiteit.capacity}</p>
 					<p className="text-xl text-gray-700">Drempelwaarde: {activiteit.threshold}</p>
 					<p className="text-xl text-gray-700">Prijs: €{activiteit.price}</p>
-					<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage}</p>
+					<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage == "0" ? "Alle leeftijden" : activiteit.minage}</p>
 					<p className="text-xl text-gray-700">Locatie: {activiteit?.location}</p>
 				</div>
 				<img
