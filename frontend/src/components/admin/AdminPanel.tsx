@@ -1,16 +1,16 @@
-import {Header} from "../KleineDingetjes";
-import {BACKEND, queryClient} from "../../App.tsx";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import type {UseMutationResult} from "@tanstack/react-query";
-import {Context, Provider} from "./Context.tsx";
+import { Header } from "../KleineDingetjes";
+import { BACKEND, queryClient } from "../../App.tsx";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type { UseMutationResult } from "@tanstack/react-query";
+import { Context, Provider } from "./Context.tsx";
 import type * as React from "react";
-import {Component, type PropsWithChildren, useContext, useEffect, useMemo, useState} from "react";
-import type {Treaty} from "@elysiajs/eden";
-import {Icon} from "@iconify/react";
+import { Component, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
+import type { Treaty } from "@elysiajs/eden";
+import { Icon } from "@iconify/react";
 import "dayjs/locale/nl"
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import {UpdateActivityRequestBody} from "../../../../backend/src/activities/model.ts";
+import { UpdateActivityRequestBody } from "../../../../backend/src/activities/model.ts";
 
 type ActivityCompact = Treaty.Data<typeof BACKEND.activities.compact.get>[0];
 type ActivityFull = Treaty.Data<typeof BACKEND.activities.get>[0];
@@ -44,7 +44,7 @@ export default function AdminPanel() {
 		},
 	});
 
-	const {isPending: compactActivitiesPending, error: compactActivitiesError, data: compactActivitiesData} = useQuery<Treaty.Data<typeof BACKEND.activities.compact.get>>({
+	const { isPending: compactActivitiesPending, error: compactActivitiesError, data: compactActivitiesData } = useQuery<Treaty.Data<typeof BACKEND.activities.compact.get>>({
 		queryKey: ["compactActivities"],
 		queryFn: async () => {
 			const res = await BACKEND.activities.compact.get();
@@ -54,7 +54,7 @@ export default function AdminPanel() {
 
 	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
 	const ActivityPatchMutator = useMutation({
-		mutationFn: (activity: any) => BACKEND.activities({id: activity.id}).patch(activity),
+		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).patch(activity),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
 	})
 	const ActivityInsertMutator = useMutation({
@@ -129,12 +129,12 @@ export default function AdminPanel() {
 	const [compactActivities, setCompactActivities] = useState<Treaty.Data<typeof BACKEND.activities.compact.get>>([]);
 
 
-	if (isPending || slideshowPending || compactActivitiesPending || slotsPending)  return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..."/>;
+	if (isPending || slideshowPending || compactActivitiesPending || slotsPending) return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..." />;
 	if (error || slideshowError || compactActivitiesError || slotsError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 	return (
-		<Provider value={{activities, setActivities}}>
-			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending}/>
+		<Provider value={{ activities, setActivities }}>
+			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending} />
 			<div className="flex flex-col gap-3 h-full bg-white/90 p-4 px-4 rounded-3xl">
 				<Header>
 					<span className="text-white select-none rounded-t-lg bg-blue-500 px-4 mr-1 font-semibold text-4xl">
@@ -157,7 +157,7 @@ export default function AdminPanel() {
 					<a href="/">
 						<button
 							className="text-white inline-flex items-center hover:underline ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
-							<Icon icon="ion:arrow-back" width="24" height="24"/>
+							<Icon icon="ion:arrow-back" width="24" height="24" />
 							<span>Terug naar hoofdpagina</span>
 						</button>
 					</a>
@@ -200,7 +200,7 @@ function ActivitiesEditor(props: {
 	SlotInsertMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlotDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
 }) {
-	const {activities} = useContext(Context)!;
+	const { activities } = useContext(Context)!;
 	const {
 		searchQuery,
 		setSearchQuery,
@@ -246,7 +246,7 @@ function ActivitiesEditor(props: {
 		<div>
 			<nav className="sticky top-0">
 				<Helper>
-					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2"/>
+					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
 					<p>
 						Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze aanpassen, verwijderen, of nieuwe aanmaken
 					</p>
@@ -276,10 +276,10 @@ function ActivitiesEditor(props: {
 				<>
 					<div className="flex items-center justify-between w-full gap-4">
 						<button
-							className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
+							className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-4xl mb-3 py-1"
 							onClick={() => setCreatingActivity(true)}
 						>
-							<Icon icon="mdi:add-bold" width="24" height="24"/>
+							<Icon icon="mdi:add-bold" width="24" height="24" />
 							<span>Activiteit aanmaken</span>
 						</button>
 
@@ -288,7 +288,7 @@ function ActivitiesEditor(props: {
 						/>
 					</div>
 
-					<ActivitiesEmptyCheck activities={activities}/>
+					<ActivitiesEmptyCheck activities={activities} />
 					<ol>
 						{filteredActivities.map((activiteit) => {
 							console.trace(compactActivities);
@@ -332,6 +332,7 @@ function ActivityCreator(props: {
 		title: string;
 		subtitle: string;
 		description: string;
+		type: string;
 		price: number;
 		capacity: number;
 		threshold: number;
@@ -351,6 +352,8 @@ function ActivityCreator(props: {
 			subtitle: String(form.elements["subtitle"]?.value || ""),
 			// @ts-ignore
 			description: String(form.elements["description"]?.value || ""),
+			// @ts-ignore
+			type: String(form.elements["type"]?.value || ""),
 			// @ts-ignore
 			price: Number(form.elements["price"]?.value || 0),
 			// @ts-ignore
@@ -381,45 +384,63 @@ function ActivityCreator(props: {
 					<div className="mb-2">
 						<label htmlFor="title">Titel</label>
 						<input id="title" type="text" required placeholder="Bijv. 'Boogschieten'"
-							   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+							className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 					</div>
 					<div className="mb-2">
 						<label htmlFor="subtitle">Ondertitel</label>
 						<input id="subtitle" type="text" required placeholder="Bijv. 'Leer boogschieten met onze instructeurs'"
-							   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+							className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 					</div>
 					<div className="mb-2">
 						<label htmlFor="description">Beschrijving</label>
 						<textarea id="description" required placeholder="Bijv. 'In deze activiteit leer je boogschieten onder begeleiding van onze ervaren instructeurs...'"
-								  className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+							className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 					</div>
 				</div>
-				<ImageUpload/>
+				<ImageUpload />
+			</div>
+			<div className="mb-2">
+				<label htmlFor="type">Type activiteit</label>
+				<select id="type" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+					<option value="sport/spel">Sport/Spel</option>
+					<option value="educatief">Educatief</option>
+					<option value="eten">Eten</option>
+					<option value="overig">Overig</option>
+				</select>
+
 			</div>
 			<div className="mb-2">
 				<label htmlFor="minage">Minimumleeftijd</label>
-				<input id="minage" type="number" placeholder="Bijv. 4 - leeg laten = alle leeftijden"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
-			</div>
-			<div className="mb-2">
-				<label htmlFor="price">Prijs</label>
-				<input id="price" type="number" required placeholder="Bijv. '€4,50'"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				<select id="minage" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+					<option value="al">Alle leeftijden</option>
+					<option value="3+">Vanaf 3 jaar</option>
+					<option value="7+">Vanaf 7 jaar</option>
+					<option value="12+">Vanaf 12 jaar</option>
+				</select>
 			</div>
 			<div className="mb-2">
 				<label htmlFor="location">Locatie</label>
-				<input id="location" type="text" required placeholder="Bijv. 'Boerderijplein'"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+				<select id="location" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+					<option value="gp">Grote Plein</option>
+					<option value="ds">De Schuur</option>
+					<option value="kb">Kleine Bos</option>
+					<option value="hw">Het Weiland</option>
+				</select>
 			</div>
 			<div className="mb-2">
 				<label htmlFor="capacity">Capaciteit</label>
 				<input id="capacity" type="number" required placeholder="Bijv. '20'"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<div className="mb-2">
 				<label htmlFor="threshold">Drempelbezetting</label>
 				<input id="threshold" type="number" required placeholder="Bijv. '5'"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
+			</div>
+			<div className="mb-2">
+				<label htmlFor="price">Prijs</label>
+				<input id="price" type="number" required placeholder="'Bijv. '€4,50'"
+					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<button type="submit" className="text-white bg-green-600 hover:bg-green-700 mt-1 rounded cursor-pointer px-4 font-small text-xl hover:ring-2">
 				Toevoegen
@@ -441,7 +462,7 @@ function SearchBar(props: { onSubmit: (value: string) => void }) {
 			<div className="flex items-center gap-2">
 				<div className="relative flex-1">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-						<Icon icon="icon-park-outline:search" width="20" height="20"/>
+						<Icon icon="icon-park-outline:search" width="20" height="20" />
 					</div>
 					<input
 						type="search"
@@ -526,27 +547,38 @@ function ActivityListItem(props: {
 									SlotInsertMutator.mutate(parsedFormData);
 								}}>
 									<div>
-										<label htmlFor="slotDate">Datum + begintijd</label>
-										<input required id="slotDate" type="datetime-local"></input>
+										<label className="ml-10 text-2xl" htmlFor="slotDate">Datum + begintijd</label>
+										<input className="ml-10 text-2xl block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDate" type="datetime-local"></input>
 									</div>
 									<div>
-										<label htmlFor="slotDuration">Lengte in uren (hoelang de activiteit duurt)</label>
-										<input required id="slotDuration" type="number"></input>
+										<label className="ml-10 text-2xl" htmlFor="slotDuration">Tijdsduur activiteit (in uren)</label>
+										<input className="ml-10 text-2xl block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDuration" type="number"></input>
 									</div>
-									<button className="rounded mt-8 border bg-green-400 hover:underline" type="submit">Verstuur slot</button>
+									<div className="flex">
+										<button
+											className="text-white ml-10 flex mt-3 mr-3 bg-orange-400 hover:bg-orange-500 rounded cursor-pointer py-5 px-5 text-2xl "
+											onClick={() => {
+												setActivityScheduling(null);
+												setSlotPlanning(false);
+											}}>
+											{slotPlanning ? "Annuleren" : "Sluiten"}
+										</button>
+										<button className="text-white mr-10 text-2xl rounded mt-3 bg-green-600 hover:bg-green-700 px-5 py-5" type="submit">Voeg tijdslot toe</button>
+
+									</div>
 								</form>
 							</>
 						) : (
 							<>
-								<div className="flex-col">
+								<div className="flex-col text-3xl font-bold mb-1 ml-3 bg-gray-200">
 									<b>{activiteit.title}</b>
 								</div>
-								<table className="table-fixed text-left w-full">
-									<thead className="bg-gray-400">
-									<tr>
-										<th>Datum en begintijd</th>
-										<th>Duur</th>
-									</tr>
+								<table className="table-fixed text-left w-full text-2xl ml-3">
+									<thead className="bg-gray-100">
+										<tr>
+											<th>Datum en begintijd</th>
+											<th>Duur</th>
+										</tr>
 									</thead>
 									<tbody className="overflow-y-auto">
 										{slots
@@ -556,20 +588,21 @@ function ActivityListItem(props: {
 													<>
 														<tr key={slot.id}>
 															<td className="flex flex-row items-center mb-1">
-																<button
-																	className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
-																	onClick={(e) => {
-																		e.stopPropagation();
-																		if (confirm(`Weet je zeker dat je dit tijdslot wilt verwijderen?`)) {
-																			SlotDeleteMutator.mutate(slot);
-																		}
-																	}}
-																>
-																	<Icon icon="line-md:trash" width="32" height="32" color="black"/>
-																</button>
+
 																{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm")}
 															</td>
 															<td>{slot.duration} u</td>
+															<button
+																className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
+																onClick={(e) => {
+																	e.stopPropagation();
+																	if (confirm(`Weet je zeker dat je dit tijdslot wilt verwijderen?`)) {
+																		SlotDeleteMutator.mutate(slot);
+																	}
+																}}
+															>
+																<Icon icon="line-md:trash" width="32" height="32" color="black" />
+															</button>
 														</tr>
 													</>
 												)
@@ -587,14 +620,7 @@ function ActivityListItem(props: {
 					</div>
 				</div>
 
-				<button
-					className="flex bg-orange-400 hover:underline rounded border-1 cursor-pointer px-4 font-small text-xl hover:ring-2"
-					onClick={() => {
-						setActivityScheduling(null);
-						setSlotPlanning(false);
-					}}>
-					{slotPlanning ? "Annuleren" : "Sluiten"}
-				</button>
+
 			</>
 		)
 	}
@@ -629,7 +655,7 @@ function ActivityListItem(props: {
 									}}
 									required
 									placeholder="Bijv. 'In deze activiteit leer je boogschieten onder begeleiding van onze ervaren instructeurs...'"
-									className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+									className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 							</div>
 							<div className="mb-2">
 								<label htmlFor="subtitle">Ondertitel</label>
@@ -642,6 +668,54 @@ function ActivityListItem(props: {
 									}}
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								/>
+							</div>
+							<div className="mb-2">
+								<label htmlFor="type">Type activiteit</label>
+								<select
+									id="type"
+									value={displayData.type}
+									onChange={(e) => {
+										props.setActivityEditing(prev => ({ ...prev!, type: e.target.value }));
+									}}
+									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+								>
+									<option value="sport/spel">Sport/Spel</option>
+									<option value="educatief">Educatief</option>
+									<option value="eten">Eten</option>
+									<option value="overig">Overig</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label htmlFor="minage">Leeftijd</label>
+								<select
+									id="minage"
+									value={displayData.minage}
+									onChange={(e) => {
+										props.setActivityEditing(prev => ({ ...prev!, minage: e.target.value }));
+									}}
+									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+								>
+									<option value="0">Alle leeftijden</option>
+									<option value="3">Vanaf 3 jaar oud</option>
+									<option value="7">Vanaf 7 jaar oud</option>
+									<option value="12">Vanaf 12 jaar oud</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label htmlFor="location">Locatie</label>
+								<select
+									id="location"
+									value={displayData.location}
+									onChange={(e) => {
+										props.setActivityEditing(prev => ({ ...prev!, location: e.target.value }));
+									}}
+									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+								>
+									<option value="gp">Grote Plein</option>
+									<option value="ds">De Schuur</option>
+									<option value="kb">Kleine Bos</option>
+									<option value="hw">Het Weiland</option>
+								</select>
 							</div>
 							<div className="mb-2">
 								<label htmlFor="capacity">Capaciteit</label>
@@ -679,35 +753,11 @@ function ActivityListItem(props: {
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								/>
 							</div>
-							<div className="mb-2">
-								<label htmlFor="minage">Leeftijd</label>
-								<input
-									id="minage"
-									type="number"
-									value={displayData.minage}
-									onChange={(e) => {
-										props.setActivityEditing(prev => ({ ...prev!, minage: e.target.value }));
-									}}
-									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-								/>
-							</div>
-							<div className="mb-2">
-								<label htmlFor="location">Locatie</label>
-								<input
-									id="location"
-									type="text"
-									value={displayData.location}
-									onChange={(e) => {
-										props.setActivityEditing(prev => ({ ...prev!, location: e.target.value }));
-									}}
-									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-								/>
-							</div>
 						</div>
 					</div>
 				</li>
 				<button
-					className="text-white bg-green-500 hover:bg-green-600 ml-10 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
+					className="text-white bg-green-500 hover:bg-green-600 ml-10 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2"
 					onClick={async () => {
 						// @ts-ignore
 						await updateActivity(activityEditing);
@@ -715,7 +765,7 @@ function ActivityListItem(props: {
 					Opslaan
 				</button>
 				<button
-					className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
+					className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2"
 					onClick={() => {
 						props.setActivityEditing(null);
 					}}>
@@ -742,23 +792,24 @@ function ActivityListItem(props: {
 				<img
 					className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
 					src={`data:image/png;base64, ${activiteit?.hero}`}
-					style={{imageRendering: "pixelated"}}
+					style={{ imageRendering: "pixelated" }}
 					alt={activiteit?.title ?? "activity image"}
 				/>
 			</li>
 			<button
-				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
+				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
 				onClick={() => { // @ts-ignore
-					props.setActivityEditing(activiteit)}}>
+					props.setActivityEditing(activiteit)
+				}}>
 				Bewerken
 			</button>
 			<button
-				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-4  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
-				onClick={() => {props.setActivityScheduling(activiteit as unknown as ActivityFull)}}>
+				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-4  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+				onClick={() => { props.setActivityScheduling(activiteit as unknown as ActivityFull) }}>
 				Plannen
 			</button>
 			<button
-				className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4  rounded cursor-pointer px-4 font-small text-2xl hover:ring-2"
+				className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
 				onClick={async () => {
 					if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 						props.ActivityDeleteMutator.mutate(activiteit);
@@ -776,13 +827,13 @@ function SlideshowEditor(props: {
 	SlideInsertMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlideDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
 }) {
-	const {slides, SlideInsertMutator, SlideDeleteMutator} = props;
+	const { slides, SlideInsertMutator, SlideDeleteMutator } = props;
 	const [creatingSlide, setCreatingSlide] = useState(false);
 
 	return (
 		<>
 			<Helper>
-				<Icon icon="material-symbols:info-outline" width="32" height="32"/>
+				<Icon icon="material-symbols:info-outline" width="32" height="32" />
 				<p>
 					Hieronder vindt u een lijst met alle slides in de slideshow. Met de knoppen kunt u ze verwijderen of nieuwe aanmaken.
 				</p>
@@ -869,11 +920,11 @@ function SlideCreator(props: {
 
 	return (
 		<form onSubmit={insertSlide}>
-			<ImageUpload fieldName="image"/>
+			<ImageUpload fieldName="image" />
 			<div className="mb-2">
 				<label htmlFor="alt">Alt-tekst (beschrijving van de afbeelding)</label>
 				<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
-					   className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/>
+					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<button type="submit" className="bg-green-700 hover:underline rounded cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
 				Toevoegen
@@ -887,13 +938,15 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 
 	return (
 		<>
-			{(() => {if (activities.length == 0) {
-				return (
-					<div className="h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
-						Er zijn nog geen activiteiten. Maak er een aan met de knop bovenaan!
-					</div>
-				)
-			}})()}
+			{(() => {
+				if (activities.length == 0) {
+					return (
+						<div className="h-[40vh] w-full flex items-center justify-center text-3xl font-bold select-none cursor-not-allowed hover:border-red-500">
+							Er zijn nog geen activiteiten. Maak er een aan met de knop bovenaan!
+						</div>
+					)
+				}
+			})()}
 		</>
 	)
 }
@@ -915,10 +968,10 @@ function ImageUpload(props?: { fieldName?: string }) {
 	return (
 		<div>
 			<label htmlFor={fieldName} className="text-base font-semibold">Plaatje</label>
-			<div className="w-full min-w-[40%] h-[100%] min-h-[10em]">
+			<div className="w-full min-w-[40%] h-full min-h-[10em]">
 				<div className={`text-black bg-gray-200/80 w-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"} h-full`}>
-					{image && <img src={image} alt="Preview" className="object-fill"/>}
-					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`}  type="file" accept="image/*" required onChange={(e) => {
+					{image && <img src={image} alt="Preview" className="object-fill" />}
+					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`} type="file" accept="image/*" required onChange={(e) => {
 						const file = e.target.files?.[0];
 						if (!file) return;
 						const reader = new FileReader();
@@ -936,9 +989,9 @@ function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 	if (!props.loading) return null;
 	return (
 		<div className="pointer-events-auto cursor-progress select-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex fixed">
-			<div className="absolute inset-0 bg-black/20 backdrop-grayscale"/> {/*De achtergrond.*/}
+			<div className="absolute inset-0 bg-black/20 backdrop-grayscale" /> {/*De achtergrond.*/}
 			<div className="bg-white p-4 rounded-xl aspect-3/2 flex flex-col justify-center z-10">
-				<Icon icon="line-md:loading-alt-loop" className="mx-auto" width="128" height="128" style={{color: "blue"}} />
+				<Icon icon="line-md:loading-alt-loop" className="mx-auto" width="128" height="128" style={{ color: "blue" }} />
 				<p className="text-black text-center text-3xl font-bold">{props.text || "ACTIE VERWERKEN..."}</p>
 			</div>
 		</div>
