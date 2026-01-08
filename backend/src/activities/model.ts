@@ -69,7 +69,7 @@ export const GetActivitiesResponseBody = t.Array(t.Object({
 	hero: t.String(), // Plaatje als base64, zodat 'ie makkelijk verstuurbaar is.
 	capacity: t.Numeric(),
 	threshold: t.Numeric(),
-	minage: t.UnionEnum([0, 3, 7, 12]),
+	minage: t.UnionEnum(["0", "3", "7", "12"]),
 	location: t.Object({
 		nl: t.String(),
 		en: t.String(),

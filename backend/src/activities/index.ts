@@ -5,6 +5,8 @@ import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
 import {getAllSlots} from "../slots/service";
 import {getActivityBookings} from "../bookings/service";
+import {bookingsTable} from "../bookings/model";
+import {slotsTable} from "../slots/model";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -92,6 +94,16 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
     .delete(
         "/:id",
         async ({params: {id}}) => {
+            // Eerst alle boekingen van de activiteit verwijderen
+            const bookings = await getActivityBookings(id);
+            for (const booking of bookings) {
+                await db.delete(bookingsTable).where(eq(bookingsTable.id, booking.id));
+            }
+
+            // Dan alle slots voor deze activiteit verwijderen
+            await db.delete(slotsTable).where(eq(slotsTable.activityId, +id));
+
+            // Nu zijn alle childs weg, en kunnen we de activiteit weggooien.
             await db.delete(activitiesTable).where(eq(activitiesTable.id, +id));
         }
     )

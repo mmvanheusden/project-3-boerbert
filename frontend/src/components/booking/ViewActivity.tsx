@@ -84,7 +84,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`border-2 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"}`}
+                    className={`border-2 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount == 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -104,8 +104,8 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                     </div>
                     <div className="">
                         {(selectedSlot?.id == slot.id) && <p className="text-blue-700">Na reserveren nog {selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
-                        <p className="text-3xl flex justify-end font-bold">
-                            {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity}
+                        <p className="text-2xl flex justify-end font-bold">
+                            {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} "Beschikbare plekken"
                         </p>
                     </div>
                 </div>
@@ -125,7 +125,7 @@ function Reserveren({ price }: { price: number | undefined }) {
 
         <button
           type="button"
-          className="w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl"
+          className={"w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl" }
           onClick={
             () => {
                 context.selectPrice(context.selectedAmount * price);
@@ -155,6 +155,7 @@ function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }
           onClick={() => context.selectAmount(Math.max(1, context.selectedAmount! - 1))}
         >
           -
+
         </button>
 
         <div className="mx-15 abolute min-w-10 text-center flex items-center justify-center text-6xl font-bold text-gray-800">{context.selectedAmount}</div>
