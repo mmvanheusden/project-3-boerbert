@@ -596,7 +596,7 @@ function ActivityListItem(props: {
 																className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
 																onClick={(e) => {
 																	e.stopPropagation();
-																	if (confirm(`Weet je zeker dat je dit tijdslot wilt verwijderen?`)) {
+																	if (confirm(`Weet je zeker dat je dit tijdslot MET ALLE GEKOPPELDE BOEKINGEN wilt verwijderen?`)) {
 																		SlotDeleteMutator.mutate(slot);
 																	}
 																}}
