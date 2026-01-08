@@ -787,7 +787,7 @@ function ActivityListItem(props: {
 					<p className="text-xl text-gray-700">Capaciteit: {activiteit.capacity}</p>
 					<p className="text-xl text-gray-700">Drempelwaarde: {activiteit.threshold}</p>
 					<p className="text-xl text-gray-700">Prijs: €{activiteit.price}</p>
-					<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage == "0" ? "Alle leeftijden" : activiteit.minage}</p>
+					<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage == "0" ? "Alle leeftijden" : activiteit.minage + "+"}</p>
 					<p className="text-xl text-gray-700">Locatie: {activiteit?.location}</p>
 				</div>
 				<img
