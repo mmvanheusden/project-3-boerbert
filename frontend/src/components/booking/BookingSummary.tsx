@@ -27,7 +27,7 @@ export function BookingSummary() {
 						/>
 					</div>
 				<h1 className="text-6xl font-semibold mb-10 text-center">Weet je zeker dat je deze activiteit wil boeken?</h1>
-				<b className="text-center text-5xl underline mb-5">Boekingsdetails:</b>
+				<b className="text-center text-5xl mb-5">Boekingsdetails:</b>
 					<div className="text-4xl">
 					<BookingDetails/>
 					</div>

@@ -156,7 +156,7 @@ export default function AdminPanel() {
 					</button>
 					<a href="/">
 						<button
-							className="text-white inline-flex items-center hover:underline ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
+							className="text-white inline-flex items-center hover:bg-orange-600 ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
 							<Icon icon="ion:arrow-back" width="24" height="24" />
 							<span>Terug naar hoofdpagina</span>
 						</button>
@@ -859,7 +859,7 @@ function SlideshowEditor(props: {
 				:
 				<>
 					<button
-						className="text-white inline-flex items-center hover:underline hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
+						className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
 						onClick={() => setCreatingSlide(true)}
 					>
 						<Icon icon="mdi:add-bold" width="24" height="24" />
@@ -883,7 +883,7 @@ function SlideshowEditor(props: {
 									</div>
 									<p className="text-base mb-2">{slide.alt}</p>
 									<button
-										className="text-white bg-red-500 hover:underline rounded cursor-pointer px-4 font-small text-xl hover:ring-2"
+										className="text-white bg-red-500 hover:bg-red-600 rounded cursor-pointer px-4 font-small text-xl hover:ring-2"
 										onClick={async () => {
 											if (confirm(`Weet je zeker dat je deze slide wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 												SlideDeleteMutator.mutate(slide);
@@ -926,7 +926,7 @@ function SlideCreator(props: {
 				<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
-			<button type="submit" className="bg-green-700 hover:underline rounded cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
+			<button type="submit" className="bg-green-600 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
 				Toevoegen
 			</button>
 		</form>
