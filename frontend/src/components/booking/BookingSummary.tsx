@@ -15,6 +15,7 @@ export function BookingSummary() {
 					{t("boeking_samenvatting")}
 				</span>
 			</Header>
+<<<<<<< Updated upstream
 			<div className="flex-1 overflow-auto text-2xl p-5">
 				<div>
 					<div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
@@ -29,6 +30,26 @@ export function BookingSummary() {
 				<h1 className="text-8xl font-semibold mb-15 mt-10 text-center">Weet je zeker dat je deze activiteit wil boeken?</h1>
 				<b className="text-center text-6xl">Boekingsdetails:</b>
 				<BookingDetails />
+=======
+			<div className="flex-1 overflow-auto text-2xl ">
+				<div className="w-full h-full overflow-auto flex flex-col  items-center bg-white shadow-md rounded-lg">
+					<div className=" min-h-[30vh] max-h-[40vh] overflow-hidden rounded-4xl outline-black outline-3 mt-10 mb-15">
+						<img
+							className="object-contain size-full "
+							src={`data:image/png;base64, ${context.selectedActivity?.hero}`}
+							style={{ imageRendering: "pixelated" }}
+							alt={context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
+						/>
+					</div>
+				<h1 className="text-6xl font-semibold mb-10 text-center">Weet je zeker dat je deze activiteit wil boeken?</h1>
+				<b className="text-center text-5xl underline mb-5">Boekingsdetails:</b>
+					<div className="text-4xl">
+					<BookingDetails/>
+					</div>
+				</div>
+			</div>
+			<div className="flex-row flex w-full items-center justify-between">
+>>>>>>> Stashed changes
 				<button
 					className="hover:cursor-pointer rounded-xl py-10 px-10 bg-green-600 hover:bg-green-700 focus:outline-none text-7xl text-white"
 					onClick={context.next}>

@@ -42,15 +42,21 @@ export function ViewActivity() {
                             <div className="text-4xl mb-1">{t("price_per_ticket", {price: selectedActivity?.price})}</div>
                         </div>
 
-                        <div className="mt-6">
-                            <Reserveren price={selectedActivity?.price!} />
+                        <div>
+                            <div className="text-5xl font-semibold text-gray-700">Selecteer een tijdslot</div>
+                            <hr></hr> 
+                            <SlotSelector selectedAmount={selectedAmount}/>
                         </div>
 
                         <div>
-                            <div className="text-5xl font-semibold text-gray-700">Selecteer een tijdslot</div>
-                            <hr></hr>
-                            <SlotSelector selectedAmount={selectedAmount}/>
+                            <Aantalmensen selectedAmount={selectedAmount}/>
                         </div>
+
+                        <div>
+                            <Reserveren price={selectedActivity?.price!} />
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -65,7 +71,7 @@ export function ViewActivity() {
                 </div>
             </div>
         </div>
-    );
+    ); 
 }
 
 function SlotSelector({selectedAmount}: {selectedAmount: number}) {
@@ -114,8 +120,31 @@ function Reserveren({ price }: { price: number | undefined }) {
   if (!price) return null;
 
     return (
+      <div className="items-center justify-center">
+        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{context.selectedAmount * price}</div>
+
+        <button
+          type="button"
+          className="w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl"
+          onClick={
+            () => {
+                context.selectPrice(context.selectedAmount * price);
+                context.next()
+            }
+          }   
+        >
+          Reserveer nu!
+        </button>
+      </div>
+)}
+
+function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }) {
+  const context = useContext(Context);
+  if (!selectedAmount) return null;
+
+    return (
       <div className="p-4 w-full">
-      <h1 className="text-center text-5xl font-semibold mb-3">
+      <h1 className="text-center text-5xl font-semibold mb-10">
         Voor hoeveel mensen wil u reserveren?
       </h1>
 
@@ -137,24 +166,6 @@ function Reserveren({ price }: { price: number | undefined }) {
         >
           +
         </button>
-
-      </div>
-      
-      <div className="flex items-center justify-center">
-        <div className="text-5xl mt-5 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{context.selectedAmount * price}</div>
-        <button
-          type="button"
-          className="mt-3 w-full h-40 flex items-center justify-center bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-6xl"
-          onClick={
-            () => {
-                context.selectPrice(context.selectedAmount * price);
-                context.next()
-            }
-          }
-        >
-          Reserveer nu!
-        </button>
-        
       </div>
     </div>
   );
