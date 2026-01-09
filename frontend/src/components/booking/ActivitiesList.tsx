@@ -12,31 +12,26 @@ export function ActivitiesList() {
     const activityItems = context.activities!.map((activiteit) => (
         <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
             <div className="bg-white shadow-md rounded-lg p-2 w-full">
-                <div className="w-full grid grid-cols-3 gap-6 items-center">
-                    <div>
+                <div className="w-full inline-flex gap-2 items-stretch px-3 py-2">
+                    <div className="min-w-1/3">
+                        <h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+                        <p className="text-6xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+                        <p className="text-5xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+                        <p className="text-5xl text-gray-600 mt-3">{t("price_per_person", {price: activiteit.price})}</p>
+                    </div>
+                    <div className="relative min-w-2/3">
                         <img
-                            className="w-95 h-100 object-cover rounded-xl"
+                            className="w-full object-fill rounded-xl aspect-3/2"
                             src={`data:image/png;base64, ${activiteit.hero}`}
-                            style={{ imageRendering: "pixelated" }}
                             alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                         />
-                    </div>
-
-                    <div>
-                        <h3 className="text-6xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-                        <p className="text-4xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-                        <p className="text-4xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-                        <p className="text-4xl text-gray-600 mt-3">{t("price_per_person", {price: activiteit.price})}</p>
-                    </div>
-
-                    <div className="flex justify-end h-full">
                         <button
                             onClick={() => {
                                 context.selectActivity(activiteit);
                                 context.next();
                             }}
                             type="button"
-                            className="w-full rounded-3xl py-2 px-6 text-white bg-green-600 hover:bg-green-700 focus:outline-none text-7xl"
+                            className="rounded-xl mt-3 py-2 text-white w-full  bg-green-600 hover:bg-green-700 focus:outline-none text-7xl"
                         >
                             {t("proceed")}
                         </button>
