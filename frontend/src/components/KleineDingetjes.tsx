@@ -46,7 +46,7 @@ export function BookingDetails() {
 			<p><b>{t("location")}: </b>{context.selectedActivity?.location[i18n.language as "en" | "de" | "nl"]}</p>
 			<p><b>{t("minimum_age")}: </b>{context.selectedActivity?.minage}</p>
 			<p><b>{t("selected_amount")}: </b> {context.selectedAmount === 1 ? t("person") : t("selected_amount_persons", {amount: context.selectedAmount})}	</p>
-			<p><b>{t("price_sum", {price: context.selectedPrice})}</b></p>
+			<p><b>{t("price_sum", {price:context.selectedPrice})}</b></p>
 		</div>
 		</>
 	)
