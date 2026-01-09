@@ -5,7 +5,7 @@ import { t } from "i18next";
 import { BACKEND } from "../../App.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { Treaty } from "@elysiajs/eden";
-import { Slideshow } from "../Slideshow.tsx";
+import { Slideshow } from "./Slideshow.tsx";
 import { ActivitiesList } from "./ActivitiesList.tsx";
 import { ViewActivity } from "./ViewActivity.tsx";
 import { LogIn } from "./LogIn.tsx";

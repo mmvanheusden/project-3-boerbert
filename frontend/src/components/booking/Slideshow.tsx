@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import Context from "./booking/Context.tsx";
+import Context from "./Context.tsx";
 import { t } from "i18next";
-import i18n from "../i18n/config.ts";
+import i18n from "../../i18n/config.ts";
 import { Icon } from "@iconify/react";
 
 export function Slideshow() {
