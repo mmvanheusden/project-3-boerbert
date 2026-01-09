@@ -26,9 +26,8 @@ export class Header extends Component<PropsWithChildren> {
 	render(){
 		return (
 			<>
-				<div className="mb-2 relative">
+				<div className="mb-2 relative w-full flex items-center justify-center bg-green-600 rounded-t-3xl py-4 px-8">
 					{this.props.children}
-					<hr className="-mx-2 w-[calc(100%+1rem)]  z-100 h-0.5 bg-white translate-y-0.5"/>
 				</div>
 
 			</>

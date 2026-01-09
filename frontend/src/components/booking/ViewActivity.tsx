@@ -78,13 +78,13 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
     const {selectedActivity, selectSlot, selectedSlot} =  useContext(Context);
 
     return (
-        <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-xl scroll-py-5">
+        <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-4xl scroll-py-5">
             {selectedActivity?.slots
             .sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`border-2 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount == 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount == 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -103,9 +103,9 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                         </div>
                     </div>
                     <div className="">
-                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">Na reserveren nog {selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
-                        <p className="text-2xl flex justify-end font-bold">
-                            {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} "Beschikbare plekken"
+                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
+                        <p className="text-3xl flex font-bold mb-5">
+                            Nog {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} plekken beschikbaar
                         </p>
                     </div>
                 </div>

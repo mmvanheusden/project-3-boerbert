@@ -64,6 +64,7 @@ i18n
           minage: "Minimumleeftijd",
           continue_bookingflow: "Bevestig details en ga door met boeken",
           boeking_samenvatting: "Bevestig details van uw boeking",
+          search_activities: "Zoek activiteiten",
         },
       },
       // German
@@ -87,6 +88,7 @@ i18n
           minage: "Mindestalter",
           continue_bookingflow: "Details bestätigen und mit der Buchung fortfahren",
           boeking_samenvatting: "Bestätigen Sie die Details Ihrer Buchung",
+          search_activities: "Aktivitäten suchen",
         },
       },
       //english
@@ -110,6 +112,7 @@ i18n
             minage: "Minimum age",
             continue_bookingflow: "Confirm details and continue booking",
             boeking_samenvatting: "Confirm details of your booking",
+            search_activities: "Search activities",
 
         }
       }

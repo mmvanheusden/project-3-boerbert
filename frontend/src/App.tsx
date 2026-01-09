@@ -43,7 +43,7 @@ export class Footer extends Component<PropsWithChildren> {
 							</div>
 							<nav>
 								<a href="/admin">
-									<button className="hover:underline ml-2 rounded border-1 cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
+									<button className="hover:underline ml-2 rounded cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
 										Beheerderspaneel
 									</button>
 								</a>
