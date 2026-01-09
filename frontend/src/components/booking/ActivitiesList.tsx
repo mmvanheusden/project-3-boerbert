@@ -4,7 +4,6 @@ import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { CancelButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
-import { Icon } from "@iconify/react";
 
 export function ActivitiesList() {
     const context = useContext(Context);
@@ -12,7 +11,7 @@ export function ActivitiesList() {
     // De kaarten met activiteiten.
     const activityItems = context.activities!.map((activiteit) => (
         <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
-            <div className="bg-white shadow-md rounded-lg p-6 w-full">
+            <div className="bg-white shadow-md rounded-lg p-2 w-full">
                 <div className="w-full grid grid-cols-3 gap-6 items-center">
                     <div>
                         <img
@@ -24,11 +23,10 @@ export function ActivitiesList() {
                     </div>
 
                     <div>
-                        <span className="text-2xl text-gray-600 font-mono font-semibold select-none">{t("activity_label")}</span>
-                        <h3 className="text-6xl font-semibold mt-2 mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+                        <h3 className="text-6xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
                         <p className="text-4xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-                        <p className="text-4xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age_note", { minage: activiteit.minage })}</p>
-                        <p className="text-4xl text-gray-600 mt-3">€{activiteit.price} per persoon</p>
+                        <p className="text-4xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+                        <p className="text-4xl text-gray-600 mt-3">{t("price_per_person", {price: activiteit.price})}</p>
                     </div>
 
                     <div className="flex justify-end h-full">
@@ -38,9 +36,9 @@ export function ActivitiesList() {
                                 context.next();
                             }}
                             type="button"
-                            className="w-full rounded-3xl py-2 px-6 text-white bg-green-600 hover:bg-green-700 focus:outline-none text-8xl"
+                            className="w-full rounded-3xl py-2 px-6 text-white bg-green-600 hover:bg-green-700 focus:outline-none text-7xl"
                         >
-                            {t("book")}
+                            {t("proceed")}
                         </button>
                     </div>
                 </div>
@@ -48,14 +46,14 @@ export function ActivitiesList() {
         </li>
     ));
 
-    return (
-        <div className="flex flex-col gap-3 h-full">
-            <Header>
-                <span
-                    className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-                    {t("stap_1")}
-                </span>
-            </Header>
+	return (
+		<div className="flex flex-col gap-3 h-full">
+			<Header>
+					<span
+						className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
+						{t("choose_an_activity")}
+					</span>
+			</Header>
             <div className="w-full flex justify-center">
                 <button className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl mr-5 w-full">Type activiteit ↓</button>
                 <button className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl mr-2.5 w-full">Minimumleeftijd ↓</button>
@@ -63,13 +61,12 @@ export function ActivitiesList() {
                 <button className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl ml-5 w-full">Beschikbare plekken ↓</button>
             </div>
 
-            <div className="flex-1 overflow-auto">
-                <ul>{activityItems}</ul>
-            </div>
-            <div className="flex">
-                <CancelButton />
-            </div>
-        </div>
-    );
-
+			<div className="flex-1 overflow-auto">
+				<ul>{activityItems}</ul>
+			</div>
+			<div className="flex">
+				<CancelButton/>
+			</div>
+		</div>
+	);
 }

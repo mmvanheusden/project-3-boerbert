@@ -41,7 +41,7 @@ export function Slideshow() {
   return (<>
         <div className="flex flex-col h-full">
         <span className="font-bold text-center text-7xl mb-2 italic bg-green-600 text-white rounded-xl p-4">
-          {t("Welkom bij Boer Bert's Camping!")}
+          {t("welcome")}
         </span>
           <div
               id="gallery"
@@ -153,8 +153,7 @@ export function Slideshow() {
                   className={`h-full inline-flex mt-5 text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
-                {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>Momenteel
-                  geen activiteiten beschikbaar!</> : t("book")}
+                {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>{t("no_activities_available")}</> : t("proceed")}
               </button>
             </div>
           </div>

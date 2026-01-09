@@ -15,7 +15,7 @@ export function ViewActivity() {
             <Header>
                 <span
                     className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-                  {t("step2_title")}
+                  {t("activity_details")}
                 </span>
             </Header>
             <div className="rounded-4xl bg-white/50 flex-1 overflow-auto">
@@ -38,12 +38,12 @@ export function ViewActivity() {
                             <div className="text-4xl mb-5">{selectedActivity?.description[i18n.language as "en" | "de" | "nl"]}</div>
                             <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
                             <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
-                            <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age_note", {minage: selectedActivity?.minage})}</div>
-                            <div className="text-4xl mb-1">{t("price_per_ticket", {price: selectedActivity?.price})}</div>
+                            <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age", {age: selectedActivity?.minage})}</div>
+                            <div className="text-4xl mb-1">{t("price_per_person", {price: selectedActivity?.price})}</div>
                         </div>
 
                         <div>
-                            <div className="text-5xl font-semibold text-gray-700">Selecteer een tijdslot</div>
+                            <div className="text-5xl font-semibold text-gray-700">{t("select_timeslot")}</div>
                             <hr></hr> 
                             <SlotSelector selectedAmount={selectedAmount}/>
                         </div>
@@ -66,7 +66,7 @@ export function ViewActivity() {
                     <button
                         className="hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
                         onClick={prev}>
-                        {t("back_to_list")}
+                        {t("back_to_activities_list")}
                     </button>
                 </div>
             </div>
@@ -98,14 +98,14 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                                 <p>{dayjs(slot.date).locale("nl").format("dddd D[ ]MMM[ om ]HH:mm")}</p>
                                 <hr></hr>
                             </div>
-                            <p><b>Tijdsduur: </b>{slot.duration} uur</p>
+                            <p><b>{t("duration")}: </b>{slot.duration} {t("hours")}</p>
 
                         </div>
                     </div>
-                    <div className="">
-                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{selectedActivity.capacity - slot.bookings - selectedAmount} plekken beschikbaar</p>}
+                    <div>
+                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>}
                         <p className="text-3xl flex font-bold mb-5">
-                            Nog {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} plekken beschikbaar
+                            {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} {t("slots_available")}
                         </p>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ function Reserveren({ price }: { price: number | undefined }) {
 
     return (
       <div className="items-center justify-center">
-        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">Totaalprijs €{context.selectedAmount * price}</div>
+        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">{t("price_sum", {price: context.selectedAmount * price})}</div>
 
         <button
           type="button"
@@ -133,7 +133,7 @@ function Reserveren({ price }: { price: number | undefined }) {
             }
           }   
         >
-          Reserveer nu!
+            {t("proceed")}
         </button>
       </div>
 )}
@@ -145,7 +145,7 @@ function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }
     return (
       <div className="p-4 w-full">
       <h1 className="text-center text-5xl font-semibold mb-10">
-        Voor hoeveel mensen wil u reserveren?
+          {t("how_many_people")}
       </h1>
 
       <div className="flex items-center justify-evenly">

@@ -1,7 +1,7 @@
 import {Component, type PropsWithChildren, useContext} from "react";
 import Context from "./booking/Context.tsx";
 import dayjs from "dayjs";
-import i18n from "i18next";
+import i18n, {t} from "i18next";
 
 // Source - https://stackoverflow.com/a/77764153
 // Posted by Victor Zamanian, modified by community. See post 'Timeline' for change history
@@ -40,13 +40,13 @@ export function BookingDetails() {
 	const context = useContext(Context);
 	return(
 		<>
-		<div className="text-5xl flex flex-col gap-3 my-10">
-			<p><b>Activiteit: </b> {context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</p>
-			<p><b>Datum en tijd: </b> {dayjs(context.selectedSlot!.date).locale("nl").format("dddd D[ ]MMMM[ om ]HH:mm")}</p>
-			<p><b>Locatie: </b>{context.selectedActivity?.location[i18n.language as "en" | "de" | "nl"]}</p>
-			<p><b>Leeftijd: </b>{context.selectedActivity?.minage}</p>
-			<p><b>Aantal personen: </b> {context.selectedAmount}</p>
-			<p><b>Totaalprijs: </b> € {context.selectedPrice}</p>
+		<div className="text-5xl flex flex-col gap-3">
+			<p><b>{t("activity")}: </b> {context.selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</p>
+			<p><b>{t("datetime")}: </b> {dayjs(context.selectedSlot!.date).locale("nl").format("dddd D[ ]MMMM[ om ]HH:mm")}</p>
+			<p><b>{t("location")}: </b>{context.selectedActivity?.location[i18n.language as "en" | "de" | "nl"]}</p>
+			<p><b>{t("minimum_age")}: </b>{context.selectedActivity?.minage}</p>
+			<p><b>{t("selected_amount")}: </b> {context.selectedAmount === 1 ? t("person") : t("selected_amount_persons", {amount: context.selectedAmount})}	</p>
+			<p><b>{t("price_sum", {price: context.selectedPrice})}</b></p>
 		</div>
 		</>
 	)

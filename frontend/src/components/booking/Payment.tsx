@@ -27,9 +27,9 @@ export function Payment() {
                             case "PIN":
                                 return <div className="text-center">
                                     <h1 className="text-7xl font-bold mb-70">
-                                        U kunt nu de QR-code scannen via uw telefooncamera
+                                        {t("scan_qrcode")}
                                     </h1>
-                                    <div className="scale-250 inline-flex">
+                                    <div className="scale-250 inline-block">
                                         <Girocode recipient="Camping Boer Bert" iban="NL50 INGB 0756 5719 60" amount={context.selectedPrice} />
                                     </div>
 
@@ -38,10 +38,7 @@ export function Payment() {
                             case "CONTANT":
                                 return <div className="text-center">
                                     <h1 className="text-8xl font-bold mb-10 mt-5">
-                                        Ga verder bij de balie
-                                    </h1>
-                                    <h1 className="text-7xl font-bold mb-20">
-                                        U krijgt daar uw bon
+                                        {t("proceed_at_counter")}
                                     </h1>
                                 </div>
                         }
@@ -53,13 +50,13 @@ export function Payment() {
                             case "PIN":
                                 return <>
                                     <h1 className="font-bold text-6xl mt-60">
-                                        Totaalprijs: €{context.selectedPrice},00
+                                        {t("price_sum", {price: context.selectedPrice})}
                                     </h1>
                                 </>
                             case "CONTANT":
                                 return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />
                                     <h1 className="font-bold text-6xl mt-20">
-                                        Totaalprijs: €{context.selectedPrice},00
+                                        {t("price_sum", {price: context.selectedPrice})}
                                     </h1>
                                     </>
                         }
@@ -73,14 +70,14 @@ export function Payment() {
                     <button
                         className="hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
                         onClick={context.prev}>
-                        {t("Terug naar betaalmethode kiezen")}
+                        {t("back_to_paymentmethod")}
                     </button>
                 </div>
             </div>
             <button
                 className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                 onClick={context.next}
-            > Verder (secret admin mode)
+            > {t("proceed")} (secret admin mode)
             </button>
         </div>
     );

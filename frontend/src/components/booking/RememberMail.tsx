@@ -15,13 +15,13 @@ export function RememberMail() {
             <Header>
             <span
                 className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-            Mail updates ontvangen
+            {t("email_updates")}
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
                 <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                         <h1 className="text-8xl font-bold mb-10 mt-5 mx-15 justify-center text-center">
-                            Wilt u updates ontvangen via mail?
+                            {t("receive_email_updates")}
                         </h1>
                             <Icon className="mt-5  cursor-pointer" icon="lucide:calendar-clock" width="300" height="300"/>
                         
@@ -35,12 +35,12 @@ export function RememberMail() {
                           <button
                               className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
                               onClick={context.next}
-                          > Doorgaan zonder emailupdates
+                          > {t("proceed_without_email_updates")}
                         </button>
                          <button
                               className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
                               onClick={context.next}
-                          > Ik ontvang graag updates via de mail
+                          > {t("proceed")}
                         </button>
                         </div>
                         

@@ -15,18 +15,18 @@ export function ConnectivityCheck() {
 				{(() => {
 					if (isPending) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-orange-500 px-4 font-medium text-xl">
-							{t("loading")}
+							{t("state_loading")}
 						</span>
 					)
 					if (error || (data !== "pong")) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-red-500 px-4 font-medium text-xl">
-							{t("error_prefix")} {t("error")}
+							{t("state_error")}
 						</span>
 					)
 
 					if (!error && (data == "pong")) return (
 						<span className="ml-2 rounded border-dashed border-2 bg-green-500 px-4 font-medium text-xl">
-							{t("ok")}
+							{t("state_ok")}
 						</span>
 					)})()}
 		</span>

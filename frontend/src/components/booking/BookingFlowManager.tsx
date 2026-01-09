@@ -15,6 +15,9 @@ import { Payment } from "./Payment.tsx";
 import { PaymentStatus } from "./Paymentstatus.tsx";
 import { Endpage } from "./EndPage.tsx";
 import { BookingSummary } from "./BookingSummary.tsx";
+import type * as React from "react";
+import {Icon} from "@iconify/react";
+import {LoadingSpinner} from "../admin/AdminPanel.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -74,8 +77,8 @@ const BookingFlow = () => {
 	})
 
 	useTranslation();
-	if (activitiesQuery.isPending || slidesQuery.isPending) return 'Laden...'
-	if (activitiesQuery.error || slidesQuery.error) return "Er is iets misgegaan!"
+	if (activitiesQuery.isPending || slidesQuery.isPending) return <LoadingSpinner loading={true} text={"Data ophalen uit systeem.."}/>;
+	if (activitiesQuery.error || slidesQuery.error) return <div className="bg-white p-5 text-2xl rounded-xl border font-medium inline-flex w-full"><Icon icon="mdi:alert" width="32" height="32"/>Server is onbereikbaar! Storing...</div>;
 
 
 	const next = () => {
@@ -106,7 +109,7 @@ export function CancelButton() {
 	const { setCurrentStep } = useContext(Context);
 
 	return (
-		<button className="inline-flex items-center hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-600 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
+		<button className="inline-flex items-center h-full hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-600 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
 			{t("cancel")}
 		</button>
 	)

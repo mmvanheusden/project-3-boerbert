@@ -14,14 +14,14 @@ export function PaymentMethod() {
             <Header>
             <span
                 className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-              Selecteer betaalmethode
+              {t("choose_payment_method")}
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
                     <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                             <div>
                                 <h1 className="text-8xl font-bold mb-30">
-                                    Selecteer betaalmethode
+                                    {t("select_payment_method")}
                                 </h1>
                             </div>
                             <div className="inline-flex">
@@ -30,7 +30,7 @@ export function PaymentMethod() {
                                 <button className="ml-10 mr-10 mt-10 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer" onClick={() => {
                                     context.selectPaymentMethod("CONTANT")
                                     context.next()
-                                }}>Met contant bij de balie</button>
+                                }}>{t("pay_cash")}</button>
 
                                 </div>
                                 <div>
@@ -38,7 +38,7 @@ export function PaymentMethod() {
                                 <button className="ml-10 mr-10 mt-10 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer" onClick={() => {
                                     context.selectPaymentMethod("PIN")
                                     context.next()
-                                }}>Met iDeal via QR-code</button>
+                                }}>{t("pay_digital")}</button>
                                 </div>
                             </div>
                     </div>
@@ -50,7 +50,7 @@ export function PaymentMethod() {
                                 <button
                                     className="hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
                                     onClick={context.prev}>
-                                    {t("Terug naar mailupdates")}
+                                    {t("back_to_email")}
                                 </button>
                             </div>
                         </div>

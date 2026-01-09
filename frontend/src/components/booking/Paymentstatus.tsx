@@ -14,13 +14,13 @@ export function PaymentStatus() {
             <Header>
             <span
                 className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
-              Betalingsstatus
+              {t("payment_status")}
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
                 <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                         <h1 className="text-8xl font-bold mb-10 mt-5">
-                            Betaling is gelukt
+                            {t("payment_successful")}
                         </h1>
                         <Icon className="mt-10  cursor-pointer" icon="streamline-ultimate-color:check" width="800" height="800"/>
                 </div>
@@ -31,18 +31,11 @@ export function PaymentStatus() {
             <div 
                                 className="flex-row flex w-full items-center justify-between">
                                 <CancelButton/>
-                            <div>
-                                <button
-                                    className="hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
-                                    onClick={context.prev}>
-                                    {t("Terug naar campingplaats invoeren")}
-                                </button>
-                            </div>
                         </div>
                 <button
                               className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                               onClick={context.next}
-                          > Verder (secret admin mode)          
+                          > {t("proceed")} (secret admin mode)
                 </button>
             </div>
     );

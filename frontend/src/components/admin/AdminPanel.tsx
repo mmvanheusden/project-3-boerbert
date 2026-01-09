@@ -986,7 +986,7 @@ function ImageUpload(props?: { fieldName?: string }) {
 	)
 }
 
-function LoadingSpinner(props: { loading?: boolean, text?: string }) {
+export function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 	if (!props.loading) return null;
 	return (
 		<div className="pointer-events-auto cursor-progress select-none mx-auto z-100 justify-center items-center top-0 left-0 right-0 bottom-0 flex fixed">
