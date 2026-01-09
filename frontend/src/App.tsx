@@ -1,11 +1,11 @@
-import {treaty} from '@elysiajs/eden'
-import type {ElysiaApp} from "../../backend/src"
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import { treaty } from '@elysiajs/eden'
+import type { ElysiaApp } from "../../backend/src"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import BookingFlow from "./components/booking/BookingFlowManager.tsx";
-import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
-import Router, {Route, Switch} from "crossroad";
+import { ConnectivityCheck } from "./components/ConnectivityCheck.tsx";
+import Router, { Route, Switch } from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
-import {Component, type PropsWithChildren, useRef} from "react";
+import { Component, type PropsWithChildren, useRef } from "react";
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")

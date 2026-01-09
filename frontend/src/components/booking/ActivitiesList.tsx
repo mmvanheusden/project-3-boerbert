@@ -2,7 +2,7 @@ import "../../index.css";
 import { useContext } from "react";
 import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
-import { CancelButton } from "./BookingFlowManager.tsx";
+import { BottomRowButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
 import useFirstRender from "../../App.tsx";
 
@@ -68,7 +68,7 @@ export function ActivitiesList() {
 				<ul>{activityItems}</ul>
 			</div>
 			<div className="flex">
-				<CancelButton/>
+				<BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"} />
 			</div>
 		</div>
 	);

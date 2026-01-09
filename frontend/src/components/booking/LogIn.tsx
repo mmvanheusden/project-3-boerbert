@@ -1,9 +1,9 @@
 import "../../index.css";
-import {useContext} from "react";
+import { useContext } from "react";
 import Context from "./Context.tsx";
-import {Header} from "../KleineDingetjes.tsx";
+import { Header } from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
-import {CancelButton} from "./BookingFlowManager.tsx";
+import { BottomRowButton } from "./BookingFlowManager.tsx";
 import { t } from "i18next";
 
 
@@ -35,14 +35,8 @@ export function LogIn() {
                 </div>
             </div>
                         <div className="flex-row flex w-full items-center justify-between">
-                            <CancelButton/>
-                            <div>
-                                <button
-                                    className="hover:cursor-pointer rounded-xl py-3 px-5 bg-orange-400 hover:bg-orange-300 focus:outline-none text-4xl mr-3 text-white"
-                                    onClick={context.prev}>
-                                    {t("back_to_confirmation")}
-                                </button>
-                            </div>
+                            <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"} />
+                            <BottomRowButton text={t("back_to_confirmation")} onClick={() => context.prev()} colorHover={"orange-300"} colorIdle={"orange-400"} />
                         </div>
         </div>
     );

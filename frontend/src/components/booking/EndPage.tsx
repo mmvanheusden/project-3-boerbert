@@ -1,10 +1,11 @@
 import "../../index.css";
-import {useContext} from "react";
+import { useContext } from "react";
 import Context from "./Context.tsx";
-import {BookingDetails, Header} from "../KleineDingetjes.tsx";
+import { BookingDetails, Header } from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
-import {BACKEND} from "../../App.tsx";
-
+import { BACKEND } from "../../App.tsx";
+import { BottomRowButton } from "./BookingFlowManager.tsx";
+import { t } from "i18next";
 
 
 export function Endpage() {
@@ -45,11 +46,7 @@ export function Endpage() {
 
             </div>
             <div className="flex justify-end">
-                <button
-                    className="text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
-                    onClick={context.next}
-                > Terug naar start
-                </button>
+                <BottomRowButton text={t("back_to_start")} onClick={() => context.setCurrentStep(0)} colorHover={"green-500"} colorIdle={"green-600"}/>
             </div>
         </div>
     );

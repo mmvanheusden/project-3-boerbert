@@ -2,10 +2,10 @@
  * Hier defineren we de context, daarin staat gedeelde "context" die relevant is voor de componenten in het beheerderspaneel.
  * Elk component kan de context benaderen.
  * **/
-import {createContext, useContext} from "react";
-import {BACKEND} from "../../App.tsx";
-import type {Treaty} from "@elysiajs/eden";
 import * as React from "react";
+import { createContext, useContext } from "react";
+import { BACKEND } from "../../App.tsx";
+import type { Treaty } from "@elysiajs/eden";
 
 // https://react.dev/learn/passing-data-deeply-with-context
 type Activity = Treaty.Data<typeof BACKEND.activities.get>[0];

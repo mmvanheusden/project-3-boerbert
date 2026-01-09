@@ -2,12 +2,12 @@ import { BookingDetails, Header } from "../KleineDingetjes.tsx";
 import i18n, { t } from "i18next";
 import { useContext } from "react";
 import Context from "./Context.tsx";
-import { CancelButton } from "./BookingFlowManager.tsx";
+import { BottomRowButton } from "./BookingFlowManager.tsx";
 
 export function BookingSummary() {
 	const context = useContext(Context), { selectedActivity, prev, selectedAmount } = useContext(Context);
 
-	return (<div className="flex flex-col gap-3 h-full rounded-4xl bg-white/50 flex-1 overflow-auto">
+	return (<div className="flex flex-col gap-3 h-full flex-1 overflow-auto">
 		<Header>
 			<span
 				className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
@@ -39,12 +39,8 @@ export function BookingSummary() {
 		</div>
 		<div
 			className="flex-row flex w-full gap-2 items-center justify-between">
-			<CancelButton />
-			<button
-				className="inline-flex items-center hover:cursor-pointer h-full py-3 px-5 bg-orange-400 hover:bg-orange-300 rounded-xl text-4xl text-white"
-				onClick={context.prev}>
-				{t("back_to_activity_view")}
-			</button>
+			<BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"} />
+			<BottomRowButton text={t("back_to_activity_view")} onClick={() => prev()} colorHover={"orange-300"} colorIdle={"orange-400"} />
 
 		</div>
 

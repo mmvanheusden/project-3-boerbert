@@ -1,7 +1,7 @@
-import {Component, type PropsWithChildren, useContext} from "react";
+import { Component, type PropsWithChildren, useContext } from "react";
 import Context from "./booking/Context.tsx";
 import dayjs from "dayjs";
-import i18n, {t} from "i18next";
+import i18n, { t } from "i18next";
 
 // Source - https://stackoverflow.com/a/77764153
 // Posted by Victor Zamanian, modified by community. See post 'Timeline' for change history

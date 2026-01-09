@@ -3,8 +3,8 @@
  * Elk component kan de context benaderen.
  * **/
 import { createContext } from "react";
-import {BACKEND} from "../../App.tsx";
-import type {Treaty} from "@elysiajs/eden";
+import { BACKEND } from "../../App.tsx";
+import type { Treaty } from "@elysiajs/eden";
 
 // https://react.dev/learn/passing-data-deeply-with-context
 

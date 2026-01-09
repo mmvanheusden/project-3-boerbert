@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
-import Context, { Provider } from "./Context.tsx";
+import type * as React from "react";
+import { useState } from "react";
+import { Provider } from "./Context.tsx";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 import { BACKEND } from "../../App.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { Treaty } from "@elysiajs/eden";
@@ -15,9 +15,8 @@ import { Payment } from "./Payment.tsx";
 import { PaymentStatus } from "./Paymentstatus.tsx";
 import { Endpage } from "./EndPage.tsx";
 import { BookingSummary } from "./BookingSummary.tsx";
-import type * as React from "react";
-import {Icon} from "@iconify/react";
-import {LoadingSpinner} from "../admin/AdminPanel.tsx";
+import { Icon } from "@iconify/react";
+import { LoadingSpinner } from "../admin/AdminPanel.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -105,12 +104,10 @@ const BookingFlow = () => {
 };
 export default BookingFlow;
 
-export function CancelButton() {
-	const { setCurrentStep } = useContext(Context);
-
+export function BottomRowButton(props: { text?: string, colorIdle?: string, colorHover?: string, onClick: () => void }) {
 	return (
-		<button className="inline-flex items-center h-full hover:cursor-pointer py-3 px-5 bg-red-500  hover:bg-red-600 rounded-xl text-4xl text-white" onClick={() => setCurrentStep(0)}>
-			{t("cancel")}
+		<button className={`inline-flex items-center h-full hover:cursor-pointer py-3 px-5 bg-${props.colorIdle} hover:bg-${props.colorHover} rounded-xl text-4xl text-white`} onClick={props.onClick}>
+			{props.text}
 		</button>
 	)
 }
