@@ -5,8 +5,7 @@ import BookingFlow from "./components/booking/BookingFlowManager.tsx";
 import {ConnectivityCheck} from "./components/ConnectivityCheck.tsx";
 import Router, {Route, Switch} from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
-import {Component, type PropsWithChildren} from "react";
-import { useRef } from 'react';
+import {Component, type PropsWithChildren, useRef} from "react";
 
 // @ts-ignore
 export const BACKEND = treaty<ElysiaApp>("localhost:3000")
@@ -39,16 +38,20 @@ export class Footer extends Component<PropsWithChildren> {
 							2025 Squad Skyr™
 						</span>
 						<span className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-							<div className="me-4 md:me-6">
-								<ConnectivityCheck/>
-							</div>
-							<nav>
-								<a href="/admin">
-									<button className="hover:underline ml-2 rounded cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
-										Beheerderspaneel
-									</button>
-								</a>
-							</nav>
+							{process.env.NODE_ENV !== "production" &&
+								<>
+									<div className="me-4 md:me-6">
+										<ConnectivityCheck/>
+									</div>
+									<nav>
+										<a href="/admin">
+											<button className="hover:underline ml-2 rounded cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
+												Beheerderspaneel
+											</button>
+										</a>
+									</nav>
+								</>
+							}
 						</span>
 					</div>
 				</QueryClientProvider>

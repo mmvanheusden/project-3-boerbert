@@ -162,7 +162,7 @@ function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }
 
         <button
           type="button"
-          className={`w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${context.selectedSlot != null && (context.selectedActivity!.capacity - context.selectedActivity!.slots.find((slot) => slot.id == context.selectedSlot!.id).bookings) <= context.selectedAmount! ? "bg-red-500 pointer-events-none"  : null}`}
+          className={`w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${context.selectedSlot != null && context.selectedActivity && (context.selectedActivity.capacity - (context.selectedActivity.slots.find((slot) => slot.id === context.selectedSlot?.id)?.bookings ?? 0)) <= context.selectedAmount! ? "bg-red-500 pointer-events-none" : null}`}
           onClick={() => context.selectAmount(context.selectedAmount! + 1)}
         >
           +
