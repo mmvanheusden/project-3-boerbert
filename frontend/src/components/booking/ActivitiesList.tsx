@@ -11,8 +11,8 @@ export function ActivitiesList() {
     // De kaarten met activiteiten.
     const activityItems = context.activities!.map((activiteit) => (
         <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
-            <div className="bg-white shadow-md rounded-lg p-2 w-full">
-                <div className="w-full inline-flex gap-2 items-stretch px-3 py-2">
+            <div className="bg-white shadow-md rounded-xl p-2 w-full">
+                <div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
                     <div className="min-w-1/3">
                         <h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
                         <p className="text-6xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
@@ -21,7 +21,7 @@ export function ActivitiesList() {
                     </div>
                     <div className="relative min-w-2/3">
                         <img
-                            className="w-full object-fill rounded-xl aspect-3/2"
+                            className="w-full object-fill rounded-lg aspect-6/4"
                             src={`data:image/png;base64, ${activiteit.hero}`}
                             alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                         />
@@ -31,7 +31,7 @@ export function ActivitiesList() {
                                 context.next();
                             }}
                             type="button"
-                            className="rounded-xl mt-3 py-2 text-white w-full  bg-green-600 hover:bg-green-700 focus:outline-none text-7xl"
+                            className="rounded-lg mt-3 py-8 text-white w-full  bg-green-600 hover:bg-green-700 focus:outline-none text-8xl"
                         >
                             {t("proceed")}
                         </button>
