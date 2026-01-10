@@ -1,24 +1,30 @@
 import { Header } from "../KleineDingetjes";
-import { BACKEND, queryClient } from "../../App.tsx";
+import useFirstRender, { BACKEND, queryClient } from "../../App.tsx";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Context, Provider } from "./Context.tsx";
-import type * as React from "react";
-import { Component, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
+import {Component, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState} from "react";
 import type { Treaty } from "@elysiajs/eden";
 import { Icon } from "@iconify/react";
 import "dayjs/locale/nl"
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { UpdateActivityRequestBody } from "../../../../backend/src/activities/model.ts";
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 
 type ActivityCompact = Treaty.Data<typeof BACKEND.activities.compact.get>[0];
 type ActivityFull = Treaty.Data<typeof BACKEND.activities.get>[0];
 type Slot = Treaty.Data<typeof BACKEND.slots.get>[0];
 type Slide = Treaty.Data<typeof BACKEND.slideshow.get>[0];
+type View = "Activiteiten" | "Slideshow" | "Kaart"; // De 3 tabjes bovenaan de pagina
+
+export const MAP_CENTER = {
+	lat: 52.2605784,
+	lng: 5.4004857,
+}
 
 export default function AdminPanel() {
-	const [currentView, setView] = useState<"Activiteiten" | "Slideshow">("Activiteiten");
+	const [currentView, setView] = useState<View>("Activiteiten");
 	const [searchQuery, search] = useState("");
 	const { isPending, error, data } = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
 		queryKey: ["activities"],
@@ -154,6 +160,13 @@ export default function AdminPanel() {
 							Slideshow
 						</span>
 					</button>
+					<button
+						onClick={() => setView("Kaart")}
+						className={`text-white select-none rounded-t-lg px-4 py-0 font-medium text-xl ml-1 hover:bg-green-600 cursor-pointer bg-green-500 ${currentView == "Kaart" ? "bg-green-700" : null}`}>
+						<span>
+							Kaart
+						</span>
+					</button>
 					<a href="/">
 						<button
 							className="text-white inline-flex items-center hover:bg-orange-600 ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
@@ -183,9 +196,65 @@ export default function AdminPanel() {
 							SlideDeleteMutator={SlideDeleteMutator}
 						/>
 					)}
+					{currentView == "Kaart" && (
+						<MapView
+							setView={setView}
+						/>
+					)}
 				</div>
 			</div>
 		</Provider>
+	)
+}
+
+function MapView(props: {
+	setView: (view: View) => void;
+}) {
+	const context = useContext(Context)!;
+
+	return (<>
+			<MapContainer center={[MAP_CENTER.lat, MAP_CENTER.lng]} zoom={18} scrollWheelZoom={true} className="w-full h-full ">
+				<TileLayer
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+				{context.activities.map((activity) => {
+					return (
+						<Marker position={[activity.latitude, activity.longitude]}>
+							<Popup className={"w-125"}>
+								<p className="text-2xl font-semibold underline underline-offset-6">{activity.title.nl}</p>
+								<p>{activity.subtitle.nl}</p>
+								<img
+									className="rounded w-full mb-2 mt-2 mx-auto"
+									src={`data:image/png;base64, ${activity.hero}`}
+									alt={activity.title.nl}
+								/>
+								<details className="open:mb-1">
+									<summary>Beschrijving</summary>
+									<p><b>{activity.description.nl}</b></p>
+								</details>
+								<div className="flex justify-between space-x-8">
+									<button
+										className="py-3 px-4 w-full bg-green-500"
+										onClick={() => {
+											window.location.hash = `#edit-${activity.id}`
+											props.setView("Activiteiten")
+										}}
+									>Bewerken</button>
+									<button
+										className="py-3 px-4 w-full bg-orange-500"
+										onClick={() => {
+											window.location.hash = `#plan-${activity.id}`
+											props.setView("Activiteiten")
+										}}
+									>Plannen</button>
+								</div>
+							</Popup>
+						</Marker>)
+				})}
+			</MapContainer>
+
+		</>
 	)
 }
 
@@ -243,10 +312,44 @@ function ActivitiesEditor(props: {
 			setActivityEditing(null);
 		}
 	};
+	// Check if we have a relevant instruction in the url hash on the first render.
+	useFirstRender(() => {
+		while (!activities) {}
+		if (!location.hash) {return;}
+		if (location.hash.startsWith("#edit-")) {
+			// Instructie voor bewerken activiteit staat in de URL hash, haal de ID eruit en open de bewerkingsweergave voor deze activiteit
+
+			// Source - https://stackoverflow.com/a/78894496
+			// Posted by X 47 48 - IR
+			// Retrieved 2026-01-10, License - CC BY-SA 4.0
+			// @ts-ignore
+			const id = location.hash.match(/\d+/g).join('')
+			const activity = compactActivities.find((a) => a.id === +id)
+
+			if (!activity) {
+				return alert(`Activiteit met ID ${id} niet in systeem.`)
+			} // @ts-ignore
+			setActivityEditing(activity)
+			location.hash = ''
+
+		} else if (location.hash.startsWith("#plan-")) {
+			// Instructie voor bewerken activiteit staat in de URL hash, haal de ID eruit en open de planningsweergave voor deze activiteit
+
+			// @ts-ignore
+			const id = location.hash.match(/\d+/g).join('')
+			const activity = compactActivities.find((a) => a.id === +id)
+
+			if (!activity) {
+				return alert(`Activiteit met ID ${id} niet in systeem.`)
+			} // @ts-ignore
+			setActivityScheduling(activity)
+			location.hash = ''
+		}
+	})
 
 	return (
 		<div>
-			<nav className="sticky top-0">
+			<nav className="sticky top-0 z-9000">
 				<Helper>
 					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
 					<p>
@@ -293,7 +396,6 @@ function ActivitiesEditor(props: {
 					<ActivitiesEmptyCheck activities={activities} />
 					<ol>
 						{filteredActivities.map((activiteit) => {
-							console.trace(compactActivities);
 							const isEditing = activityEditing && activityEditing.id === activiteit.id;
 							const displayData = isEditing ? activityEditing : activiteit;
 
@@ -343,6 +445,7 @@ function ActivityCreator(props: {
 		hero: File;
 	}) => void | Promise<void>;
 }) {
+	const [position, setPosition] = useState<{ lat : number; lng: number }>()
 	async function insertActivity(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 		const form = event.currentTarget
@@ -368,6 +471,10 @@ function ActivityCreator(props: {
 			location: String(form.elements["location"]?.value || ""),
 			// @ts-ignore
 			hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
+			// @ts-ignore
+			latitude: position?.lat,
+			// @ts-ignore
+			longitude: position?.lng,
 			// @ts-ignore
 			targetAudience: String(form.elements["targetAudience"]?.value || "Overig"),
 		};
@@ -402,6 +509,16 @@ function ActivityCreator(props: {
 					</div>
 				</div>
 				<ImageUpload />
+			</div>
+			<div className="h-100 w-1/2 mb-7">
+				<label>Locatie op de camping</label>
+				<MapContainer center={[52.2605784, 5.4004857]} zoom={18} scrollWheelZoom={true} className="size-full">
+					<TileLayer
+						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					< DraggableMarker setPosition={setPosition}/>
+				</MapContainer>
 			</div>
 			<div className="mb-2">
 				<label htmlFor="type">Type activiteit</label>
@@ -556,7 +673,10 @@ function ActivityListItem(props: {
 										return alert("Kan niet. Wij leven niet in het verleden!")
 									}
 
-									SlotInsertMutator.mutate(parsedFormData);
+									if (confirm(`Weet je zeker dat je dit tijdslot wilt aanmaken?`)) {
+										SlotInsertMutator.mutate(parsedFormData);
+										setSlotPlanning(false);
+									}
 								}}>
 									<div>
 										<label className="ml-10 text-2xl" htmlFor="slotDate">Datum + begintijd</label>
@@ -627,6 +747,16 @@ function ActivityListItem(props: {
 										</tr>
 									</tbody>
 								</table>
+								<div className="flex">
+									<button
+										className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2 mt-4"
+										onClick={() => {
+											setActivityScheduling(null);
+											setSlotPlanning(false);
+										}}>
+										Sluiten
+									</button>
+								</div>
 							</>
 						)}
 					</div>
@@ -1025,5 +1155,34 @@ export function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 				<p className="text-black text-center text-3xl font-bold">{props.text || "ACTIE VERWERKEN..."}</p>
 			</div>
 		</div>
+	)
+}
+
+// Bron: https://react-leaflet.js.org/docs/example-draggable-marker/
+function DraggableMarker(props: {setPosition: (position: {lat: number, lng: number}) => void}) {
+	const markerRef = useRef(null)
+	const eventHandlers = useMemo(
+		() => ({
+			dragend() {
+				const marker = markerRef.current
+				if (marker != null) {
+					// @ts-ignore
+					props.setPosition(marker.getLatLng())
+				}
+			},
+		}),
+		[],
+	)
+
+	return (
+		<Marker
+			draggable={true}
+			eventHandlers={eventHandlers}
+			position={MAP_CENTER}
+			ref={markerRef}>
+			<Popup minWidth={90}>
+				<span>Hier speelt de activiteit zich af.</span>
+			</Popup>
+		</Marker>
 	)
 }

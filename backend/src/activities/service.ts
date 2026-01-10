@@ -38,10 +38,8 @@ export async function getActivities() {
 }
 
 export async function insertActivity(activity: Static<typeof InsertActivityRequestBody>) {
-    if (activity.threshold > activity.capacity) {
-        return status(400, {
-            error: 'Oenemeloen! Capaciteit moet altijd hoger zijn!!!'})
-    }
+    validateActivity(activity);
+
     try {
         // TODO: (future proof): mocht de vertalingsdienst kapot gaan, alles in Nederlands ipv niks doen
         await db.insert(activitiesTable).values({
@@ -55,6 +53,8 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             minage: activity.minage,
             location: await vertaal(activity.location),
             type: (activity.type),
+            latitude: activity.latitude,
+            longitude: activity.longitude,
             targetAudience: activity.targetAudience,
         })
     } catch (e) {
@@ -68,6 +68,8 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
 }
 
 export async function updateActivity(id: string, activity: Static<typeof UpdateActivityRequestBody>) {
+    validateActivity(activity);
+
     await db.update(activitiesTable).set({
         title: await vertaal(activity.title),
         subtitle: await vertaal(activity.subtitle),
@@ -85,4 +87,27 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
 
 export async function getActivity(id: string) {
     return ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
+}
+
+
+// Valideer de gegevens van de activiteit
+function validateActivity(activity: Static<typeof InsertActivityRequestBody | typeof UpdateActivityRequestBody>) {
+    if (activity.threshold > activity.capacity) {
+        return status(400, {
+            error: 'Oenemeloen! Capaciteit moet altijd hoger zijn!!!'})
+    }
+
+    if (!(isLatitude(activity.latitude) && isLongitude(activity.longitude))) {
+        return status(400, "Latitude en/of longitude zijn ongeldig.")
+    }
+}
+
+// Source - https://stackoverflow.com/a/66126875
+// Posted by Bhad Guy
+// Retrieved 2026-01-10, License - CC BY-SA 4.0
+function isLatitude(latitude: number) {
+    return isFinite(latitude) && Math.abs(latitude) <= 90;
+}
+function isLongitude(longitude: number) {
+    return isFinite(longitude) && Math.abs(longitude) <= 180;
 }
