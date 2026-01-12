@@ -69,36 +69,57 @@ export function ActivitiesList() {
                 </span>
             </Header>
             <div className="w-full flex justify-between gap-3">
-                <select className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full" value={activityTypeFilter} onChange={(e) => setActivityTypeFilter(e.target.value)}>
-                    <option selected hidden value="">Type</option>
-                    <option value="Sport/Spel">Sport/Spel</option>
-                    <option value="Educatief">Educatief</option>
-                    <option value="Eten">Eten</option>
-                    <option value="Overig">Overig</option>
-                </select>
+                <div className="relative w-full">
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityTypeFilter != "" && "ring-5 ring-orange-500"}`}>Type</button>
+                    <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
+                            onChange={(e) => setActivityTypeFilter(e.target.value)}>
+                        <option hidden selected value="">Type</option>
+                        <option value="">Alles</option>
+                        <option value="Sport/Spel">Sport/Spel</option>
+                        <option value="Educatief">Educatief</option>
+                        <option value="Eten">Eten</option>
+                        <option value="Overig">Overig</option>
+                    </select>
+                </div>
 
-                <select className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full" value={activityMinAgeFilter} onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
-                    <option selected hidden value="">Leeftijd</option>
-                    <option value="0">Alle leeftijden</option>
-                    <option value="3">3+</option>
-                    <option value="7">7+</option>
-                    <option value="12">12+</option>
-                </select>
-                <select className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full" value={activityTargetAudienceFilter} onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
-                    <option selected hidden value="">Doelgroep</option>
-                    <option value="Kinderen">Kinderen</option>
-                    <option value="Gezinnen">Gezinnen</option>
-                    <option value="Senioren">Senioren</option>
-                    <option value="Volwassenen">(Jong)volwassenen</option>
-                </select>
-                <select className="bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full" value={activityPriceFilter} onChange={(e) => setActivityPriceFilter(e.target.value)}>
-                    <option selected hidden value="">Prijs</option>
-                    <option value="3.5">Max. 3,50 euro</option>
-                    <option value="5">Max. 5 euro</option>
-                    <option value="10">Max. 10 euro</option>
-                    <option value="0">Gratis</option>
-                </select>
-              
+                <div className="relative w-full">
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityMinAgeFilter != "" && "ring-5 ring-orange-500"}`}>Leeftijd</button>
+                    <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
+                            onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
+                        <option hidden selected value="">Leeftijd</option>
+                        <option value="">Alles</option>
+                        <option value="3">3+</option>
+                        <option value="7">7+</option>
+                        <option value="12">12+</option>
+                        <option value="0">Alle leeftijden</option>
+                    </select>
+                </div>
+
+                <div className="relative w-full">
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityTargetAudienceFilter != "" && "ring-5 ring-orange-500"}`}>Doelgroep</button>
+                    <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
+                            value={activityTargetAudienceFilter}
+                            onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
+                        <option hidden selected value="">Doelgroep</option>
+                        <option value="">Alles</option>
+                        <option value="Kinderen">Kinderen</option>
+                        <option value="Gezinnen">Gezinnen</option>
+                        <option value="Senioren">Senioren</option>
+                        <option value="Volwassenen">(Jong)volwassenen</option>
+                    </select>
+                </div>
+                <div className="relative w-full">
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityPriceFilter != "" && "ring-5 ring-orange-500"}`}>Prijs</button>
+                    <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
+                            onChange={(e) => setActivityPriceFilter(e.target.value)}>
+                        <option hidden selected value="">Prijs</option>
+                        <option value="">Alles</option>
+                        <option value="3.5">Max. 3,50 euro</option>
+                        <option value="5">Max. 5 euro</option>
+                        <option value="10">Max. 10 euro</option>
+                        <option value="0">Gratis</option>
+                    </select>
+                </div>
             </div>
 
             <div className="flex-1 overflow-auto">
