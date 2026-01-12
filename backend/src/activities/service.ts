@@ -82,6 +82,8 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         location: await vertaal(activity.location),
         type: activity.type,
         targetAudience: activity.targetAudience,
+        latitude: activity.latitude,
+        longitude: activity.longitude,
     }).where(eq(activitiesTable.id, +id));
 }
 
