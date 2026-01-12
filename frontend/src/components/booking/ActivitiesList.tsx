@@ -10,7 +10,7 @@ export function ActivitiesList() {
     const context = useContext(Context);
     const [activityTypeFilter, setActivityTypeFilter] = useState("");
     const [activityMinAgeFilter, setActivityMinAgeFilter] = useState("");
-    const [activityGroupFilter, setActivityGroupFilter] = useState("");
+    const [activityTargetAudienceFilter, setActivityTargetAudienceFilter] = useState("");
     const [activityPriceFilter, setActivityPriceFilter] = useState("");
 
     useFirstRender(() => {
@@ -25,7 +25,7 @@ export function ActivitiesList() {
     const activityItems = context.activities!
         .filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "")
         .filter((activity) => (activity.minage === activityMinAgeFilter) || activityMinAgeFilter == "")
-        .filter((activity) => (activity.targetaudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
+        .filter((activity) => (activity.targetAudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
         .filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
         .map((activiteit) => (
             <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
