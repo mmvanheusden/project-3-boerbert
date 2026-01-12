@@ -83,7 +83,7 @@ export function Slideshow() {
                 aria-label="Previous"
             >
           <span
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+              className="inline-flex items-center justify-center w-30 h-30 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
             <svg
                 className="w-4 h-8 text-white dark:text-gray-800 rtl:rotate-180"
                 aria-hidden="true"
@@ -107,7 +107,7 @@ export function Slideshow() {
                 aria-label="Next"
             >
           <span
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+              className="inline-flex items-center justify-center w-30 h-30 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
             <svg
                 className="w-4 h-8 text-white dark:text-gray-800 rtl:rotate-180"
                 aria-hidden="true"
