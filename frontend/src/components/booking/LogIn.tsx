@@ -25,10 +25,13 @@ export function LogIn() {
                         </h1>
                         <Icon icon="fluent:tent-16-regular" className="flex-none size-[20em]"/>
                         <form>
-                            <input type="number" className="outline focus:ring-4 text-7xl mx-5 mb-10 flex justify-center text-center caret-green-800 py-2"/>
+                            <input type="number" className="outline focus:ring-4 text-7xl mx-5 mb-10 flex justify-center text-center caret-green-800 py-2"
+                            value={context.selectedCampingSpot}
+                            onChange={(e) => context.selectCampingSpot(Number(e.target.value))}
+                            />
                         </form>
                         <button
-                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15  border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || context.selectedCampingSpot == 0) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
                               onClick={context.next}
                           > {t("proceed")}
                         </button>
