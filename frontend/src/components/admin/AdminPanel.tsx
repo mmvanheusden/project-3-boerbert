@@ -305,6 +305,8 @@ function ActivitiesEditor(props: {
 			location: activiteit?.location,
 			type: activiteit?.type,
 			targetAudience: activiteit?.targetAudience,
+			latitude: activiteit?.latitude,
+			longitude: activiteit?.longitude,
 		};
 
 		if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
@@ -517,7 +519,7 @@ function ActivityCreator(props: {
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
-					< DraggableMarker setPosition={setPosition}/>
+					< DraggableMarker position={MAP_CENTER} setPosition={setPosition}/>
 				</MapContainer>
 			</div>
 			<div className="mb-2">
@@ -810,6 +812,19 @@ function ActivityListItem(props: {
 									}}
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								/>
+							</div>
+							<div className="h-100 w-1/2 mb-7">
+								<label>Locatie op de camping</label>
+								<MapContainer center={[52.2605784, 5.4004857]} zoom={18} scrollWheelZoom={true} className="size-full">
+									<TileLayer
+										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+									/>
+									< DraggableMarker position={{lat: displayData.latitude, lng: displayData.latitude}} setPosition={(a: {lat: number, lng: number}) => {
+										props.setActivityEditing(prev => ({ ...prev!, latitude: a.lat }));
+										props.setActivityEditing(prev => ({ ...prev!, longitude: a.lng }));
+									}}/>
+								</MapContainer>
 							</div>
 							<div className="mb-2">
 								<label htmlFor="type">Type activiteit</label>
@@ -1159,7 +1174,7 @@ export function LoadingSpinner(props: { loading?: boolean, text?: string }) {
 }
 
 // Bron: https://react-leaflet.js.org/docs/example-draggable-marker/
-function DraggableMarker(props: {setPosition: (position: {lat: number, lng: number}) => void}) {
+function DraggableMarker(props: {position: {lat: number, lng: number}, setPosition: (position: {lat: number, lng: number}) => void}) {
 	const markerRef = useRef(null)
 	const eventHandlers = useMemo(
 		() => ({
