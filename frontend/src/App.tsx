@@ -8,7 +8,7 @@ import AdminPanel from "./components/admin/AdminPanel.tsx";
 import { Component, type PropsWithChildren, useRef } from "react";
 
 // @ts-ignore
-export const BACKEND = treaty<ElysiaApp>("localhost:3000")
+export const BACKEND = treaty<ElysiaApp>("http://172.20.10.5:3000")
 
 export const queryClient = new QueryClient()
 

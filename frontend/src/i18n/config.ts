@@ -53,6 +53,7 @@ i18n
                     back_to_confirmation: "Terug naar boekingsbevestiging",
                     back_to_email: "Terug naar e-mailinvoer",
                     back_to_paymentmethod: "Terug naar betaalmethodeselectie",
+                    back_to_campingspot: "Terug naar campingplaatsselectie",
                     book_areyousure: "Weet je zeker dat je deze activiteit wil boeken?",
                     booking_details: "Boekingsdetails",
                     campingspot_overview: "Campingplaatsnummer doorgeven",
@@ -95,7 +96,7 @@ i18n
                     state_loading: "Laden...",
                     state_ok: "OK",
                     view_details: "Bekijken",
-                    welcome: "Boek hier een activiteit",
+                    welcome: "Welkom",
                 },
             }, // German
             de: {
@@ -107,6 +108,7 @@ i18n
                     back_to_confirmation: "Zurück zur Buchungsbestätigung",
                     back_to_email: "Zurück zum E-Mail-Eintrag",
                     back_to_paymentmethod: "Zurück zur Auswahl der Zahlungsart",
+                    back_to_campingspot: "Zurück zur Campingplatzübersicht",
                     book_areyousure: "Sind Sie sicher, dass Sie diese Aktivität buchen möchten?",
                     booking_details: "Buchungsdetails",
                     campingspot_overview: "Geben Sie die Nummer des Campingplatzes an",
@@ -134,7 +136,7 @@ i18n
                     price_per_person: "€ {{price}} pro Person",
                     price_sum: "Gesamtpreis: € {{price}}",
                     error_select: "Bitte wählen Sie einen Zeitraum.",
-                    proceed: "Weitermachen",
+                    proceed: "Fohrtfahren",
                     proceed_at_counter: "Schließen Sie die Zahlung an der Rezeption ab",
                     proceed_without_email_updates: "Fahren Sie fort, ohne eine E-Mail zu senden",
                     receive_email_updates: "Möchten Sie Updates zu Ihrer Buchung per E-Mail erhalten?",
@@ -149,7 +151,7 @@ i18n
                     state_loading: "Laden...",
                     state_ok: "OK",
                     view_details: "Zum Anschauen",
-                    welcome: "Buchen Sie hier eine Aktivität"
+                    welcome: "Wilkommen"
                 }
             }, // English
             en: {
@@ -161,6 +163,7 @@ i18n
                     back_to_confirmation: "Back to booking confirmation",
                     back_to_email: "Back to email entry",
                     back_to_paymentmethod: "Back to payment method selection",
+                    back_to_campingspot: "Back to camping spot selection",
                     book_areyousure: "Are you sure you want to book this activity?",
                     booking_details: "Booking details",
                     campingspot_overview: "Provide camping site number",
@@ -203,7 +206,7 @@ i18n
                     state_loading: "Loading...",
                     state_ok: "OK",
                     view_details: "View details",
-                    welcome: "Book an activity here"
+                    welcome: "Welcome"
                 }
             }
         },

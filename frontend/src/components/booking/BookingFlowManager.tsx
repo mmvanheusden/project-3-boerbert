@@ -107,7 +107,7 @@ export default BookingFlow;
 
 export function BottomRowButton(props: { text?: string, colorIdle?: string, colorHover?: string, onClick: () => void }) {
 	return (
-		<button className={`inline-flex items-center h-full hover:cursor-pointer py-3 px-5 bg-${props.colorIdle} hover:bg-${props.colorHover} rounded-xl text-4xl text-white`} onClick={props.onClick}>
+		<button className={`inline-flex items-center h-full hover:cursor-pointer py-7 px-7 bg-${props.colorIdle} hover:bg-${props.colorHover} rounded-xl text-5xl text-white`} onClick={props.onClick}>
 			{props.text}
 		</button>
 	)
