@@ -96,6 +96,7 @@ i18n
                     state_ok: "OK",
                     view_details: "Bekijken",
                     welcome: "Welkom",
+                    locationlist: "Locatie:",
                 },
             }, // German
             de: {
@@ -149,7 +150,8 @@ i18n
                     state_loading: "Laden...",
                     state_ok: "OK",
                     view_details: "Zum Anschauen",
-                    welcome: "Wilkommen"
+                    welcome: "Wilkommen",
+                    locationlist: "Standort:",
                 }
             }, // English
             en: {
@@ -203,7 +205,8 @@ i18n
                     state_loading: "Loading...",
                     state_ok: "OK",
                     view_details: "View details",
-                    welcome: "Welcome"
+                    welcome: "Welcome",
+                    locationlist: "Location:",
                 }
             }
         },
