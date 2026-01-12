@@ -55,6 +55,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             minage: activity.minage,
             location: await vertaal(activity.location),
             type: (activity.type),
+            targetAudience: activity.targetAudience,
         })
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
@@ -78,6 +79,7 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         minage: activity.minage,
         location: await vertaal(activity.location),
         type: activity.type,
+        targetAudience: activity.targetAudience,
     }).where(eq(activitiesTable.id, +id));
 }
 

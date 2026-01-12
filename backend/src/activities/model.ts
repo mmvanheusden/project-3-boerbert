@@ -12,7 +12,8 @@ export const activitiesTable = sqliteTable("activities", {
     threshold: int().notNull(),
     minage: text({ enum: ["0", "3", "7", "12"] }).notNull(),
     location: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
-	type: text({ enum: ["Sport/Spel", "Educatief", "Eten", "Overig"] }).notNull()
+	type: text({ enum: ["Sport/Spel", "Educatief", "Eten", "Overig"] }).notNull(),
+	targetAudience: text({ enum: ["Kinderen", "Gezinnen", "Senioren", "Volwassenen"] }).notNull()
 });
 
 
@@ -29,6 +30,7 @@ export const InsertActivityRequestBody = t.Object({
     minage: t.UnionEnum(["0", "3", "7", "12"]),
     location: t.String(),
 	type: t.UnionEnum(["Sport/Spel", "Educatief", "Eten", "Overig"]),
+	targetAudience: t.UnionEnum(["Kinderen", "Gezinnen", "Senioren", "Volwassenen"]),
 })
 
 export const UpdateActivityRequestBody = t.Object({
@@ -46,6 +48,7 @@ export const UpdateActivityRequestBody = t.Object({
 	minage: t.UnionEnum(["0", "3", "7", "12"]),
 	location: t.String(),
 	type: t.UnionEnum(["Sport/Spel", "Educatief", "Eten", "Overig"]),
+	targetAudience: t.UnionEnum(["Kinderen", "Gezinnen", "Senioren", "Volwassenen"]),
 })
 
 export const GetActivitiesResponseBody = t.Array(t.Object({
@@ -82,6 +85,7 @@ export const GetActivitiesResponseBody = t.Array(t.Object({
 		bookings: t.Numeric(),
 	})),
 	type: t.UnionEnum(["Sport/Spel", "Educatief", "Eten", "Overig"]),
+	targetAudience: t.UnionEnum(["Kinderen", "Gezinnen", "Senioren", "Volwassenen"]),
 }))
 
 

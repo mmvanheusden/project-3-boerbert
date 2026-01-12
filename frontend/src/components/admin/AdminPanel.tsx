@@ -367,6 +367,8 @@ function ActivityCreator(props: {
 			location: String(form.elements["location"]?.value || ""),
 			// @ts-ignore
 			hero: (form.elements["hero"] as HTMLInputElement)?.files?.[0] as File,
+			// @ts-ignore
+			targetAudience: String(form.elements["targetAudience"]?.value || "Overig"),
 		};
 
 		if (parsedFormData.threshold > parsedFormData.capacity) {
@@ -407,6 +409,15 @@ function ActivityCreator(props: {
 					<option value="Educatief">Educatief</option>
 					<option value="Eten">Eten</option>
 					<option value="Overig" selected>Overig</option>
+				</select>
+			</div>
+			<div className="mb-2">
+				<label htmlFor="targetAudience">Doelgroep</label>
+				<select id="targetAudience" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+					<option value="Kinderen" selected>Kinderen</option>
+					<option value="Gezinnen">Gezinnen</option>
+					<option value="Senioren">Senioren</option>
+					<option value="Volwassenen">(Jong)volwassenen</option>
 				</select>
 			</div>
 			<div className="mb-2">
@@ -684,6 +695,23 @@ function ActivityListItem(props: {
 									<option value="Educatief">Educatief</option>
 									<option value="Eten">Eten</option>
 									<option value="Overig">Overig</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label htmlFor="type">Doelgroep</label>
+								<select
+									id="type"
+									value={displayData.targetAudience}
+									onChange={(e) => {
+										// @ts-ignore (type is string maar moet een TUnionEnum ofzo zijn)
+										props.setActivityEditing(prev => ({ ...prev!, targetAudience: e.target.value}));
+									}}
+									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+								>
+									<option value="Kinderen">Kinderen</option>
+									<option value="Gezinnen">Gezinnen</option>
+									<option value="Senioren">Senioren</option>
+									<option value="Volwassenen">(Jong)volwassenen</option>
 								</select>
 							</div>
 							<div className="mb-2">
