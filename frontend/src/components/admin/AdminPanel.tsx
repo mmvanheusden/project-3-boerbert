@@ -810,7 +810,7 @@ function ActivityListItem(props: {
 				Plannen
 			</button>
 			<button
-				className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+				className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4 pr-50 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
 				onClick={async () => {
 					if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 						props.ActivityDeleteMutator.mutate(activiteit);
