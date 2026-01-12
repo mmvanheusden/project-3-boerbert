@@ -1,1 +1,19 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+.leaflet-popup-content {
+    width: auto !important;
+}
+.leaflet-popup-content p {
+    margin: 0;
+}
+.map-container {
+    position: relative;
+    height: 180px;
+    width: 600px;
+}
+
+.map {
+    position: relative;
+    height: inherit;
+    width: inherit;
+}

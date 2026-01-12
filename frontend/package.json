@@ -9,29 +9,32 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@elysiajs/eden": "^1.4.5",
-    "@tailwindcss/vite": "^4.1.17",
-    "@tanstack/react-query": "^5.90.12",
+    "@elysiajs/eden": "^1.4.6",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-query": "^5.90.16",
     "crossroad": "^2.0.0",
     "dayjs": "^1.11.19",
-    "i18next": "^25.7.1",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "i18next": "^25.7.4",
+    "leaflet": "^1.9.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-girocode": "^2.0.1",
-    "react-i18next": "^16.3.5",
-    "tailwindcss": "^4.1.17"
+    "react-i18next": "^16.5.1",
+    "react-leaflet": "^5.0.0",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@iconify/react": "^6.0.2",
-    "@types/node": "^24.10.2",
-    "@types/react": "^19.2.7",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^25.0.5",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "typescript": "~5.9.3",
-    "vite": "npm:rolldown-vite@7.2.10"
+    "vite": "npm:rolldown-vite@7.3.1"
   },
   "overrides": {
-    "vite": "npm:rolldown-vite@7.2.10"
+    "vite": "npm:rolldown-vite@7.3.1"
   }
 }
