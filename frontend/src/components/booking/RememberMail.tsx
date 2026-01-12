@@ -25,13 +25,16 @@ export function RememberMail() {
                         </h1>
                             <Icon className="mt-5  cursor-pointer" icon="lucide:calendar-clock" width="300" height="300"/>
                         
-                        <form>
+                        <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                            e.preventDefault();
+                            context.next()
+                        }}>
                             <label className="text-7xl mt-5 mb-10 flex justify-center">
-                                <input type="text" placeholder=" Voer uw e-mailadres in" className="outline mt-10 text-center"/>
-                                <input type="checkbox" className="outline w-30 h-30 ml-5 mt-10"/> 
+                                <input type="email" placeholder=" Voer uw e-mailadres in" className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"/>
+                                <input type="checkbox" className="outline-2 outline-offset-2 rounded-4xl w-30 h-30 ml-5 mt-10"/> 
                             </label>
                         </form>
-                        <div className="flex items-center justify-evenly">
+                        <div className="flex items-center justify-evenly w-full">
                           <button
                               className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
                               onClick={context.next}

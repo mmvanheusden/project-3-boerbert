@@ -24,7 +24,10 @@ export function LogIn() {
                             {t("enter_campingspot")}
                         </h1>
                         <Icon icon="fluent:tent-16-regular" className="flex-none size-[20em]"/>
-                        <form>
+                        <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                            e.preventDefault();
+                            context.next();
+                        }}>
                             <input type="number" className="outline focus:ring-4 text-7xl mx-5 mb-10 flex justify-center text-center caret-green-800 py-2"/>
                         </form>
                         <button
