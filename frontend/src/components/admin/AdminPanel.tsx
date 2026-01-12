@@ -235,6 +235,7 @@ function ActivitiesEditor(props: {
 			minage: activiteit?.minage.toString(),
 			location: activiteit?.location,
 			type: activiteit?.type,
+			targetAudience: activiteit?.targetAudience,
 		};
 
 		if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
