@@ -98,6 +98,7 @@ i18n
                     view_details: "Bekijken",
                     welcome: "Welkom",
                     locationlist: "Locatie:",
+                    all_ages: "Alle leeftijden",
                 },
             }, // German
             de: {
@@ -154,6 +155,7 @@ i18n
                     view_details: "Zum Anschauen",
                     welcome: "Wilkommen",
                     locationlist: "Standort:",
+                    all_ages: "Alle Altersgruppen",
                 }
             }, // English
             en: {
@@ -210,6 +212,7 @@ i18n
                     view_details: "View details",
                     welcome: "Welcome",
                     locationlist: "Location:",
+                    all_ages: "All ages",
                 }
             }
         },
