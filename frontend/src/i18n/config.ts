@@ -99,6 +99,7 @@ i18n
                     welcome: "Welkom",
                     locationlist: "Locatie:",
                     all_ages: "Alle leeftijden",
+                    email_placeholder: "Voer een E-mail in",
                 },
             }, // German
             de: {
@@ -156,6 +157,7 @@ i18n
                     welcome: "Wilkommen",
                     locationlist: "Standort:",
                     all_ages: "Alle Altersgruppen",
+                    email_placeholder: "Geben Sie eine E-Mail ein",
                 }
             }, // English
             en: {
@@ -213,6 +215,7 @@ i18n
                     welcome: "Welcome",
                     locationlist: "Location:",
                     all_ages: "All ages",
+                    email_placeholder: "Please enter an E-mail",
                 }
             }
         },
