@@ -44,7 +44,7 @@ export function RememberMail() {
                           > {t("proceed_without_email_updates")}
                         </button>
                          <button
-                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700 ${(context.selectedEmail != "haha@gmail.com") ? "bg-red-600 pointer-events-none" : null}`}
+                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl  hover:bg-green-700 ${(context.selectedEmail != "haha@gmail.com") ? "bg-gray-600 pointer-events-none" : "bg-green-600"}`}
                               onClick={context.next}
                           > {t("proceed")}
                         </button>
