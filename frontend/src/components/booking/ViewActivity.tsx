@@ -117,7 +117,7 @@ function Reserveren({ price }: { price: number | undefined }) {
       <div className="items-center justify-center">
         <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">{t("price_sum", {price: context.selectedAmount * price})}</div>
         <div className = "text-red-700 text-2xl ml-5">
-          { (context.selectedSlot == null) ? t("error_select") : null} 
+          { (context.selectedSlot == null) ? t("error_select") : null}
         </div>
         <button
           className={`w-full h-40 flex items-center justify-center  text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${(context.selectedSlot == null) ? "bg-gray-500 pointer-events-none" : "bg-green-600"} `}
@@ -157,7 +157,7 @@ function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }
 
         <button
           type="button"
-          className={`w-full h-40 flex items-center justify-center bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${context.selectedSlot != null && context.selectedActivity && (context.selectedActivity.capacity - (context.selectedActivity.slots.find((slot) => slot.id === context.selectedSlot?.id)?.bookings ?? 0)) <= context.selectedAmount! ? "bg-red-500 pointer-events-none" : null}`}
+          className={`w-full h-40 flex items-center justify-center text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${context.selectedSlot != null && context.selectedActivity && (context.selectedActivity.capacity - (context.selectedActivity.slots.find((slot) => slot.id === context.selectedSlot?.id)?.bookings ?? 0)) <= context.selectedAmount! ? "bg-gray-600 pointer-events-none" : "bg-green-600" }`}
           onClick={() => context.selectAmount(context.selectedAmount! + 1)}
         >
           +
