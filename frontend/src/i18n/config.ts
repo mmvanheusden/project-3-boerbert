@@ -99,6 +99,11 @@ i18n
                     welcome: "Welkom",
                     locationlist: "Locatie:",
                     all_ages: "Alle leeftijden",
+                    type: "Type",
+                    age: "Leeftijd",
+                    target_audience: "Doelgroep",
+                    price: "prijs",
+
                 },
             }, // German
             de: {
@@ -156,6 +161,10 @@ i18n
                     welcome: "Wilkommen",
                     locationlist: "Standort:",
                     all_ages: "Alle Altersgruppen",
+                    type: "Typ",
+                    age: "Alter",
+                    target_audience: "Zielgruppe",
+                    price: "Preis",
                 }
             }, // English
             en: {
@@ -213,6 +222,10 @@ i18n
                     welcome: "Welcome",
                     locationlist: "Location:",
                     all_ages: "All ages",
+                    type: "Type",
+                    age: "Age",
+                    target_audience: "Target audience",
+                    price: "Price",
                 }
             }
         },

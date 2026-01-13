@@ -70,7 +70,7 @@ export function ActivitiesList() {
             </Header>
             <div className="w-full flex justify-between gap-3">
                 <div className="relative w-full">
-                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityTypeFilter != "" && "ring-5 ring-orange-500"}`}>Type</button>
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityTypeFilter != "" && "ring-5 ring-orange-500"}`}>{t("type")}</button>
                     <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
                             onChange={(e) => setActivityTypeFilter(e.target.value)}>
                         <option hidden selected value="">Type</option>
@@ -83,7 +83,7 @@ export function ActivitiesList() {
                 </div>
 
                 <div className="relative w-full">
-                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityMinAgeFilter != "" && "ring-5 ring-orange-500"}`}>Leeftijd</button>
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityMinAgeFilter != "" && "ring-5 ring-orange-500"}`}>{t("age")}</button>
                     <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
                             onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
                         <option hidden selected value="">Leeftijd</option>
@@ -96,7 +96,7 @@ export function ActivitiesList() {
                 </div>
 
                 <div className="relative w-full">
-                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityTargetAudienceFilter != "" && "ring-5 ring-orange-500"}`}>Doelgroep</button>
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityTargetAudienceFilter != "" && "ring-5 ring-orange-500"}`}> {t("target_audience")}</button>
                     <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
                             value={activityTargetAudienceFilter}
                             onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
@@ -109,7 +109,7 @@ export function ActivitiesList() {
                     </select>
                 </div>
                 <div className="relative w-full">
-                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center ${activityPriceFilter != "" && "ring-5 ring-orange-500"}`}>Prijs</button>
+                    <button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityPriceFilter != "" && "ring-5 ring-orange-500"}`}>{t("price")}</button>
                     <select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
                             onChange={(e) => setActivityPriceFilter(e.target.value)}>
                         <option hidden selected value="">Prijs</option>
