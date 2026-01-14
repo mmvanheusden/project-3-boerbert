@@ -103,7 +103,8 @@ i18n
                     age: "Leeftijd",
                     target_audience: "Doelgroep",
                     price: "prijs",
-
+                    email_placeholder: "Voer een E-mail in",
+                    back_to_start: "Terug naar begin",
                 },
             }, // German
             de: {
@@ -165,6 +166,8 @@ i18n
                     age: "Alter",
                     target_audience: "Zielgruppe",
                     price: "Preis",
+                    email_placeholder: "Geben Sie eine E-Mail ein",
+                    back_to_start: "Zurück zum Anfang",
                 }
             }, // English
             en: {
@@ -180,7 +183,7 @@ i18n
                     book_areyousure: "Are you sure you want to book this activity?",
                     booking_details: "Booking details",
                     campingspot_overview: "Provide camping site number",
-                    cancel: "Abort",
+                    cancel: "Cancel",
                     choose_an_activity: "Activity overview",
                     choose_payment_method: "Choose payment method",
                     confirm_booking: "Booking confirmation",
@@ -226,6 +229,8 @@ i18n
                     age: "Age",
                     target_audience: "Target audience",
                     price: "Price",
+                    email_placeholder: "Please enter an E-mail",
+                    back_to_start: "Back to start",
                 }
             }
         },

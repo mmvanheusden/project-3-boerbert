@@ -30,23 +30,26 @@ export function RememberMail() {
                             context.next()
                         }}>
                             <label className="text-7xl mt-5 mb-10 flex justify-center">
-                                <input type="email" placeholder=" Voer uw e-mailadres in" className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"/>
+                                <input type="email" placeholder= {t("email_placeholder")} className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"
+                                        value={context.selectedEmail}
+                                       onChange={(e) => context.selectEmail(e.target.value)}
+                                />
                                 <input type="checkbox" className="outline-2 outline-offset-2 rounded-4xl w-30 h-30 ml-5 mt-10"/> 
                             </label>
                         </form>
                         <div className="flex items-center justify-evenly w-full">
                           <button
-                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
+                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 `}
                               onClick={context.next}
                           > {t("proceed_without_email_updates")}
                         </button>
                          <button
-                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700 ${(context.activities != null && context.activities.length == 0) ? "" : ""}`}
+                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl  hover:bg-green-700 ${(context.selectedEmail != "haha@gmail.com") ? "bg-gray-600 pointer-events-none" : "bg-green-600"}`}
                               onClick={context.next}
                           > {t("proceed")}
                         </button>
                         </div>
-                        
+
                 </div>
             </div>
 

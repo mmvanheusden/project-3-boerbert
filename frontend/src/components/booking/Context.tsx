@@ -30,6 +30,8 @@ type ContextPayload = {
 	selectAmount: (amount: number) => void;
 	selectedCampingSpot?: number;
 	selectCampingSpot: (spot: number) => void;
+	selectedEmail: string;
+	selectEmail: (email: string) => void
 };
 
 
@@ -54,6 +56,8 @@ export const Context = createContext<ContextPayload>({
 	selectAmount: () => {},
 	selectedCampingSpot: undefined!,
 	selectCampingSpot: () => {},
+	selectedEmail: undefined!,
+	selectEmail: () => {},
 });
 
 
