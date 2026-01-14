@@ -34,10 +34,19 @@ export function LogIn() {
                             />
                         </form>
                         <button
-                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15  border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || context.selectedCampingSpot == 0) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
+                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || context.selectedCampingSpot == 0) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
                               onClick={context.next}
-                          > {t("proceed")}
+                          >
+                             {t("proceed")}
                         </button>
+                        <a href="/evil">
+                         <button
+                         className= {`mt-10 text-7xl hover:cursor-pointer px-15 py-15 bg-red-500 focus:outline-none rounded-xl ${(context.selectedCampingSpot == 666) ? "text-black" : "bg-white text-white pointer-events-none" }`}
+                         >
+                           <Icon icon="game-icons:devil-mask" width="100" height="100" />
+                           
+                           </button>
+                        </a>
                 </div>
             </div>
                         <div className="flex-row flex w-full items-center justify-between">

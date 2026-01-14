@@ -35,6 +35,19 @@ export class Header extends Component<PropsWithChildren> {
 	}
 }
 
+export class EvilHeader extends Component<PropsWithChildren> {
+	render(){
+		return (
+			<>
+				<div className="mb-2 relative w-full flex items-center justify-center bg-red-600 rounded-t-3xl py-4 px-8">
+					{this.props.children}
+				</div>
+
+			</>
+		)
+	}
+}
+
 
 export function BookingDetails() {
 	const context = useContext(Context);

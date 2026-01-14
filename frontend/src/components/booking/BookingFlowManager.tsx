@@ -17,6 +17,7 @@ import { Endpage } from "./EndPage.tsx";
 import { BookingSummary } from "./BookingSummary.tsx";
 import { Icon } from "@iconify/react";
 import { LoadingSpinner } from "../admin/AdminPanel.tsx";
+import { Evil } from "./evil.tsx";
 
 // Bron: https://codesandbox.io/p/sandbox/react-multi-step-form-dyujr?file=%2Fsrc%2FMultiStepForm%2FMultiStepForm.jsx%3A16%2C30
 
@@ -45,6 +46,8 @@ const renderStep = (step: number) => {
 						return <PaymentStatus />
 					case 9:
 						return <Endpage />
+					case 10:
+						return <Evil />
 					default:
 						return null;
 				}
@@ -54,7 +57,7 @@ const renderStep = (step: number) => {
 };
 
 const BookingFlow = () => {
-	const STEPS = 10; // Hoeveel stappen we hebben
+	const STEPS = 11; // Hoeveel stappen we hebben
 	const [currentStep, setCurrentStep] = useState(0); // Dit is de huidige stap als opgeslagen in het manager-component. Deze wordt synchroon gehouden met de context.
 	const [selectedActivity, selectActivity] = useState<Treaty.Data<typeof BACKEND.activities.get>[0] | null>(null);
 	const [selectedSlot, selectSlot] = useState<Treaty.Data<typeof BACKEND.slots.get>[0] | null>(null);
