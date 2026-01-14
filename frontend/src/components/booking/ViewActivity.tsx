@@ -78,7 +78,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`bg-gray-300 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount < 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
