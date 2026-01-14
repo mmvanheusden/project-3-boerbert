@@ -11,3 +11,14 @@ services:
     env_file:
       - ./frontend/.env
     restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: boerbert-backend
+    ports:
+      - "3312:3000"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped

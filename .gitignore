@@ -163,4 +163,7 @@ fabric.properties
 
 # Bun
 **/*.bun
+
 backend/package-lock.json
+backend/server
+backent/server.js
