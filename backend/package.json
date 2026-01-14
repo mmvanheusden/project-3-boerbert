@@ -4,7 +4,7 @@
     "@elysiajs/cors": "^1.4.1",
     "@elysiajs/openapi": "^1.4.13",
     "@libsql/client": "^0.17.0",
-    "@sckt/translate": "^1.0.9",
+    "translate": "^3.0.1",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
