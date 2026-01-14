@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      additional_contexts:
+        backend: ./backend
+    container_name: boerbert-frontend
+    ports:
+      - "1233:80"
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
