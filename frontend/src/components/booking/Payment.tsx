@@ -52,6 +52,14 @@ export function Payment() {
                                     <h1 className="font-bold text-6xl mt-60">
                                         {t("price_sum", {price: context.selectedPrice})}
                                     </h1>
+                                    <label>
+                                        <button
+                                            className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600`}
+                                            onClick={context.next}
+                                            >
+                                        {t("proceed")}
+                                        </button>
+                                    </label>
                                 </>
                             case "CONTANT":
                                 return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />
@@ -75,10 +83,9 @@ export function Payment() {
                     })()}
                 </div>
             </div>
-            <div className="flex-row flex w-full items-center justify-between gap-20">
+            <div className="flex-row flex w-full items-center justify-between">
                 <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"}/>
                 <BottomRowButton text={t("back_to_paymentmethod")} onClick={() => context.prev()} colorHover={"orange-300"} colorIdle={"orange-400"}/>
-                <BottomRowButton text={t("proceed")} onClick={() => context.next()} colorHover={"green-600"} colorIdle={"green-600"}/>
             </div>
 
         </div>
