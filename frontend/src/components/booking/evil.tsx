@@ -3,7 +3,7 @@ import {useContext} from "react";
 import Context from "./Context.tsx";
 import {EvilHeader} from "../KleineDingetjes.tsx";
 import {t} from "i18next";
-import useFirstRender from "../../App.tsx";
+import useFirstRender, {BACKEND} from "../../App.tsx";
 
 export function Evil() {
 	const context = useContext(Context);
@@ -58,6 +58,11 @@ export function Evil() {
 					<button
 						className="ml-2 w-full text-7xl rounded-2xl cursor-pointer px-4 font-medium hover:ring-2 bg-red-600"
 						onClick={async () => {
+							await BACKEND.bookings.put({
+								slotId: context.selectedSlot!.id,
+								amount: context.selectedAmount,
+								campingSpot: context.selectedCampingSpot,
+							})
 							context.setCurrentStep(9)
 						}}>
 						Betalen😈😈
