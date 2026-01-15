@@ -107,6 +107,7 @@ i18n
                     back_to_start: "Terug naar begin",
                     verification: "Voer de code in",
                     here: "Voer hier in",
+                    not_available: "Niet beschikbaar",
                 },
             }, // German
             de: {
@@ -172,6 +173,7 @@ i18n
                     back_to_start: "Zurück zum Anfang",
                     verification: "Code eingeben",
                     here: "Hier eintragen",
+                    not_available: "Nicht verfügbar",
                 }
             }, // English
             en: {
@@ -237,6 +239,7 @@ i18n
                     back_to_start: "Back to start",
                     verification: "Enter the code ",
                     here: "Enter here",
+                    not_available: "Not available",
                 }
             }
         },

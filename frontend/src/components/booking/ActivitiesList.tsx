@@ -5,6 +5,8 @@ import { Header } from "../KleineDingetjes.tsx";
 import { BottomRowButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
 import useFirstRender from "../../App.tsx";
+import dayjs from "dayjs";
+import {Icon} from "@iconify/react";
 
 export function ActivitiesList() {
     const context = useContext(Context);
@@ -21,13 +23,25 @@ export function ActivitiesList() {
         context.clearPreviousSession();
     })
 
+    // Check of een activiteit zichtbaar moet zijn
+    const hasAvailableSlots = (activity: any) => {
+        if (!activity.slots || activity.slots.length === 0) return false;
+        return activity.slots.some((slot: any) => {
+            const isAfterNow = dayjs(slot.date).isAfter(dayjs());
+            const hasCapacity = activity.capacity - slot.bookings > 0;
+            return isAfterNow && hasCapacity;
+        });
+    };
+
     // De kaarten met activiteiten.
     const activityItems = context.activities!
         .filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "")
         .filter((activity) => (activity.minage === activityMinAgeFilter) || activityMinAgeFilter == "")
         .filter((activity) => (activity.targetAudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
         .filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
-        .map((activiteit) => (
+        .map((activiteit) => {
+            const isAvailable = hasAvailableSlots(activiteit);
+            return (
             <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
                 <div className="bg-white shadow-md rounded-xl p-2 w-full">
                     <div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
@@ -50,15 +64,20 @@ export function ActivitiesList() {
                                     context.next();
                                 }}
                                 type="button"
-                                className="rounded-lg mt-3 py-8 text-white w-full  bg-green-600 hover:bg-green-700 focus:outline-none text-8xl"
+                                className={`rounded-lg mt-3 py-8 text-white w-full text-7xl transition-colors inline-flex justify-center  ${
+                                        isAvailable
+                                            ? "bg-green-600 hover:bg-green-700 focus:outline-none"
+                                            : "bg-red-600 cursor-not-allowed"
+                                }`}
                             >
-                                {t("proceed")}
+                                {isAvailable ? t("proceed") : <><Icon icon="mdi:alert"/>{t("not_available")}</>}
                             </button>
                         </div>
                     </div>
                 </div>
             </li>
-        ));
+            )
+        });
 
     return (
         <div className="flex flex-col gap-3 h-full">
