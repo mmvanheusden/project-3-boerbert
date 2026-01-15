@@ -5,6 +5,7 @@ import { Header } from "../KleineDingetjes.tsx";
 import { Icon } from "@iconify/react";
 import { BottomRowButton } from "./BookingFlowManager.tsx";
 import { t } from "i18next";
+import {BACKEND} from "../../App.tsx";
 
 export function PaymentStatus() {
     const context = useContext(Context);
@@ -28,9 +29,19 @@ export function PaymentStatus() {
 
 
             </div>
-            <div className="flex-row flex w-full items-center justify-between">
-                <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"}/>
-                <BottomRowButton text={t("proceed")} onClick={() => context.next()} colorHover={"green-600"} colorIdle={"green-600"}/>
+            <div className="flex-row flex w-full items-center justify-end">
+                <button
+                    className="inline-flex items-center h-full hover:cursor-pointer py-7 px-7 bg-green-600 hover: rounded-xl text-5xl text-white"
+                    onClick={async () => {
+                        // HIER BOEKEN WE DE ACTIVITEIT FR!!1!1!!1!!
+                        await BACKEND.bookings.put({
+                            slotId: context.selectedSlot!.id,
+                            amount: context.selectedAmount,
+                            campingSpot: 0
+                        })
+                        context.setCurrentStep (9)
+                    }}
+                > {t("proceed")}</button>
             </div>
         </div>
     );

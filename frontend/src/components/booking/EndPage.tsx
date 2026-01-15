@@ -26,18 +26,7 @@ export function Endpage() {
                         <h1 className="text-5xl font-bold">
                             Uw boeking is successvol!
                         </h1>
-                        <button
-                            className="text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl bg-green-600 hover:bg-green-700"
-                            onClick={async () => {
-                                // HIER BOEKEN WE DE ACTIVITEIT FR!!1!1!!1!!
-                                await BACKEND.bookings.put({
-                                    slotId: context.selectedSlot!.id,
-                                    amount: context.selectedAmount,
-                                    campingSpot: 0
-                                })
-                            }}
-                            > Boeken</button>
-                        <b className="text-center">Boekingsdetails:</b>
+                        <b className="text-center text-4xl">Boekingsdetails:</b>
                         <hr></hr>
                         <BookingDetails/>
                     </div>
