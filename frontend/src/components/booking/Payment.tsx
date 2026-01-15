@@ -75,9 +75,10 @@ export function Payment() {
                     })()}
                 </div>
             </div>
-            <div className="flex-row flex w-full items-center justify-between">
+            <div className="flex-row flex w-full items-center justify-between gap-20">
                 <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"}/>
                 <BottomRowButton text={t("back_to_paymentmethod")} onClick={() => context.prev()} colorHover={"orange-300"} colorIdle={"orange-400"}/>
+                <BottomRowButton text={t("proceed")} onClick={() => context.next()} colorHover={"green-600"} colorIdle={"green-600"}/>
             </div>
 
         </div>

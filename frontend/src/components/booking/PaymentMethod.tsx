@@ -20,7 +20,7 @@ export function PaymentMethod() {
             <div className="flex-1 overflow-auto">
                     <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
                             <div>
-                                <h1 className="text-8xl font-bold mb-30">
+                                <h1 className="text-8xl text-center font-bold mb-30">
                                     {t("select_payment_method")}
                                 </h1>
                             </div>
