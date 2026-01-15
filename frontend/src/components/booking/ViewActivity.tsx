@@ -74,6 +74,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
     return (
         <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-4xl scroll-py-5">
             {selectedActivity?.slots
+            .filter((slot) => (selectedActivity.capacity - slot.bookings) != 0)
             .sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (

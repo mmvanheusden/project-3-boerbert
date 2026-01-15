@@ -37,7 +37,7 @@ export function PaymentStatus() {
                         await BACKEND.bookings.put({
                             slotId: context.selectedSlot!.id,
                             amount: context.selectedAmount,
-                            campingSpot: 0
+                            campingSpot: context.selectedCampingSpot,
                         })
                         context.setCurrentStep (9)
                     }}
