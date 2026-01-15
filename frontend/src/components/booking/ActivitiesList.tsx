@@ -67,7 +67,7 @@ export function ActivitiesList() {
                                 className={`rounded-lg mt-3 py-8 text-white w-full text-7xl transition-colors inline-flex justify-center  ${
                                         isAvailable
                                             ? "bg-green-600 hover:bg-green-700 focus:outline-none"
-                                            : "bg-red-600 cursor-not-allowed"
+                                            : "bg-red-600 pointer-events-none"
                                 }`}
                             >
                                 {isAvailable ? t("proceed") : <><Icon icon="mdi:alert"/>{t("not_available")}</>}
