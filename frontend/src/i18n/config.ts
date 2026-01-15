@@ -102,7 +102,7 @@ i18n
                     type: "Type",
                     age: "Leeftijd",
                     target_audience: "Doelgroep",
-                    price: "prijs",
+                    price: "Prijs",
                     email_placeholder: "Voer een E-mail in",
                     back_to_start: "Terug naar begin",
                     verification: "Voer de code in",
