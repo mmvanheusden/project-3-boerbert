@@ -64,8 +64,9 @@ const BookingFlow = () => {
 	const [selectedPaymentMethod, selectPaymentMethod] = useState<"PIN" | "CONTANT" | null>(null);
 	const [selectedPrice, selectPrice] = useState(1);
 	const [selectedAmount, selectAmount] = useState(1);
-	const [selectedCampingSpot, selectCampingSpot] = useState<number | undefined>(undefined);
+	const [selectedCampingSpot, selectCampingSpot] = useState<string>("");
 	const [selectedEmail, selectEmail] = useState<string>("");
+	const [selectedCode, selectCode] = useState<string>("");
 
 	// Haal de activiteiten en slideshow alvast op (en stop in de gedeelde context). Scheelt laadtijd later.
 	const activitiesQuery = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
@@ -100,7 +101,7 @@ const BookingFlow = () => {
 	};
 
 	return (
-		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount, refetchData: () => { activitiesQuery.refetch(); slidesQuery.refetch(); }, clearPreviousSession: () => { selectActivity(null);selectSlot(null);selectAmount(1);selectPrice(0); }, selectedCampingSpot, selectCampingSpot, selectedEmail, selectEmail, }}>
+		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount, refetchData: () => { activitiesQuery.refetch(); slidesQuery.refetch(); }, clearPreviousSession: () => { selectActivity(null);selectSlot(null);selectAmount(1);selectPrice(0); }, selectedCampingSpot, selectCampingSpot, selectedEmail, selectEmail, selectedCode, selectCode }}>
 			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>

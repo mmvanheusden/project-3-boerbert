@@ -1,52 +1,73 @@
 import "../../index.css";
-import { useContext } from "react";
+import {useContext} from "react";
 import Context from "./Context.tsx";
-import { EvilHeader } from "../KleineDingetjes.tsx";
-import { Icon } from "@iconify/react";
-import { BottomRowButton } from "./BookingFlowManager.tsx";
-import { t } from "i18next";
+import {EvilHeader} from "../KleineDingetjes.tsx";
+import {t} from "i18next";
+import useFirstRender from "../../App.tsx";
 
 export function Evil() {
-    const context = useContext(Context);
+	const context = useContext(Context);
+	const laugh = new Audio("Evil Laugh.mp3");
 
-    return (
-        <div className="bg-gray-900/90 border-2 h-full border-gray-800 p-4 rounded-3xl select-none">
-            <div className="flex flex-col gap-3 h-full">
-            <style>{`
+	useFirstRender(async () => {
+		await laugh.play();
+	})
+
+	return (<div className="bg-gray-900/90 border-2 h-full border-gray-800 p-4 rounded-3xl select-none">
+			<div className="flex flex-col gap-3 h-full">
+				<style>{`
                 body {
                     background: url(/evil.jpg); !important
-                }`}
-            </style>
-            <EvilHeader>
+                }
+                
+                .bg-white/90 {
+                    background: gray; !important
+                }
+                `}
+				</style>
+				<EvilHeader>
             <span
-                className="select-none rounded-t-lg bg-red-600 px-8 mb-1 font-semibold text-5xl text-white">
-              {t("choose_payment_method")}
+	            className="select-none rounded-t-lg bg-red-600 px-8 mb-1 font-semibold text-5xl text-white">
+              Betaal met je bloed en ziel!!👿
             </span>
-            </EvilHeader>
-            <div className="flex-1 overflow-auto">
-                    <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-black shadow-md rounded-lg">
-                            <div>
-                                <h1 className="text-8xl font-bold">
-                                    {t("select_payment_method")}
-                                </h1>
-                            </div>
+				</EvilHeader>
+				<div className="flex-1 overflow-auto ">
+					<div
+						className="w-full h-full overflow-auto flex flex-col justify-start items-center bg-black shadow-md rounded-lg">
 
-                            <div  className="text-red-600 text-7xl mt-20 ">
-                                EVIL BERT CURSES U
-                            </div>
-                            <div className="">
-                                <img src="./evilbert.png" className="scale-85"/>
-                            </div>
-                            
-                    </div>
-            </div>
-            <div className="flex-row flex w-full items-center justify-between">
-                <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"}/>
-            </div>
-        </div>
-        </div>
-        
-        );
+						<div className="text-red-600 text-5xl mt-10">
+							Niet genoeg geld om voor de activieteit te betalen?
+						</div>
+						<div className="text-red-600 text-5xl mt-5 mb-10 ">
+							Geen probleem! Je ziel is ook een valuta😈
+						</div>
+						<div className="">
+							<img src="./evilbert.png" className=" w-260 h-300"/>
+						</div>
+
+					</div>
+				</div>
+				<div className="flex justify-evenly gap-8 h-40">
+					<button
+						className="ml-2 w-full text-7xl rounded-2xl cursor-pointer px-4 font-medium hover:ring-2 bg-orange-600"
+						onClick={async () => {
+							context.setCurrentStep(4);
+						}}>
+						Nee ben te bang papi😨
+					</button>
+					<button
+						className="ml-2 w-full text-7xl rounded-2xl cursor-pointer px-4 font-medium hover:ring-2 bg-red-600"
+						onClick={async () => {
+							context.setCurrentStep(9)
+						}}>
+						Betalen😈😈
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+	);
 }
 
 

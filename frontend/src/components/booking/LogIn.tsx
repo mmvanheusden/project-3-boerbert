@@ -28,25 +28,27 @@ export function LogIn() {
                             e.preventDefault();
                             context.next();
                         }}>
-                            <input type="number" className="outline focus:ring-4 text-7xl mx-5 mb-10 flex justify-center text-center caret-green-800 py-2"
+                            <input type="number" placeholder= {t("here")} className="outline focus:ring-4 text-7xl mx-5 mb-10 flex justify-center text-center caret-green-800 py-2"
                             value={context.selectedCampingSpot}
-                            onChange={(e) => context.selectCampingSpot(Number(e.target.value))}
+                            onChange={(e) => context.selectCampingSpot(e.target.value)}
                             />
                         </form>
                         <button
-                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || context.selectedCampingSpot == 0) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
+                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || Number(context.selectedCampingSpot) <= 0 || Number(context.selectedCampingSpot) >= 31 ) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
                               onClick={context.next}
                           >
                              {t("proceed")}
                         </button>
-                        <a href="/evil">
+
                          <button
-                         className= {`mt-10 text-7xl hover:cursor-pointer px-15 py-15 bg-red-500 focus:outline-none rounded-xl ${(context.selectedCampingSpot == 666) ? "text-black" : "bg-white text-white pointer-events-none" }`}
+                             className= {`mt-10 text-7xl hover:cursor-pointer px-15 py-15 bg-red-500 focus:outline-none rounded-xl ${(context.selectedCampingSpot == "666") ? "text-black" : "bg-white text-white pointer-events-none" }`}
+                             onClick={async () => {
+                                 context.setCurrentStep(10)}}
                          >
                            <Icon icon="game-icons:devil-mask" width="100" height="100" />
                            
                            </button>
-                        </a>
+
                 </div>
             </div>
                         <div className="flex-row flex w-full items-center justify-between">

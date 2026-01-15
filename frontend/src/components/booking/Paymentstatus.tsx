@@ -30,12 +30,8 @@ export function PaymentStatus() {
             </div>
             <div className="flex-row flex w-full items-center justify-between">
                 <BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"}/>
+                <BottomRowButton text={t("proceed")} onClick={() => context.next()} colorHover={"green-600"} colorIdle={"green-600"}/>
             </div>
-            <button
-                className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
-                onClick={context.next}
-            > {t("proceed")} (secret admin mode)
-            </button>
         </div>
     );
 }

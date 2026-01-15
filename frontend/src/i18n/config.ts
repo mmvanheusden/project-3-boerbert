@@ -82,7 +82,7 @@ i18n
                     price_sum: "Totaalprijs: € {{price}}",
                     error_select: "Selecteer een tijdslot a.u.b.", 
                     proceed: "Doorgaan",
-                    proceed_at_counter: "Rond de betaling af bij de receptiebalie",
+                    proceed_at_counter: "Ga naar de balie om de betaling af te ronden",
                     proceed_without_email_updates: "Doorgaan zonder e-mail door de geven",
                     receive_email_updates: "Wilt u updates over uw boeking via e-mail ontvangen?",
                     scan_qrcode: "U kunt de QR-code scannen via uw bankapp",
@@ -105,6 +105,8 @@ i18n
                     price: "prijs",
                     email_placeholder: "Voer een E-mail in",
                     back_to_start: "Terug naar begin",
+                    verification: "Voer de code in",
+                    here: "Voer hier in",
                 },
             }, // German
             de: {
@@ -145,7 +147,7 @@ i18n
                     price_sum: "Gesamtpreis: € {{price}}",
                     error_select: "Bitte wählen Sie einen Zeitraum.",
                     proceed: "Fohrtfahren",
-                    proceed_at_counter: "Schließen Sie die Zahlung an der Rezeption ab",
+                    proceed_at_counter: "Begeben Sie sich zur Rezeption, um die Zahlung abzuschließen.",
                     proceed_without_email_updates: "Fahren Sie fort, ohne eine E-Mail zu senden",
                     receive_email_updates: "Möchten Sie Updates zu Ihrer Buchung per E-Mail erhalten?",
                     scan_qrcode: "Sie können den QR-Code über Ihre Banking-App scannen",
@@ -168,6 +170,8 @@ i18n
                     price: "Preis",
                     email_placeholder: "Geben Sie eine E-Mail ein",
                     back_to_start: "Zurück zum Anfang",
+                    verification: "Code eingeben",
+                    here: "Hier eintragen",
                 }
             }, // English
             en: {
@@ -208,7 +212,7 @@ i18n
                     price_sum: "Total price: € {{price}}",
                     error_select: "Please select a timeslot.",
                     proceed: "Continue",
-                    proceed_at_counter: "Complete the payment at the reception desk",
+                    proceed_at_counter: "Go to the reception desk to complete the payment",
                     proceed_without_email_updates: "Continue without submitting an email",
                     receive_email_updates: "Would you like to receive updates about your booking via email?",
                     scan_qrcode: "You can scan the QR code via your banking app",
@@ -231,6 +235,8 @@ i18n
                     price: "Price",
                     email_placeholder: "Please enter an E-mail",
                     back_to_start: "Back to start",
+                    verification: "Enter the code ",
+                    here: "Enter here",
                 }
             }
         },

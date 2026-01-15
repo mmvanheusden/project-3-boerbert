@@ -58,6 +58,18 @@ export function Payment() {
                                     <h1 className="font-bold text-6xl mt-20">
                                         {t("price_sum", {price: context.selectedPrice})}
                                     </h1>
+                                    <label className="text-7xl mt-5 mb-10 flex justify-center">
+                                        <input type="number"  inputMode="numeric" placeholder= {t("verification")} className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"
+                                               value={context.selectedCode}
+                                               onChange={(e) => context.selectCode(e.target.value)}
+                                        />
+                                    </label>
+                                    <button
+                                        className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCode == null || context.selectedCode != "6767"  ) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
+                                        onClick={context.next}
+                                    >
+                                        {t("proceed")}
+                                    </button>
                                     </>
                         }
                     })()}
@@ -68,11 +80,6 @@ export function Payment() {
                 <BottomRowButton text={t("back_to_paymentmethod")} onClick={() => context.prev()} colorHover={"orange-300"} colorIdle={"orange-400"}/>
             </div>
 
-            <button
-                className={`text-5xl hover:cursor-pointer py-3 px-10 border-black focus:outline-none text-white rounded-xl ${(context.activities != null && context.activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
-                onClick={context.next}
-            > {t("proceed")} (secret admin mode)
-            </button>
         </div>
     );
 }

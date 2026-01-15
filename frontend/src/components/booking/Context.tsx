@@ -28,10 +28,12 @@ type ContextPayload = {
 	selectedSlot: Treaty.Data<typeof BACKEND.slots.get>[0] | null,
 	selectedAmount: number;
 	selectAmount: (amount: number) => void;
-	selectedCampingSpot?: number;
-	selectCampingSpot: (spot: number) => void;
+	selectedCampingSpot: string;
+	selectCampingSpot: (spot: string) => void;
 	selectedEmail: string;
 	selectEmail: (email: string) => void
+	selectedCode: string;
+	selectCode: (verification: string) => void;
 };
 
 
@@ -58,6 +60,9 @@ export const Context = createContext<ContextPayload>({
 	selectCampingSpot: () => {},
 	selectedEmail: undefined!,
 	selectEmail: () => {},
+	selectedCode: undefined!,
+	selectCode: () => {},
+
 });
 
 
