@@ -8,7 +8,9 @@ const app = new Elysia()
     .use(openapi({
         references: fromTypes()
     }))
-    .use(cors())
+    .use(cors({
+        origin: process.env.FRONTEND_URL || "http://localhost:5173"
+    }))
     .use(AppRoutes)
 	.get("/ping", () => "pong") // ping geeft terug pong
     .listen(3000, ({hostname, port}) => {

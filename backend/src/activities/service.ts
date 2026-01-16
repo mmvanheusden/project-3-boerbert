@@ -2,7 +2,7 @@ import {activitiesTable, InsertActivityRequestBody, UpdateActivityRequestBody} f
 import db from "../config/db";
 import {DrizzleQueryError, eq} from 'drizzle-orm';
 import {Static, status} from "elysia";
-import translate from '@sckt/translate'
+import translate from "translate";
 
 
 export async function vertaal(text: string): Promise<{ nl: string, en: string, de: string }> {
@@ -14,14 +14,12 @@ export async function vertaal(text: string): Promise<{ nl: string, en: string, d
     const german = await translate(text, {
         from: "nl",
         to: "de",
-        engine: "simplytranslate"
     })
     console.trace(german)
 
     const english = await translate(text, {
         from: "nl",
         to: "en",
-        engine: "simplytranslate"
     })
     console.trace(english)
 
