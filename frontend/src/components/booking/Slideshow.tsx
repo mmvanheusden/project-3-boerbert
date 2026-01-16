@@ -129,7 +129,7 @@ export function Slideshow() {
             {/*Deze div wordt aan het einde verspreid (er staat 1 knopje in)*/}
             <div>
               <button
-                  className={`w-66% h-full inline-flex text-9xl hover:cursor-pointer translate-y-2 py-10 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                  className={`w-66% h-full items-center inline-flex text-8xl hover:cursor-pointer translate-y-2 py-10 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
                 {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>{t("no_activities_available")}</> : t("proceed")}
