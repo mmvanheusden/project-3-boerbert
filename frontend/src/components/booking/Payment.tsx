@@ -50,7 +50,7 @@ export function Payment() {
                             case "PIN":
                                 return <>
                                     <h1 className="font-bold text-6xl mt-60">
-                                        {t("price_sum", {price: context.selectedPrice})}
+                                        <p><b>{t("price_sum")}: € </b> {context.selectedPrice!.toFixed(2).dot2comma().replace(",00", ",-")}</p>
                                     </h1>
                                     <label>
                                         <button
@@ -64,7 +64,7 @@ export function Payment() {
                             case "CONTANT":
                                 return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />
                                     <h1 className="font-bold text-6xl mt-20">
-                                        {t("price_sum", {price: context.selectedPrice})}
+                                        <p><b>{t("price_sum")}: € </b> {context.selectedPrice!.toFixed(2).dot2comma().replace(",00", ",-")}</p>
                                     </h1>
                                     <label className="text-7xl mt-5 mb-10 flex justify-center">
                                         <input type="number"  inputMode="numeric" placeholder= {t("verification")} className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"
