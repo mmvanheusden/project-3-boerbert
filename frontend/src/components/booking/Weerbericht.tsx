@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
 function Weerbericht() {
@@ -6,7 +7,7 @@ function Weerbericht() {
 
   useEffect(() => {
     const apiKey = "a3e97ae2a9d868bfd778f5fedf2f45c1";
-    const stad = "Amsterdam";
+    const stad = "Utrecht";
 
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${stad}&units=metric&appid=${apiKey}&lang=nl`
@@ -29,9 +30,9 @@ function Weerbericht() {
 
   const temperatuur = Math.round(weerData.main.temp);
   const gevoel = Math.round(weerData.main.feels_like);
-  const beschrijving = weerData.weather[0].description;
   const wind = Math.round(weerData.wind.speed * 3.6);
   const luchtvochtigheid = weerData.main.humidity;
+  const weerType = weerData.weather[0].main;
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-blue-200">
@@ -47,10 +48,9 @@ function Weerbericht() {
         <div className="mb-6 text-7xl">☁️</div>
 
         <div className="space-y-3 text-2xl">
-          <p>🌡️ {temperatuur}°C</p>
-          <p>🤔 Gevoel: {gevoel}°C</p>
-          <p>☀️ {beschrijving}</p>
-          <p>💨 Wind: {wind} km/u</p>
+          <p> {temperatuur}°C</p>
+          <p className="flex items-center justify-center"><Icon icon="carbon:temperature-feels-like"  className="w-8 h-8 text-orange-400 drop-shadow-md"></Icon> {gevoel}°C</p>
+          <p className="flex items-center justify-center"><Icon icon="meteocons:wind-offshore-fill" className="w-8 h-8 "></Icon> {wind} km/u</p>
           <p>💧 {luchtvochtigheid}%</p>
         </div>
       </div>
