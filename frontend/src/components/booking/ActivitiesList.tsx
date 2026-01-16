@@ -49,7 +49,7 @@ export function ActivitiesList() {
                             <h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
                             <p className="text-6xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
                             <p className="text-5xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-                            <p className="text-5xl text-gray-600 mt-3">{t("price_per_person", { price: activiteit.price })}</p>
+                            <p className="text-5xl text-gray-600 mt-3">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
                             <p className="text-5xl text-gray-600 mt-3">{t("locationlist", { location: activiteit.location })}</p>
                         </div>
                         <div className="relative min-w-2/3">

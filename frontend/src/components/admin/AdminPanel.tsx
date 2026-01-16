@@ -18,6 +18,18 @@ type Slot = Treaty.Data<typeof BACKEND.slots.get>[0];
 type Slide = Treaty.Data<typeof BACKEND.slideshow.get>[0];
 type View = "Activiteiten" | "Slideshow" | "Kaart"; // De 3 tabjes bovenaan de pagina
 
+/* Turns a "." into a "," (localization) */
+declare global {
+	interface String {
+		dot2comma(): string;
+	}
+}
+String.prototype.dot2comma = function() {
+	return this.replace(".", ",");
+};
+
+
+
 export const MAP_CENTER = {
 	lat: 52.2605784,
 	lng: 5.4004857,
@@ -284,6 +296,7 @@ function ActivitiesEditor(props: {
 
 	const [activityEditing, setActivityEditing] = useState<typeof UpdateActivityRequestBody | null>(null);
 	const [activityScheduling, setActivityScheduling] = useState<ActivityFull | null>(null);
+	const [activityInspecting, setActivityInspecting] = useState<ActivityFull | null>(null);
 	const [slotPlanning, setSlotPlanning] = useState(false);
 	const [creatingActivity, setCreatingActivity] = useState(false);
 
@@ -412,6 +425,8 @@ function ActivitiesEditor(props: {
 											setActivityEditing={setActivityEditing}
 											activityScheduling={activityScheduling}
 											setActivityScheduling={setActivityScheduling}
+											activityInspecting={activityInspecting}
+											setActivityInspecting={setActivityInspecting}
 											slotPlanning={slotPlanning}
 											setSlotPlanning={setSlotPlanning}
 											slots={slots}
@@ -570,7 +585,7 @@ function ActivityCreator(props: {
 			</div>
 			<div className="mb-2">
 				<label htmlFor="price">Prijs</label>
-				<input id="price" type="number" required placeholder="'Bijv. '€4,50'"
+				<input id="price" type="number" step="0.01" required placeholder="'Bijv. '€4,50'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<button type="submit" className="text-white bg-green-600 hover:bg-green-700 mt-1 rounded cursor-pointer px-4 font-small text-xl hover:ring-2">
@@ -622,6 +637,8 @@ function ActivityListItem(props: {
 	setActivityEditing: React.Dispatch<React.SetStateAction<typeof UpdateActivityRequestBody | null>>;
 	activityScheduling: ActivityFull | null;
 	setActivityScheduling: (a: ActivityFull | null) => void;
+	activityInspecting: ActivityFull | null;
+	setActivityInspecting: (a: ActivityFull | null) => void;
 	slotPlanning: boolean;
 	setSlotPlanning: (v: boolean) => void;
 	slots: Slot[];
@@ -639,6 +656,8 @@ function ActivityListItem(props: {
 		setActivityEditing,
 		activityScheduling,
 		setActivityScheduling,
+		activityInspecting,
+		setActivityInspecting,
 		slotPlanning,
 		setSlotPlanning,
 		slots,
@@ -648,6 +667,38 @@ function ActivityListItem(props: {
 		SlotDeleteMutator,
 		compactActivities
 	} = props;
+
+	// Inspecting view
+	if (activityInspecting && activityInspecting.id == activiteit.id) {
+		return (<>
+			<div className="flex-1">
+				<div className="flex flex-col max-h-270	 overflow-auto gap-3">
+					{slots
+						.filter((slot) => activiteit.id === slot.activityId)
+						.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
+						.map((slot) => <>
+							<div className="min-h-20 border-2 p-5 min-w-50 mb-3 flex">
+								<div className="w-full">
+									<p className="text-xl font-bold w-full flex items-center underline mb-3">{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
+
+									<p className="text-3xl w-full flex items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(van {activiteit.capacity})</span></p>
+								</div>
+								<p className="italic font-bold text-6xl items-center flex  w-fit text-nowrap ">Omzet:&nbsp;<span className="text-green-500">€ {(activiteit.price * slot.bookings).toFixed(2).dot2comma().replace(",00", ",-")}</span></p>
+							</div>
+						</>)}
+				</div>
+			</div>
+			<div className="flex justify-between">
+				<button
+					className="text-white bg-orange-500 hover:bg-orange-600 rounded cursor-pointer px-4 py-4 font-small text-2xl mt-4"
+					onClick={() => {
+						setActivityInspecting(null);
+					}}>
+					Sluiten
+				</button>
+			</div>
+		</>)
+	}
 
 	// Scheduling view
 	if (activityScheduling && activityScheduling.id == activiteit.id) {
@@ -953,46 +1004,57 @@ function ActivityListItem(props: {
 	// Readonly view
 	return (
 		<>
-			<li key={activiteit.id} className="flex">
-				<span className="text-gray-700 text-lg font-medium mr-4 font-mono">{activiteit.id}</span>
-				<div className="flex-1 mb-1">
-					<h3 className="text-4xl font-medium text-gray-800">{activiteit?.title}</h3>
-					<p className="text-2xl text-gray-600 mb-1">{activiteit?.subtitle}</p>
-					<p className="text-xl text-gray-700">Capaciteit: {activiteit.capacity}</p>
-					<p className="text-xl text-gray-700">Drempelwaarde: {activiteit.threshold}</p>
-					<p className="text-xl text-gray-700">Prijs: €{activiteit.price}</p>
-					<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage == "0" ? "Alle leeftijden" : activiteit.minage + "+"}</p>
-					<p className="text-xl text-gray-700">Locatie: {activiteit?.location}</p>
+			<li key={activiteit.id} >
+				<div className="flex">
+					<span className="text-gray-700 text-lg font-medium mr-4 font-mono">{activiteit.id}</span>
+					<div className="flex-1 mb-1">
+						<h3 className="text-4xl font-medium text-gray-800">{activiteit?.title}</h3>
+						<p className="text-2xl text-gray-600 mb-1">{activiteit?.subtitle}</p>
+						<p className="text-xl text-gray-700">Capaciteit: {activiteit.capacity}</p>
+						<p className="text-xl text-gray-700">Drempelwaarde: {activiteit.threshold}</p>
+						<p className="text-xl text-gray-700">Prijs: €{activiteit.price}</p>
+						<p className="text-xl text-gray-700">Leeftijd: {activiteit.minage == "0" ? "Alle leeftijden" : activiteit.minage + "+"}</p>
+						<p className="text-xl text-gray-700">Locatie: {activiteit?.location}</p>
+					</div>
+					<img
+						className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
+						src={`data:image/png;base64, ${activiteit?.hero}`}
+						style={{ imageRendering: "pixelated" }}
+						alt={activiteit?.title ?? "activity image"}
+					/>
 				</div>
-				<img
-					className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
-					src={`data:image/png;base64, ${activiteit?.hero}`}
-					style={{ imageRendering: "pixelated" }}
-					alt={activiteit?.title ?? "activity image"}
-				/>
+				<div className="flex justify-around w-full gap-3">
+					<button
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						onClick={() => { // @ts-ignore
+							props.setActivityEditing(activiteit)
+						}}>
+						Bewerken
+					</button>
+					<button
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						onClick={() => { props.setActivityScheduling(activiteit as unknown as ActivityFull) }}>
+						Plannen
+					</button>
+					<button
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						onClick={() => { props.setActivityInspecting(activiteit as unknown as ActivityFull) }}>
+						Boekingen
+					</button>
+					<div className="w-full flex justify-end">
+						<button
+							className="text-white bg-red-600 h-20 w-20 hover:bg-red-700 pr-50 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+							onClick={async () => {
+								if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
+									props.ActivityDeleteMutator.mutate(activiteit);
+									props.compactActivities.splice(props.compactActivities.findIndex(a => a.id === activiteit.id), 1);
+								}
+							}}>
+							Verwijderen
+						</button>
+					</div>
+				</div>
 			</li>
-			<button
-				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-10  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
-				onClick={() => { // @ts-ignore
-					props.setActivityEditing(activiteit)
-				}}>
-				Bewerken
-			</button>
-			<button
-				className="text-white bg-green-600 h-20 w-50 hover:bg-green-700 ml-4  rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
-				onClick={() => { props.setActivityScheduling(activiteit as unknown as ActivityFull) }}>
-				Plannen
-			</button>
-			<button
-				className="text-white bg-red-600 h-20 w-50 hover:bg-red-700 ml-4 pr-50 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
-				onClick={async () => {
-					if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
-						props.ActivityDeleteMutator.mutate(activiteit);
-						props.compactActivities.splice(props.compactActivities.findIndex(a => a.id === activiteit.id), 1);
-					}
-				}}>
-				Verwijderen
-			</button>
 		</>
 	)
 }
