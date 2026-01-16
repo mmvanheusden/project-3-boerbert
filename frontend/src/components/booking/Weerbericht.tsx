@@ -1,6 +1,21 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
+if (typeof document !== "undefined") {
+  const style = document.createElement("style");
+  style.innerHTML = `
+  @keyframes moveClouds {
+    from {
+      transform: translateX(-300px);
+    }
+    to {
+      transform: translateX(100vw);
+    }
+  }
+  `;
+  document.head.appendChild(style);
+}
+
 function Weerbericht() {
   const [weerData, setWeerData] = useState<any>(null);
   const [laden, setLaden] = useState(true);
@@ -32,11 +47,21 @@ function Weerbericht() {
   const gevoel = Math.round(weerData.main.feels_like);
   const wind = Math.round(weerData.wind.speed * 3.6);
   const luchtvochtigheid = weerData.main.humidity;
-  const weerType = weerData.weather[0].main;
+  const weerType = weerData.weather[0].main.toLowerCase();
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-blue-200">
-      <div className="rounded-2xl bg-white p-10 shadow-xl text-center">
+    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gray-300">
+      {weerType === "clouds" && (
+        <>
+          <div className="absolute top-20 left-0 text-[20rem] opacity-70" style={{animation: "moveClouds 6s linear infinite"}}>☁️</div>
+          <div className="absolute top-40 left-0 text-[12rem] opacity-50" style={{animation: "moveClouds 9s linear infinite"}}>☁️</div>
+          <div className="absolute top-64 left-0 text-[30rem] opacity-60" style={{animation: "moveClouds 15s linear infinite"}}>☁️</div>
+          <div className="absolute top-20 left-0 text-[25rem] opacity-70" style={{animation: "moveClouds 20s linear infinite" }}>☁️</div>
+          <div className="absolute top-40 left-0 text-[40rem] opacity-50" style={{animation: "moveClouds 30s linear infinite" }}>☁️</div>
+          <div className="absolute top-64 left-0 text-[60rem] opacity-60" style={{animation: "moveClouds 40s linear infinite"}}>☁️</div>
+        </>
+      )}
+      <div className="rounded-2xl bg-white/10 p-10 shadow-xl text-center">
         <h1 className="mb-4 text-5xl font-bold text-blue-700">
           Weerbericht
         </h1>
