@@ -3,7 +3,7 @@ import {InsertActivitySlotRequest, slotsTable} from "./model";
 import {getAllSlots, getSlots, insertSlot} from "./service";
 import {eq} from 'drizzle-orm';
 import db from "../config/db";
-import {getAllBookings} from "../bookings/service";
+import { getActivityBookings, getAllBookings } from "../bookings/service";
 import {bookingsTable} from "../bookings/model";
 
 
@@ -29,10 +29,13 @@ export const SlotsController = new Elysia().group("/slots", (app) => app
     .get(
         '/',
         async () => {
-            return (await getAllSlots()).map((slot) => ({
+            return Promise.all((await getAllSlots()).map(async (slot) => ({
                 ...slot,
-                date: new Date(slot.date)
-            }));
+                date: new Date(slot.date),
+                bookings: (await getActivityBookings(slot.activityId.toString())).filter((booking) => booking.slotId == slot.id).reduce((accumulator, booking) => {
+                    return accumulator += booking.amount
+                }, 0), // Tel alle personen die in de boekingen staan op.
+            })));
         }
     )
     .delete(

@@ -1,5 +1,5 @@
 import "../../index.css";
-import { useContext } from "react";
+import { useContext, useRef, useEffect } from "react";
 import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { Girocode } from "react-girocode";
@@ -9,6 +9,30 @@ import { t } from "i18next";
 
 export function Payment() {
     const context = useContext(Context);
+
+   
+
+    const cash = "cash sound-effect.mp3";
+
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    useEffect(() => {
+        audioRef.current = new Audio(cash);
+        audioRef.current.preload = "auto";
+        audioRef.current.volume = 0.7;
+        return () => {
+            audioRef.current = null;
+        };
+    }, [cash]);
+
+    function playClickSound() {
+        try {
+            if (!audioRef.current) return;
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(() => { });
+        } catch {
+            /* silent fallback */
+        }
+    }
 
     return (
         <div className="flex flex-col gap-3 h-full">
@@ -32,8 +56,6 @@ export function Payment() {
                                     <div className="scale-250 inline-block">
                                         <Girocode recipient="Camping Boer Bert" iban="NL50 INGB 0756 5719 60" amount={context.selectedPrice} />
                                     </div>
-
-
                                 </div>
                             case "CONTANT":
                                 return <div className="text-center">
@@ -50,12 +72,12 @@ export function Payment() {
                             case "PIN":
                                 return <>
                                     <h1 className="font-bold text-6xl mt-60">
-                                        {t("price_sum", {price: context.selectedPrice})}
+                                        <p><b>{t("price_sum")}: € </b> {context.selectedPrice!.toFixed(2).dot2comma().replace(",00", ",-")}</p>
                                     </h1>
                                     <label>
                                         <button
                                             className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600`}
-                                            onClick={context.next}
+                                            onClick={() => { playClickSound(); context.next(); }}
                                             >
                                         {t("proceed")}
                                         </button>
@@ -64,7 +86,7 @@ export function Payment() {
                             case "CONTANT":
                                 return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />
                                     <h1 className="font-bold text-6xl mt-20">
-                                        {t("price_sum", {price: context.selectedPrice})}
+                                        <p><b>{t("price_sum")}: € </b> {context.selectedPrice!.toFixed(2).dot2comma().replace(",00", ",-")}</p>
                                     </h1>
                                     <label className="text-7xl mt-5 mb-10 flex justify-center">
                                         <input type="number"  inputMode="numeric" placeholder= {t("verification")} className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"
@@ -74,7 +96,7 @@ export function Payment() {
                                     </label>
                                     <button
                                         className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCode == null || context.selectedCode != "6767"  ) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
-                                        onClick={context.next}
+                                        onClick={() => { if (context.selectedCode != null && context.selectedCode === "6767") { playClickSound(); context.next(); } }}
                                     >
                                         {t("proceed")}
                                     </button>

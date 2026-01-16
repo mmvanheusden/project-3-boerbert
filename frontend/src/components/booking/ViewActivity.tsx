@@ -39,7 +39,7 @@ export function ViewActivity() {
                             <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
                             <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
                             <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age", {age: selectedActivity?.minage})}</div>
-                            <div className="text-4xl mb-1">{t("price_per_person", {price: selectedActivity?.price})}</div>
+                            <div className="text-4xl mb-1">{t("price_per_person", {price: selectedActivity?.price.toFixed(2).dot2comma().replace(",00", ",-")})}</div>
                         </div>
 
                         <div>
@@ -84,7 +84,8 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                         id: slot.id,
                         activityId: selectedActivity?.id,
                         date: slot.date,
-                        duration: slot.duration
+                        duration: slot.duration,
+                        bookings: slot.bookings
                     })}
                 >
                     <div className="flex-1">
@@ -116,7 +117,7 @@ function Reserveren({ price }: { price: number | undefined }) {
 
     return (
       <div className="items-center justify-center">
-        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">{t("price_sum", {price: context.selectedAmount * price})}</div>
+        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">{t("price_sum")}: € {(context.selectedAmount * price)!.toFixed(2).dot2comma().replace(",00", ",-")}</div>
         <div className = "text-red-700 text-4xl mb-3 ml-5">
           { (context.selectedSlot == null) ? t("error_select") : null} 
         </div>
