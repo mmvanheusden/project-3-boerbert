@@ -108,6 +108,7 @@ i18n
                     verification: "Voer de code in",
                     here: "Voer hier in",
                     not_available: "Niet beschikbaar",
+                    no_activities_available: "Geen activiteiten beschikbaar",
                 },
             }, // German
             de: {
@@ -174,6 +175,7 @@ i18n
                     verification: "Code eingeben",
                     here: "Hier eintragen",
                     not_available: "Nicht verfügbar",
+                    no_activities_available: "Keine Aktivitäten verfügbar",
                 }
             }, // English
             en: {
@@ -240,6 +242,7 @@ i18n
                     verification: "Enter the code ",
                     here: "Enter here",
                     not_available: "Not available",
+                    no_activities_available: "No activities available",
                 }
             }
         },
