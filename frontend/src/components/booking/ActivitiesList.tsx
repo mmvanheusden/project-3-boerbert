@@ -55,7 +55,7 @@ export function ActivitiesList() {
                         <div className="relative min-w-2/3">
                             <img
                                 className="w-full object-fill rounded-lg aspect-6/4"
-								src={`${BACKEND_URL}/activities/${activiteit.id}/image`}
+                                src={`${BACKEND_URL}/public/activities/${activiteit.id}.png`}
                                 alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                             />
                             <button

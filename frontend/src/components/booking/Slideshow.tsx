@@ -69,7 +69,7 @@ export function Slideshow() {
               }`}
             >
               <img
-                src={`${BACKEND_URL}/slideshow/${slide.id}/image`}
+                src={`${BACKEND_URL}/public/slides/${slide.id}.png`}
                 alt={slide.alt}
                 className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
               />

@@ -1,5 +1,4 @@
 import {Elysia} from 'elysia'
-import {node} from '@elysiajs/node'
 import 'dotenv/config';
 import {AppRoutes} from "./index.routes";
 import openapi, {fromTypes} from "@elysiajs/openapi";

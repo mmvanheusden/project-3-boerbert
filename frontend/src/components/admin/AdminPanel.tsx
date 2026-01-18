@@ -238,7 +238,7 @@ function MapView(props: {
 								<p>{activity.subtitle.nl}</p>
 								<img
 									className="rounded w-full mb-2 mt-2 mx-auto"
-									src={`${BACKEND_URL}/activities/${activity.id}/image`}
+									src={`${BACKEND_URL}/public/activities/${activity.id}.png`}
 									alt={activity.title.nl}
 								/>
 								<details className="open:mb-1">
@@ -1016,7 +1016,7 @@ function ActivityListItem(props: {
 					</div>
 					<img
 						className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
-						src={`${BACKEND_URL}/activities/${activiteit.id}/image`}
+						src={`${BACKEND_URL}/public/activities/${activiteit.id}.png`}
 						style={{ imageRendering: "pixelated" }}
 						alt={activiteit?.title ?? "activity image"}
 					/>
@@ -1112,7 +1112,7 @@ function SlideshowEditor(props: {
 									<div className="mb-2">
 										<img
 											className="w-full h-48 object-cover rounded-lg"
-											src={`${BACKEND_URL}/slideshow/${slide.id}/image`}
+											src={`${BACKEND_URL}/public/slides/${slide.id}.png`}
 											alt={slide.alt}
 										/>
 									</div>
