@@ -767,6 +767,7 @@ function ActivityListItem(props: {
 									<tbody className="overflow-y-auto">
 										{slots
 											.filter((slot) => (slot.activityId == activiteit.id))
+											.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
 											.map((slot) => {
 												return (
 													<>
