@@ -1,5 +1,5 @@
 import { Header } from "../KleineDingetjes";
-import useFirstRender, { BACKEND, queryClient } from "../../App.tsx";
+import useFirstRender, {BACKEND, BACKEND_URL, queryClient} from "../../App.tsx";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Context, Provider } from "./Context.tsx";
@@ -238,7 +238,7 @@ function MapView(props: {
 								<p>{activity.subtitle.nl}</p>
 								<img
 									className="rounded w-full mb-2 mt-2 mx-auto"
-									src={`http://localhost:3000/activities/${activity.id}/image`}
+									src={`${BACKEND_URL}/activities/${activity.id}/image`}
 									alt={activity.title.nl}
 								/>
 								<details className="open:mb-1">
@@ -1016,7 +1016,7 @@ function ActivityListItem(props: {
 					</div>
 					<img
 						className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
-						src={`http://localhost:3000/activities/${activiteit.id}/image`}
+						src={`${BACKEND_URL}/activities/${activiteit.id}/image`}
 						style={{ imageRendering: "pixelated" }}
 						alt={activiteit?.title ?? "activity image"}
 					/>
@@ -1112,7 +1112,7 @@ function SlideshowEditor(props: {
 									<div className="mb-2">
 										<img
 											className="w-full h-48 object-cover rounded-lg"
-											src={`data:image/jpeg;base64, ${slide.image}`}
+											src={`${BACKEND_URL}/slideshow/${slide.id}/image`}
 											alt={slide.alt}
 										/>
 									</div>

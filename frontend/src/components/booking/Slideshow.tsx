@@ -3,7 +3,7 @@ import Context from "./Context.tsx";
 import { t } from "i18next";
 import i18n from "../../i18n/config.ts";
 import { Icon } from "@iconify/react";
-import useFirstRender from "../../App.tsx";
+import useFirstRender, {BACKEND_URL} from "../../App.tsx";
 import Weerbericht from "./Weerbericht.tsx";
 
 export function Slideshow() {
@@ -69,7 +69,7 @@ export function Slideshow() {
               }`}
             >
               <img
-                src={`data:image/png;base64, ${slide.image}`}
+                src={`${BACKEND_URL}/slideshow/${slide.id}/image`}
                 alt={slide.alt}
                 className="absolute block max-w-full h-screen -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
               />

@@ -1,6 +1,12 @@
-import {Elysia, file, status, Static} from "elysia";
+import {Elysia, file, Static, status} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
+import {
+    activitiesTable,
+    GetActivitiesResponseBody,
+    InsertActivityRequestBody,
+    OverrideField,
+    UpdateActivityRequestBody,
+} from "./model";
 import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
 import {getAllSlots} from "../slots/service";
@@ -110,10 +116,10 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
 			} catch (error) {
 				return status(404, "Activiteit niet gevonden");
 			}
-			if (!fs.existsSync(`public/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`)) {
+			if (!fs.existsSync(`public/activities/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`)) {
 				return status(500, "Plaatje niet gevonden");
 			}
 
-			return file(`public/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`);
+			return file(`public/activities/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`);
 		})
 )

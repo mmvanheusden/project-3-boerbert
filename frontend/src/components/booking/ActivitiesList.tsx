@@ -4,7 +4,7 @@ import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { BottomRowButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
-import useFirstRender from "../../App.tsx";
+import useFirstRender, {BACKEND_URL} from "../../App.tsx";
 import dayjs from "dayjs";
 import {Icon} from "@iconify/react";
 
@@ -55,7 +55,7 @@ export function ActivitiesList() {
                         <div className="relative min-w-2/3">
                             <img
                                 className="w-full object-fill rounded-lg aspect-6/4"
-								src={`http://localhost:3000/activities/${activiteit.id}/image`}
+								src={`${BACKEND_URL}/activities/${activiteit.id}/image`}
                                 alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                             />
                             <button

@@ -58,7 +58,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
         }).returning();
 
 		// Add image to image storage.
-		fs.writeFileSync(`public/${insertedActivity[0].id}.png`, imageBuffer);
+		fs.writeFileSync(`public/activities/${insertedActivity[0].id}.png`, imageBuffer);
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
             if (e.cause?.message.includes('UNIQUE constraint failed')) return status(409, "Een activiteit met deze titel bestaat al.")
