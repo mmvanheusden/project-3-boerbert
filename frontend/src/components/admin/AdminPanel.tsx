@@ -225,7 +225,7 @@ function MapView(props: {
 	const context = useContext(Context)!;
 
 	return (<>
-			<MapContainer center={[MAP_CENTER.lat, MAP_CENTER.lng]} zoom={18} scrollWheelZoom={true} className="w-full h-full ">
+			<MapContainer center={[MAP_CENTER.lat, MAP_CENTER.lng]} zoom={17} scrollWheelZoom={true} className="w-full h-full">
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -462,7 +462,7 @@ function ActivityCreator(props: {
 		hero: File;
 	}) => void | Promise<void>;
 }) {
-	const [position, setPosition] = useState<{ lat : number; lng: number }>()
+	const [position, setPosition] = useState<{ lat : number; lng: number }>(MAP_CENTER)
 	async function insertActivity(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 		const form = event.currentTarget
@@ -527,16 +527,24 @@ function ActivityCreator(props: {
 				</div>
 				<ImageUpload />
 			</div>
-			<div className="h-100 w-1/2 mb-7">
-				<label>Locatie op de camping</label>
-				<MapContainer center={[52.2605784, 5.4004857]} zoom={18} scrollWheelZoom={true} className="size-full">
-					<TileLayer
-						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-					/>
-					< DraggableMarker position={MAP_CENTER} setPosition={setPosition}/>
-				</MapContainer>
+			<div className="h-100 w-full flex justify-between mb-7 gap-7">
+				<div className="w-full">
+					<label>Locatie op de camping</label>
+					<MapContainer center={[52.2605784, 5.4004857]} zoom={17} scrollWheelZoom={true} className="size-full">
+						<TileLayer
+							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						/>
+						< DraggableMarker position={MAP_CENTER} setPosition={setPosition}/>
+					</MapContainer>
+				</div>
+				<div className="w-full">
+					<label htmlFor="location">Locatiebeschrijving</label>
+					<textarea id="location" required placeholder="Bijv. 'Bij het grote veld, in het midden.'"
+							  className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
+				</div>
 			</div>
+
 			<div className="mb-2">
 				<label htmlFor="type">Type activiteit</label>
 				<select id="type" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
@@ -562,15 +570,6 @@ function ActivityCreator(props: {
 					<option value="3">Vanaf 3 jaar</option>
 					<option value="7" selected>Vanaf 7 jaar</option>
 					<option value="12">Vanaf 12 jaar</option>
-				</select>
-			</div>
-			<div className="mb-2">
-				<label htmlFor="location">Locatie</label>
-				<select id="location" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="Grote Plein">Grote Plein</option>
-					<option value="De Schuur">De Schuur</option>
-					<option value="Kleine Bos">Kleine Bos</option>
-					<option value="Het Weiland">Het Weiland</option>
 				</select>
 			</div>
 			<div className="mb-2">
@@ -822,6 +821,7 @@ function ActivityListItem(props: {
 
 	// Editing view
 	if (isEditing && activityEditing && activityEditing.id == activiteit.id) {
+		console.trace(activityEditing)
 		return (
 			<>
 				<li key={activiteit.id} className="flex">
@@ -864,18 +864,32 @@ function ActivityListItem(props: {
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								/>
 							</div>
-							<div className="h-100 w-1/2 mb-7">
-								<label>Locatie op de camping</label>
-								<MapContainer center={[52.2605784, 5.4004857]} zoom={18} scrollWheelZoom={true} className="size-full">
-									<TileLayer
-										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-									/>
-									< DraggableMarker position={{lat: displayData.latitude, lng: displayData.latitude}} setPosition={(a: {lat: number, lng: number}) => {
-										props.setActivityEditing(prev => ({ ...prev!, latitude: a.lat }));
-										props.setActivityEditing(prev => ({ ...prev!, longitude: a.lng }));
-									}}/>
-								</MapContainer>
+							<div className="h-100 w-full flex justify-between mb-7 gap-7">
+								<div className="w-full">
+									<label>Locatie op de camping</label>
+									<MapContainer center={[displayData.latitude, displayData.longitude]} zoom={17} scrollWheelZoom={true} className="size-full">
+										<TileLayer
+											attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+											url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+										/>
+										< DraggableMarker position={{lat: displayData.latitude, lng: displayData.longitude}} setPosition={(a: {lat: number, lng: number}) => {
+											props.setActivityEditing(prev => ({ ...prev!, latitude: a.lat }));
+											props.setActivityEditing(prev => ({ ...prev!, longitude: a.lng }));
+										}}/>
+									</MapContainer>
+								</div>
+								<div className="w-full">
+									<label htmlFor="description">Locatiebeschrijving</label>
+									<textarea
+										id="description"
+										value={displayData.location}
+										onChange={(e) => {
+											props.setActivityEditing(prev => ({ ...prev!, location: e.target.value }));
+										}}
+										required
+										placeholder="Bijv. 'Bij het grote veld, in het midden.'"
+										className="min-h-48 block w-full p-2.5 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
+								</div>
 							</div>
 							<div className="mb-2">
 								<label htmlFor="type">Type activiteit</label>
@@ -925,22 +939,6 @@ function ActivityListItem(props: {
 									<option value="3">Vanaf 3 jaar oud</option>
 									<option value="7">Vanaf 7 jaar oud</option>
 									<option value="12">Vanaf 12 jaar oud</option>
-								</select>
-							</div>
-							<div className="mb-2">
-								<label htmlFor="location">Locatie</label>
-								<select
-									id="location"
-									value={displayData.location}
-									onChange={(e) => {
-										props.setActivityEditing(prev => ({ ...prev!, location: e.target.value }));
-									}}
-									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-								>
-									<option value="Grote Plein">Grote Plein</option>
-									<option value="De Schuur">De Schuur</option>
-									<option value="Kleine Bos">Kleine Bos</option>
-									<option value="Het Weiland">Het Weiland</option>
 								</select>
 							</div>
 							<div className="mb-2">
@@ -1203,9 +1201,9 @@ function ImageUpload(props?: { fieldName?: string }) {
 	const [image, setImage] = useState<string | null>(null);
 
 	return (
-		<div>
+		<div className={`${!image && "mb-10"}`}>
 			<label htmlFor={fieldName} className="text-base font-semibold">Plaatje</label>
-			<div className="w-full min-w-[40%] h-full min-h-[10em]">
+			<div className="w-full min-w-[40%] h-full">
 				<div className={`text-black bg-gray-200/80 w-full justify-center  ${!image && "hover:outline-5 hover:outline-red-300 hover:font-bold"} h-full`}>
 					{image && <img src={image} alt="Preview" className="object-fill" />}
 					<input id={fieldName} className={`w-full pb-0 hover:cursor-pointer hover:outline-red-300 hover:font-bold ${image && "border-t-2"} ${!image && "h-full"}`} type="file" accept="image/*" required onChange={(e) => {
@@ -1255,7 +1253,7 @@ function DraggableMarker(props: {position: {lat: number, lng: number}, setPositi
 		<Marker
 			draggable={true}
 			eventHandlers={eventHandlers}
-			position={MAP_CENTER}
+			position={props.position}
 			ref={markerRef}>
 			<Popup minWidth={90}>
 				<span>Hier speelt de activiteit zich af.</span>
