@@ -14,3 +14,9 @@ export const InsertActivitySlotRequest = t.Object({
     date: t.String(),
     duration: t.Numeric(),
 })
+
+export const RepeatActivitySlotRequest = t.Object({
+    slotId: t.Numeric(),
+    interval: t.UnionEnum(["daily", "weekly", "monthly"]),
+    times: t.Numeric(),
+})
