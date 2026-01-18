@@ -670,17 +670,16 @@ function ActivityListItem(props: {
 	// Inspecting view
 	if (activityInspecting && activityInspecting.id == activiteit.id) {
 		return (<>
-			<div className="flex-1">
-				<div className="flex flex-col max-h-270	 overflow-auto gap-3">
+			<div className="flex-1 py-5">
+				<div className="flex flex-col max-h-[45vh] px-2 overflow-auto gap-4">
 					{slots
 						.filter((slot) => activiteit.id === slot.activityId)
 						.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
 						.map((slot) => <>
-							<div className="min-h-20 border-2 p-5 min-w-50 mb-3 flex">
+							<div className="border-2 p-5 w-full flex">
 								<div className="w-full">
-									<p className="text-xl font-bold w-full flex items-center underline mb-3">{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
-
-									<p className="text-3xl w-full flex items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(van {activiteit.capacity})</span></p>
+									<p className="text-xl font-bold w-full flex items-center underline">{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
+									<p className="text-3xl w-full items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(van {activiteit.capacity})</span></p>
 								</div>
 								<p className="italic font-bold text-6xl items-center flex  w-fit text-nowrap ">Omzet:&nbsp;<span className="text-green-500">€ {(activiteit.price * slot.bookings).toFixed(2).dot2comma().replace(",00", ",-")}</span></p>
 							</div>
