@@ -91,7 +91,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                     <div className="flex-1">
                         <div className="h-full w-full">
                             <div>
-                                <p>{dayjs(slot.date).locale("nl").format("dddd D[ ]MMM[ om ]HH:mm")}</p>
+                                <p>{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
                                 <hr></hr>
                             </div>
                             <p><b>{t("duration")}: </b>{slot.duration} {t("hours")}</p>

@@ -7,11 +7,13 @@ import {Static, status} from "elysia";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
 
 
 export async function insertSlot(slot: Static<typeof InsertActivitySlotRequest>) {
     dayjs.extend(customParseFormat)
     dayjs.extend(relativeTime)
+    dayjs.extend(utc)
 
     // Probeer de ontvangen datum met begintijd te parsen naar een dayjs object. Als dit niet lukt, weten we dat de client ongeldige data heeft gestuurd en keur dit request dan af.
     if (!dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).isValid()) {
@@ -26,7 +28,7 @@ export async function insertSlot(slot: Static<typeof InsertActivitySlotRequest>)
     try {
         await db.insert(slotsTable).values({
             activityId: slot.activityId,
-            date: dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).toDate().toString(),
+            date: dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).utc().toISOString(),
             duration: slot.duration,
         })
     } catch (e) {
@@ -76,12 +78,14 @@ enum RepeatInterval {
 }
 
 async function repeatSlotInDatabase(slot: InferSelectModel<typeof slotsTable>, interval: RepeatInterval, times: number) {
+    dayjs.extend(utc)
+
     for (let i = 0; i < times; i++) {
         // Herhaal het slot
         try {
             await db.insert(slotsTable).values({
                 activityId: slot.activityId,
-                date: dayjs(slot.date, 'YYYY-MM-DDTHH:mm', true).add(i+1, interval).toDate().toString(),
+                date: dayjs(slot.date).add(i+1, interval).utc().toISOString(),
                 duration: slot.duration,
             })
         } catch (e) {
