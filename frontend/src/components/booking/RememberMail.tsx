@@ -40,7 +40,10 @@ export function RememberMail() {
                         <div className="flex items-center justify-evenly w-full">
                           <button
                               className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 `}
-                              onClick={context.next}
+                              onClick={() => {
+                                  context.selectEmail(""); // Zorg dat we de email in de context legen.
+                                  context.next();
+                              }}
                           > {t("proceed_without_email_updates")}
                         </button>
                          <button

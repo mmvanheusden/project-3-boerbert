@@ -17,5 +17,5 @@ export const InsertBookingRequest = t.Object({
     slotId: t.Numeric(),
     amount: t.Numeric(),
     campingSpot: t.Numeric(),
-    email: t.Optional(t.String({format: 'email'})),
+    email: t.Optional(t.Union([t.String({format: 'email'}), t.Null()])),
 })
