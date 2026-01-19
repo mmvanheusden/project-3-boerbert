@@ -4,9 +4,14 @@ import {
 } from './model';
 import db from "../config/db";
 import {Static, status} from "elysia";
-import {DrizzleQueryError, eq} from "drizzle-orm";
+import { DrizzleQueryError, eq, InferSelectModel } from "drizzle-orm";
 import {slotsTable} from "../slots/model";
 import {activitiesTable} from "../activities/model";
+import * as fs from "node:fs";
+import * as handlebars from "handlebars";
+import dayjs from "dayjs";
+import "dayjs/locale/nl"
+import { EmailTransporter } from "../index";
 
 
 export async function insertBooking(request: Static<typeof InsertBookingRequest>) {
@@ -36,13 +41,19 @@ export async function insertBooking(request: Static<typeof InsertBookingRequest>
     }
 
     try {
-        await db.insert(bookingsTable).values({
+        const [booking] =  await db.insert(bookingsTable).values({
             activityId: slot.activityId,
             slotId: request.slotId,
             amount: request.amount,
             campingSpot: request.campingSpot,
-            paid: 1
-        })
+            paid: 1,
+            email: request.email
+        }).returning();
+
+        // Send confirmation email :O
+        if (request.email) {
+            await sendConfirmationEmail(booking, request.email);
+        }
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
             console.log(e.cause?.message)
@@ -61,4 +72,42 @@ export async function getAllBookings() {
 
 export async function deleteBooking(id: string) {
     return db.select().from(bookingsTable);
+}
+
+export async function sendConfirmationEmail(booking: InferSelectModel<typeof bookingsTable>, to: string) {
+    if (!process.env.MAILTRAP_TOKEN!) {
+        console.warn("GEEN MAILTRAP TOKEN GECONFIGUEERD, GEEN EMAIL VERSTUURD!")
+        return;
+    }
+
+    const activity = await db.select().from(activitiesTable).where(eq(activitiesTable.id, booking.activityId)).get();
+    const slot = await db.select().from(slotsTable).where(eq(slotsTable.id, booking.slotId)).get();
+    if (!activity || !slot) {
+        console.error("vereiste informatie van boeking niet gevonden, geen email verstuurd.")
+        return;
+    }
+
+
+    const contentTemplate = handlebars.compile(fs.readFileSync('emails/boekingsbevestiging/content.hbs', 'utf8'));
+    const subjectTemplate =  handlebars.compile(fs.readFileSync('emails/boekingsbevestiging/subject.hbs', 'utf8'));
+
+    const content = contentTemplate({
+        activity_name: activity!.title.nl,
+        slot_datetime: dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm"),
+        activity_location: activity!.location.nl,
+        activity_minage: activity!.minage == "0" ? "Alle leeftijden" : activity!.minage + "+",
+        booking_amount: booking.amount,
+        activity_price: `€ ${activity!.price.toFixed(2).dot2comma().replace(",00", ",-")}`
+    });
+    const subject = subjectTemplate({
+        slot_date: dayjs(slot.date).locale("nl").format("D[ ]MMMM"),
+    });
+
+
+    await EmailTransporter
+        .sendMail({
+            to: to,
+            subject: subject,
+            html: content
+        });
 }
