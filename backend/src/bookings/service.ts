@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/nl"
 import duration from "dayjs/plugin/duration";
 import { EmailTransporter } from "../index";
+import {composeBookingConfirmationEmail, composeBookingReminderEmail} from "../email";
 
 
 export async function insertBooking(request: Static<typeof InsertBookingRequest>) {
@@ -82,29 +83,14 @@ export async function sendConfirmationEmail(booking: InferSelectModel<typeof boo
         return;
     }
 
-    const activity = await db.select().from(activitiesTable).where(eq(activitiesTable.id, booking.activityId)).get();
-    const slot = await db.select().from(slotsTable).where(eq(slotsTable.id, booking.slotId)).get();
-    if (!activity || !slot) {
+    // Met deze query halen we in 1x de slot op, en activiteit.
+    const bookingData = await db.select().from(slotsTable).where(eq(slotsTable.id, booking.slotId)).leftJoin(activitiesTable, eq(activitiesTable.id, slotsTable.activityId)).get();
+    if (!bookingData || !bookingData!.activities || !bookingData!.slots) {
         console.error("vereiste informatie van boeking niet gevonden, geen email verstuurd.")
         return;
     }
 
-
-    const contentTemplate = handlebars.compile(fs.readFileSync('emails/boekingsbevestiging/content.hbs', 'utf8'));
-    const subjectTemplate =  handlebars.compile(fs.readFileSync('emails/boekingsbevestiging/subject.hbs', 'utf8'));
-
-    const content = contentTemplate({
-        activity_name: activity!.title.nl,
-        slot_datetime: dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm"),
-        activity_location: activity!.location.nl,
-        activity_minage: activity!.minage == "0" ? "Alle leeftijden" : activity!.minage + "+",
-        booking_amount: booking.amount,
-        activity_price: `€ ${activity!.price.toFixed(2).dot2comma().replace(",00", ",-")}`
-    });
-    const subject = subjectTemplate({
-        slot_date: dayjs(slot.date).locale("nl").format("D[ ]MMMM"),
-    });
-
+    const {subject, content} = composeBookingConfirmationEmail(booking, bookingData.activities, bookingData.slots);
 
     await EmailTransporter
         .sendMail({
@@ -120,34 +106,18 @@ export async function sendReminderEmails() {
         return;
     }
     dayjs.extend(duration)
-    const notRemindedBookings = await db.select().from(bookingsTable).where(and(eq(bookingsTable.reminderEmailSent, false), isNotNull(bookingsTable.email)));
 
-    for (const booking of notRemindedBookings) {
-        const [slot] = await db.selectDistinct().from(slotsTable).where(eq(slotsTable.id, booking.slotId));
+    // Met deze query halen we in 1x de boeking op, slot, en activiteit.
+    const notRemindedBookings = await db.select().from(bookingsTable).where(and(eq(bookingsTable.reminderEmailSent, false), isNotNull(bookingsTable.email))).innerJoin(slotsTable, eq(slotsTable.id, bookingsTable.slotId)).innerJoin(activitiesTable, eq(activitiesTable.id, slotsTable.activityId)).all();
+
+    for (const { activities: activity, bookings: booking, slots: slot } of notRemindedBookings) {
         if (dayjs.duration(dayjs(slot.date).diff(dayjs())).days() <= 1) {
             // Slot is morgen
             console.log(`Slot ${slot.id} is morgen, verstuur herinneringsemail naar ${booking.email} (Boeking ${booking.id})`)
 
+            const {subject, content} = composeBookingReminderEmail(booking, activity, slot);
+
             // Stuur de email
-            const activity = await db.select().from(activitiesTable).where(eq(activitiesTable.id, booking.activityId)).get();
-
-            const contentTemplate = handlebars.compile(fs.readFileSync('emails/boekingsherinnering/content.hbs', 'utf8'));
-            const subjectTemplate =  handlebars.compile(fs.readFileSync('emails/boekingsherinnering/subject.hbs', 'utf8'));
-
-            const content = contentTemplate({
-                activity_name: activity!.title.nl,
-                slot_datetime: dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm"),
-                activity_location: activity!.location.nl,
-                activity_minage: activity!.minage == "0" ? "Alle leeftijden" : activity!.minage + "+",
-                booking_amount: booking.amount,
-                activity_price: `€ ${activity!.price.toFixed(2).dot2comma().replace(",00", ",-")}`
-            });
-
-            const subject = subjectTemplate({
-                slot_date: dayjs(slot.date).locale("nl").format("D[ ]MMMM"),
-            });
-
-
             await EmailTransporter
                 .sendMail({
                     to: booking.email!,
