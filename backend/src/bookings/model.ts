@@ -11,6 +11,7 @@ export const bookingsTable = sqliteTable("bookings", {
     paid: int().notNull(),
     campingSpot: int().notNull(),
     email: text(),
+    reminderEmailSent: int({mode: "boolean"}).notNull().default(false),
 });
 
 export const InsertBookingRequest = t.Object({
