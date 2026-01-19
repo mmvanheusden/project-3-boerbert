@@ -6,9 +6,10 @@ import { ConnectivityCheck } from "./components/ConnectivityCheck.tsx";
 import Router, { Route, Switch } from "crossroad";
 import AdminPanel from "./components/admin/AdminPanel.tsx";
 import { Component, type PropsWithChildren, useRef } from "react";
+export const BACKEND_URL= import.meta.env.VITE_BACKEND_URL || "http://localhost:3000"
 
 // @ts-ignore
-export const BACKEND = treaty<ElysiaApp>(import.meta.env.VITE_BACKEND_URL || "http://localhost:3000")
+export const BACKEND = treaty<ElysiaApp>(BACKEND_URL)
 
 export const queryClient = new QueryClient()
 
