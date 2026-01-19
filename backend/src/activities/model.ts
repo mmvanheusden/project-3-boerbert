@@ -7,7 +7,6 @@ export const activitiesTable = sqliteTable("activities", {
     subtitle: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
     description: text({ mode: 'json' }).$type<{ nl: string, en: string, de: string }>().notNull(),
     price: int().notNull(),
-    hero: blob({ mode: 'buffer' }).notNull(), // Cover image
     capacity: int().notNull(),
     threshold: int().notNull(),
     minage: text({ enum: ["0", "3", "7", "12"] }).notNull(),
@@ -75,7 +74,6 @@ export const GetActivitiesResponseBody = t.Array(t.Object({
 		de: t.String()
 	}),
 	price: t.Numeric(),
-	hero: t.String(), // Plaatje als base64, zodat 'ie makkelijk verstuurbaar is.
 	capacity: t.Numeric(),
 	threshold: t.Numeric(),
 	minage: t.UnionEnum(["0", "3", "7", "12"]),

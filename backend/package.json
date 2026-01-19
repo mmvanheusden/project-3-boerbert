@@ -11,6 +11,7 @@
     "handlebars": "^4.7.8",
     "nodemailer": "^7.0.12",
     "translate": "^3.0.1"
+    "@elysiajs/static": "^1.4.7"
   },
   "devDependencies": {
     "@types/nodemailer": "^7.0.5",

@@ -6,6 +6,7 @@ import { BottomRowButton } from "./BookingFlowManager.tsx";
 import { t } from "i18next";
 import i18n from "../../i18n/config.ts";
 import dayjs from "dayjs";
+import {BACKEND_URL} from "../../App.tsx";
 
 export function ViewActivity() {
     const {selectedActivity, prev, selectedAmount, setCurrentStep} = useContext(Context);
@@ -25,7 +26,7 @@ export function ViewActivity() {
                             <div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
                                 <img
                                     className="w-full h-full object-cover object-center"
-                                    src={`data:image/png;base64, ${selectedActivity?.hero}`}
+                                    src={`${BACKEND_URL}/public/activities/${selectedActivity?.id}.png`}
                                     style={{ imageRendering: "pixelated" }}
                                     alt={selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
                                 />
@@ -91,7 +92,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                     <div className="flex-1">
                         <div className="h-full w-full">
                             <div>
-                                <p>{dayjs(slot.date).locale("nl").format("dddd D[ ]MMM[ om ]HH:mm")}</p>
+                                <p>{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
                                 <hr></hr>
                             </div>
                             <p><b>{t("duration")}: </b>{slot.duration} {t("hours")}</p>
