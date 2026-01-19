@@ -109,6 +109,7 @@ i18n
                     here: "Voer hier in",
                     not_available: "Niet beschikbaar",
                     no_activities_available: "Geen activiteiten beschikbaar",
+                    pinned_activity: "Uitgelicht"
                 },
             }, // German
             de: {
@@ -176,6 +177,7 @@ i18n
                     here: "Hier eintragen",
                     not_available: "Nicht verfügbar",
                     no_activities_available: "Keine Aktivitäten verfügbar",
+                    pinned_activity: "Vorgestellt"
                 }
             }, // English
             en: {
@@ -243,6 +245,7 @@ i18n
                     here: "Enter here",
                     not_available: "Not available",
                     no_activities_available: "No activities available",
+                    pinned_activity: "Featured",
                 }
             }
         },

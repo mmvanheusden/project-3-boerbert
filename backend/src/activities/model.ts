@@ -16,6 +16,7 @@ export const activitiesTable = sqliteTable("activities", {
 	latitude: int().notNull(),
 	longitude: int().notNull(),
 	targetAudience: text({ enum: ["Kinderen", "Gezinnen", "Senioren", "Volwassenen"] }).notNull(),
+	pinned: int({ mode: 'boolean' }).notNull().default(0),
 });
 
 
@@ -55,6 +56,7 @@ export const UpdateActivityRequestBody = t.Object({
 	targetAudience: t.UnionEnum(["Kinderen", "Gezinnen", "Senioren", "Volwassenen"]),
 	latitude: t.Numeric(),
 	longitude: t.Numeric(),
+	pinned: t.Boolean(),
 })
 
 export const GetActivitiesResponseBody = t.Array(t.Object({
@@ -94,6 +96,7 @@ export const GetActivitiesResponseBody = t.Array(t.Object({
 	targetAudience: t.UnionEnum(["Kinderen", "Gezinnen", "Senioren", "Volwassenen"]),
 	latitude: t.Numeric(),
 	longitude: t.Numeric(),
+	pinned: t.Boolean(),
 }))
 
 

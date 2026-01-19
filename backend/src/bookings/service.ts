@@ -23,7 +23,7 @@ export async function insertBooking(request: Static<typeof InsertBookingRequest>
 
     // Check of de activiteit voor dit slot wel bestaat
     const activity = await db.select().from(activitiesTable).where(eq(activitiesTable.id, slot.activityId)).get();
-    if (!activity) {
+    if (!activity) {{ mode: 'boolean' }
         return status(400, "Er is geen activiteit met dit slot.")
     }
 
@@ -41,7 +41,7 @@ export async function insertBooking(request: Static<typeof InsertBookingRequest>
             slotId: request.slotId,
             amount: request.amount,
             campingSpot: request.campingSpot,
-            paid: 1
+            paid: true,
         })
     } catch (e) {
         if (e instanceof DrizzleQueryError) {

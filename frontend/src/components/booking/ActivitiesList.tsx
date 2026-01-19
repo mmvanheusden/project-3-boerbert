@@ -43,7 +43,7 @@ export function ActivitiesList() {
             const isAvailable = hasAvailableSlots(activiteit);
             return (
             <li key={activiteit.id ?? activiteit.title.toString()} className="mb-2">
-                <div className="bg-white shadow-md rounded-xl p-2 w-full">
+                <div className={`bg-white shadow-md rounded-xl p-2 w-full ${activiteit.pinned && " border-12 border-green-400" }`}>
                     <div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
                         <div className="min-w-1/3">
                             <h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
@@ -58,6 +58,11 @@ export function ActivitiesList() {
                                 src={`data:image/png;base64, ${activiteit.hero}`}
                                 alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
                             />
+                            {activiteit.pinned == true && (
+                                <div className="absolute top-2 right-2 bg-green-400 text-black text-4xl font-bold px-3 py-1 rounded-lg">
+                                    {t("pinned_activity")}
+                                </div>
+                            )}
                             <button
                                 onClick={() => {
                                     context.selectActivity(activiteit);
@@ -149,4 +154,4 @@ export function ActivitiesList() {
             </div>
         </div>
     );
-}
+} 
