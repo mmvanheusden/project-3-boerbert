@@ -1,6 +1,6 @@
 import {Elysia} from "elysia";
-import {InsertActivitySlotRequest, slotsTable} from "./model";
-import {getAllSlots, getSlots, insertSlot} from "./service";
+import {InsertActivitySlotRequest, RepeatActivitySlotRequest, slotsTable} from "./model";
+import {getAllSlots, getSlots, insertSlot, repeatSlot} from "./service";
 import {eq} from 'drizzle-orm';
 import db from "../config/db";
 import { getActivityBookings, getAllBookings } from "../bookings/service";
@@ -8,13 +8,19 @@ import {bookingsTable} from "../bookings/model";
 
 
 export const SlotsController = new Elysia().group("/slots", (app) => app
-    .put(
-        "/",
+    .put("/",
         async (context) => {
             return await insertSlot(context.body)
         }, {
             body: InsertActivitySlotRequest,
             parse: "json",
+        }
+    )
+    .post("/:id/repeat",
+        async ({params: {id}, body}) => {
+            return await repeatSlot(+id, body)
+        }, {
+            body: RepeatActivitySlotRequest
         }
     )
     .get(
