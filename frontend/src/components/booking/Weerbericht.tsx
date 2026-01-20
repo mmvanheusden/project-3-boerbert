@@ -40,7 +40,7 @@ function Weerbericht() {
         item.dt_txt.includes("12:00:00")
       );
 
-      setForecast(dagelijks.slice(0, 5));
+      setForecast(dagelijks.slice(1, 6));
       setLaden(false);
     });
   }, []);
@@ -114,21 +114,13 @@ function Weerbericht() {
       {/* Regen */}
       {isRegen && (
         <div
-          className="absolute inset-0 text-blue-200 opacity-40 text-2xl"
-          style={{ animation: "rain 1s linear infinite" }}
-        >
-          💧💧💧💧💧💧💧💧💧
-        </div>
+          className="absolute inset-0 text-blue-200 opacity-40 text-2xl" style={{ animation: "rain 1s linear infinite" }}>💧💧💧💧💧💧💧💧</div>
       )}
 
       {/* Sneeuw */}
       {isSneeuw && (
         <div
-          className="absolute inset-0 text-white opacity-80 text-2xl"
-          style={{ animation: "snow 4s linear infinite" }}
-        >
-          ❄️ ❄️ ❄️ ❄️ ❄️ ❄️
-        </div>
+          className="absolute inset-0 text-white opacity-80 text-2xl" style={{ animation: "snow 4s linear infinite" }}>❄️ ❄️ ❄️ ❄️ ❄️ ❄️</div>
       )}
 
       {/* === Huidig weer === */}
