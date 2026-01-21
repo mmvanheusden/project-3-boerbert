@@ -38,6 +38,7 @@ export function PaymentStatus() {
                             slotId: context.selectedSlot!.id,
                             amount: context.selectedAmount,
                             campingSpot: context.selectedCampingSpot,
+                            email: context.selectedEmail === "" ? null : context.selectedEmail,
                         })
                         context.setCurrentStep (9)
                     }}

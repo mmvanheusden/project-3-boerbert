@@ -1,5 +1,5 @@
 import { Header } from "../KleineDingetjes";
-import useFirstRender, { BACKEND, queryClient } from "../../App.tsx";
+import useFirstRender, {BACKEND, BACKEND_URL, queryClient} from "../../App.tsx";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Context, Provider } from "./Context.tsx";
@@ -115,6 +115,10 @@ export default function AdminPanel() {
 		mutationFn: (slot: any) => BACKEND.slots({ id: slot.id }).delete(),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
 	})
+	const SlotRepeatMutator = useMutation({
+		mutationFn: (options: {slotId: number, interval: "monthly" | "daily" | "weekly", times: number}) => BACKEND.slots({ id: options.slotId }).repeat.post(options),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+	})
 
 
 	// Sync query data into local state once fetched
@@ -181,7 +185,7 @@ export default function AdminPanel() {
 					</button>
 					<a href="/">
 						<button
-							className="text-white inline-flex items-center hover:bg-orange-600 ml-4 hover:ring-2 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
+							className="text-white inline-flex items-center hover:bg-orange-600 ml-4 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
 							<Icon icon="ion:arrow-back" width="24" height="24" />
 							<span>Terug naar hoofdpagina</span>
 						</button>
@@ -198,6 +202,7 @@ export default function AdminPanel() {
 							ActivityPatchMutator={ActivityPatchMutator}
 							ActivityDeleteMutator={ActivityDeleteMutator}
 							SlotInsertMutator={SlotInsertMutator}
+							SlotRepeatMutator={SlotRepeatMutator}
 							SlotDeleteMutator={SlotDeleteMutator}
 						/>
 					)}
@@ -225,6 +230,14 @@ function MapView(props: {
 	const context = useContext(Context)!;
 
 	return (<>
+			<nav className="sticky top-0 z-9000">
+				<Helper>
+					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
+					<p>
+						Hieronder vindt u een kaart met daarop alle activiteiten. Klik op een pin om de activiteit te inspecteren.
+					</p>
+				</Helper>
+			</nav>
 			<MapContainer center={[MAP_CENTER.lat, MAP_CENTER.lng]} zoom={17} scrollWheelZoom={true} className="w-full h-full">
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -238,7 +251,7 @@ function MapView(props: {
 								<p>{activity.subtitle.nl}</p>
 								<img
 									className="rounded w-full mb-2 mt-2 mx-auto"
-									src={`data:image/png;base64, ${activity.hero}`}
+									src={`${BACKEND_URL}/public/activities/${activity.id}.png`}
 									alt={activity.title.nl}
 								/>
 								<details className="open:mb-1">
@@ -279,6 +292,7 @@ function ActivitiesEditor(props: {
 	ActivityPatchMutator: UseMutationResult<any, unknown, any, unknown>;
 	ActivityDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlotInsertMutator: UseMutationResult<any, unknown, any, unknown>;
+	SlotRepeatMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlotDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
 }) {
 	const { activities } = useContext(Context)!;
@@ -291,13 +305,15 @@ function ActivitiesEditor(props: {
 		ActivityPatchMutator,
 		ActivityDeleteMutator,
 		SlotInsertMutator,
-		SlotDeleteMutator
+		SlotDeleteMutator,
+		SlotRepeatMutator,
 	} = props;
 
 	const [activityEditing, setActivityEditing] = useState<typeof UpdateActivityRequestBody | null>(null);
 	const [activityScheduling, setActivityScheduling] = useState<ActivityFull | null>(null);
 	const [activityInspecting, setActivityInspecting] = useState<ActivityFull | null>(null);
 	const [slotPlanning, setSlotPlanning] = useState(false);
+	const [slotRepeating, setSlotRepeating] = useState<number | null>(null);
 	const [creatingActivity, setCreatingActivity] = useState(false);
 
 	const filteredActivities = useMemo(
@@ -369,7 +385,7 @@ function ActivitiesEditor(props: {
 				<Helper>
 					<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
 					<p>
-						Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze aanpassen, verwijderen, of nieuwe aanmaken
+						Hieronder vindt u een lijst met alle activiteiten. Met de knoppen kunt u ze plannen, bewerken, verwijderen, of toevoegen.
 					</p>
 				</Helper>
 			</nav>
@@ -377,7 +393,7 @@ function ActivitiesEditor(props: {
 			{creatingActivity ? (
 				<>
 					<button
-						className="text-white inline-flex items-center hover:bg-orange-500 hover:ring-2 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
+						className="text-white inline-flex items-center hover:bg-orange-500 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
 						onClick={() => setCreatingActivity(false)}
 					>
 						<Icon icon="mdi:cancel-bold" width="24" height="24" />
@@ -397,7 +413,7 @@ function ActivitiesEditor(props: {
 				<>
 					<div className="flex items-center justify-between w-full gap-4">
 						<button
-							className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-4xl mb-3 py-1"
+							className="text-white inline-flex items-center hover:bg-green-700 rounded cursor-pointer bg-green-600 px-2 font-medium text-4xl mb-3 py-1"
 							onClick={() => setCreatingActivity(true)}
 						>
 							<Icon icon="mdi:add-bold" width="24" height="24" />
@@ -430,11 +446,14 @@ function ActivitiesEditor(props: {
 											setActivityInspecting={setActivityInspecting}
 											slotPlanning={slotPlanning}
 											setSlotPlanning={setSlotPlanning}
+											slotRepeating={slotRepeating}
+											setSlotRepeating={setSlotRepeating}
 											slots={slots}
 											updateActivity={updateActivity}
 											ActivityDeleteMutator={ActivityDeleteMutator}
 											SlotInsertMutator={SlotInsertMutator}
 											SlotDeleteMutator={SlotDeleteMutator}
+											SlotRepeatMutator={SlotRepeatMutator}
 											compactActivities={compactActivities}
 										/>
 									</div>
@@ -588,7 +607,7 @@ function ActivityCreator(props: {
 				<input id="price" type="number" step="0.01" required placeholder="'Bijv. '€4,50'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
-			<button type="submit" className="text-white bg-green-600 hover:bg-green-700 mt-1 rounded cursor-pointer px-4 font-small text-xl hover:ring-2">
+			<button type="submit" className="text-white bg-green-600 hover:bg-green-700 mt-1 rounded cursor-pointer px-4 font-small text-xl">
 				Toevoegen
 			</button>
 		</form>
@@ -641,11 +660,14 @@ function ActivityListItem(props: {
 	setActivityInspecting: (a: ActivityFull | null) => void;
 	slotPlanning: boolean;
 	setSlotPlanning: (v: boolean) => void;
+	slotRepeating: number | null;
+	setSlotRepeating: (id: number | null) => void;
 	slots: Slot[];
 	updateActivity: (a: typeof UpdateActivityRequestBody | null) => Promise<void>;
 	ActivityDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlotInsertMutator: UseMutationResult<any, unknown, any, unknown>;
 	SlotDeleteMutator: UseMutationResult<any, unknown, any, unknown>;
+	SlotRepeatMutator: UseMutationResult<any, unknown, any, unknown>;
 	compactActivities: Treaty.Data<typeof BACKEND.activities.compact.get>;
 }) {
 	const {
@@ -660,28 +682,30 @@ function ActivityListItem(props: {
 		setActivityInspecting,
 		slotPlanning,
 		setSlotPlanning,
+		slotRepeating,
+		setSlotRepeating,
 		slots,
 		updateActivity,
 		ActivityDeleteMutator,
 		SlotInsertMutator,
 		SlotDeleteMutator,
+		SlotRepeatMutator,
 		compactActivities
 	} = props;
 
 	// Inspecting view
 	if (activityInspecting && activityInspecting.id == activiteit.id) {
 		return (<>
-			<div className="flex-1">
-				<div className="flex flex-col max-h-270	 overflow-auto gap-3">
+			<div className="flex-1 py-5">
+				<div className="flex flex-col max-h-[45vh] px-2 overflow-auto gap-4">
 					{slots
 						.filter((slot) => activiteit.id === slot.activityId)
 						.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
 						.map((slot) => <>
-							<div className="min-h-20 border-2 p-5 min-w-50 mb-3 flex">
+							<div className="border-2 p-5 w-full flex">
 								<div className="w-full">
-									<p className="text-xl font-bold w-full flex items-center underline mb-3">{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
-
-									<p className="text-3xl w-full flex items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(van {activiteit.capacity})</span></p>
+									<p className="text-xl font-bold w-full flex items-center underline">{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
+									<p className="text-3xl w-full items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(van {activiteit.capacity})</span></p>
 								</div>
 								<p className="italic font-bold text-6xl items-center flex  w-fit text-nowrap ">Omzet:&nbsp;<span className="text-green-500">€ {(activiteit.price * slot.bookings).toFixed(2).dot2comma().replace(",00", ",-")}</span></p>
 							</div>
@@ -706,9 +730,67 @@ function ActivityListItem(props: {
 			<>
 				<div className="flex-1">
 					<div className="min-h-50">
-						{slotPlanning ? (
+						{slotRepeating ?
 							<>
-								<form onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+								<nav className="sticky top-0 z-9000">
+									<Helper>
+										<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
+										<div>
+											<p>U gaat het tijdslot van <b className="underline">{dayjs(slots.find((slot) => slot.id == slotRepeating)?.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</b> herhalen.</p>
+											<p>De herhaalde slots worden door het systeem automatisch aangemaakt, waarbij het begintijdstip <b>{dayjs(slots.find((slot) => slot.id == slotRepeating)?.date).locale("nl").format("HH:mm")}</b> van de activiteit wordt aangehouden.</p>
+										</div>
+									</Helper>
+								</nav>
+								<form className="text-2xl" onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+									event.preventDefault();
+									const form = event.currentTarget;
+
+									const parsedFormData = {
+										// @ts-ignore
+										slotId: slotRepeating,
+										// @ts-ignore
+										interval: String(form.elements["interval"]?.value || ""),
+										// @ts-ignore
+										times: Number(form.elements["times"]?.value || 0),
+									}
+									if (confirm(`Weet je zeker dat je dit tijdslot wilt herhalen?`)) {
+										SlotRepeatMutator.mutate(parsedFormData);
+										setSlotRepeating(null);
+									}
+								}}>
+									<div className="mb-2">
+										<label htmlFor="type">Herhalingsinterval</label>
+										<select
+											id="interval"
+											defaultValue="weekly"
+											className="block w-1/3 p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+										>
+											<option value="daily">Dagelijks</option>
+											<option value="weekly">Wekelijks</option>
+											<option value="monthly">Maandelijks</option>
+										</select>
+									</div>
+									<div className="mb-2">
+										<label htmlFor="times">Hoeveel keer herhalen</label><br/>
+										<input id="times" type="number" step="1" defaultValue="2" required
+											   className="w-1/3 p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"/><span>keer</span>
+									</div>
+
+									<div className="flex">
+										<button
+											className="text-white flex mt-3 mr-3 bg-orange-400 hover:bg-orange-500 rounded cursor-pointer py-5 px-5 text-2xl "
+											onClick={() => {
+												setSlotRepeating(null);
+											}}>
+											{slotPlanning ? "Annuleren" : "Sluiten"}
+										</button>
+										<button className="text-white mr-10 text-2xl rounded mt-3 bg-green-600 hover:bg-green-700 cursor-pointer px-5 py-5" type="submit">Herhaal tijdslot</button>
+									</div>
+								</form>
+							</>
+						: (slotPlanning ? (
+							<>
+								<form className="text-2xl" onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
 									event.preventDefault();
 									const form = event.currentTarget
 
@@ -732,16 +814,16 @@ function ActivityListItem(props: {
 									}
 								}}>
 									<div>
-										<label className="ml-10 text-2xl" htmlFor="slotDate">Datum + begintijd</label>
-										<input className="ml-10 text-2xl block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDate" type="datetime-local"></input>
+										<label htmlFor="slotDate">Datum + begintijd</label>
+										<input className="block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDate" type="datetime-local"></input>
 									</div>
 									<div>
-										<label className="ml-10 text-2xl" htmlFor="slotDuration">Tijdsduur activiteit (in uren)</label>
-										<input className="ml-10 text-2xl block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDuration" type="number"></input>
+										<label htmlFor="slotDuration">Tijdsduur activiteit (in uren)</label>
+										<input className="block p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required id="slotDuration" type="number"></input>
 									</div>
 									<div className="flex">
 										<button
-											className="text-white ml-10 flex mt-3 mr-3 bg-orange-400 hover:bg-orange-500 rounded cursor-pointer py-5 px-5 text-2xl "
+											className="text-white flex mt-3 mr-3 bg-orange-400 hover:bg-orange-500 rounded cursor-pointer py-5 px-5 text-2xl "
 											onClick={() => {
 												setActivityScheduling(null);
 												setSlotPlanning(false);
@@ -749,60 +831,69 @@ function ActivityListItem(props: {
 											{slotPlanning ? "Annuleren" : "Sluiten"}
 										</button>
 										<button className="text-white mr-10 text-2xl rounded mt-3 bg-green-600 hover:bg-green-700 px-5 py-5" type="submit">Voeg tijdslot toe</button>
-
 									</div>
 								</form>
 							</>
 						) : (
-							<>
-								<div className="flex-col text-3xl font-bold mb-1 ml-3 bg-gray-200">
-									<b>{activiteit.title}</b>
-								</div>
-								<table className="table-fixed text-left w-full text-2xl ml-3">
-									<thead className="bg-gray-100">
-										<tr>
-											<th>Datum en begintijd</th>
-											<th>Duur</th>
-										</tr>
-									</thead>
-									<tbody className="overflow-y-auto">
-										{slots
-											.filter((slot) => (slot.activityId == activiteit.id))
-											.map((slot) => {
-												return (
-													<>
-														<tr key={slot.id}>
-															<td className="flex flex-row items-center mb-1">
-
-																{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ om ]HH:mm")}
-															</td>
-															<td>{slot.duration} u</td>
-															<button
-																className="size-8 cursor-pointer border-2 border-blue-500 flex flex-row justify-center items-center hover:border-3 hover:border-red-400 mr-2"
-																onClick={(e) => {
-																	e.stopPropagation();
-																	if (confirm(`Weet je zeker dat je dit tijdslot MET ALLE GEKOPPELDE BOEKINGEN wilt verwijderen?`)) {
-																		SlotDeleteMutator.mutate(slot);
-																	}
-																}}
-															>
-																<Icon icon="line-md:trash" width="32" height="32" color="black" />
-															</button>
-														</tr>
-													</>
-												)
-											})}
+							<div>
+								<div className="max-h-[45vh] px-2 pb-5 overflow-auto">
+									<div className="flex-col text-3xl font-semibold underline">{activiteit.title}</div>
+									<table className="table-auto text-left w-full max-h-[45vh]">
+										<thead className="bg-gray-300 text-xl">
+											<tr>
+												<th>Datum en begintijd</th>
+												<th>Duur</th>
+												<th>Acties</th>
+											</tr>
+										</thead>
+										<tbody className="overflow-y-auto text-2xl">
 										<tr
 											className="hover:ring-2 hover:ring-red-400 hover:cursor-pointer hover:font-bold"
 											onClick={() => setSlotPlanning(true)}
 										>
 											<td className="text-blue-700">Toevoegen</td>
 										</tr>
-									</tbody>
-								</table>
+											{slots
+											.filter((slot) => (slot.activityId == activiteit.id))
+											.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
+											.map((slot) => {
+												return (
+														<tr key={slot.id}>
+															<td className="flex flex-row items-center mb-1">
+																{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}
+															</td>
+															<td>{slot.duration} u</td>
+															<td className="flex flex-row gap-2 mb-2">
+																<button
+																	className="px-1 py-px text-xl font-semibold rounded transition cursor-pointer border-2 border-blue-500 inline-flex items-center hover:ring-3 hover:border-white hover:ring-green-600"
+																	onClick={() => {
+																		if (confirm(`Weet je zeker dat je dit tijdslot MET ALLE GEKOPPELDE BOEKINGEN wilt verwijderen?`)) {
+																			SlotDeleteMutator.mutate(slot);
+																		}
+																	}}
+																>
+																	<Icon icon="line-md:trash" width="32" height="32" color="black" /> Verwijderen
+																</button>
+																<button
+																	className="px-1 py-px text-xl font-semibold rounded transition cursor-pointer border-2 border-orange-500 inline-flex items-center hover:ring-3 hover:border-white hover:ring-green-600"
+																	onClick={() => {
+																		setSlotRepeating(slot.id)
+																	}}
+																>
+																	<Icon icon="material-symbols:event-repeat" width="32" height="32"  color="black" /> Herhalen
+																</button>
+															</td>
+
+														</tr>
+												)
+											})}
+										</tbody>
+									</table>
+								</div>
+
 								<div className="flex">
 									<button
-										className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2 mt-4"
+										className="text-white bg-orange-500 hover:bg-orange-600  rounded cursor-pointer px-4 py-4 font-small text-2xl mt-4"
 										onClick={() => {
 											setActivityScheduling(null);
 											setSlotPlanning(false);
@@ -810,8 +901,8 @@ function ActivityListItem(props: {
 										Sluiten
 									</button>
 								</div>
-							</>
-						)}
+							</div>
+						))}
 					</div>
 				</div>
 
@@ -988,7 +1079,7 @@ function ActivityListItem(props: {
 					</div>
 				</li>
 				<button
-					className="text-white bg-green-500 hover:bg-green-600 ml-10 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2"
+					className="text-white bg-green-500 hover:bg-green-600 ml-10 rounded cursor-pointer px-4 py-4 font-small text-2xl"
 					onClick={async () => {
 						// @ts-ignore
 						await updateActivity(activityEditing);
@@ -996,7 +1087,7 @@ function ActivityListItem(props: {
 					Opslaan
 				</button>
 				<button
-					className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 py-4 font-small text-2xl hover:ring-2"
+					className="text-white bg-orange-500 hover:bg-orange-600 ml-4 rounded cursor-pointer px-4 py-4 font-small text-2xl"
 					onClick={() => {
 						props.setActivityEditing(null);
 					}}>
@@ -1023,32 +1114,32 @@ function ActivityListItem(props: {
 					</div>
 					<img
 						className="max-h-70 right-0 max-w-[50%] object-cover rounded-xl ml-auto"
-						src={`data:image/png;base64, ${activiteit?.hero}`}
+						src={`${BACKEND_URL}/public/activities/${activiteit.id}.png`}
 						style={{ imageRendering: "pixelated" }}
 						alt={activiteit?.title ?? "activity image"}
 					/>
 				</div>
 				<div className="flex justify-around w-full gap-3">
 					<button
-						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl"
 						onClick={() => { // @ts-ignore
 							props.setActivityEditing(activiteit)
 						}}>
 						Bewerken
 					</button>
 					<button
-						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl"
 						onClick={() => { props.setActivityScheduling(activiteit as unknown as ActivityFull) }}>
 						Plannen
 					</button>
 					<button
-						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+						className="text-white bg-green-600 h-20 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-4xl"
 						onClick={() => { props.setActivityInspecting(activiteit as unknown as ActivityFull) }}>
 						Boekingen
 					</button>
 					<div className="w-full flex justify-end">
 						<button
-							className="text-white bg-red-600 h-20 w-20 hover:bg-red-700 pr-50 rounded cursor-pointer px-4 font-small text-4xl hover:ring-2"
+							className="text-white bg-red-600 h-20 w-20 hover:bg-red-700 pr-50 rounded cursor-pointer px-4 font-small text-4xl"
 							onClick={async () => {
 								if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 									props.ActivityDeleteMutator.mutate(activiteit);
@@ -1083,7 +1174,7 @@ function SlideshowEditor(props: {
 			{creatingSlide ?
 				<>
 					<button
-						className="text-white inline-flex items-center hover:bg-orange-500 hover:ring-2 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
+						className="text-white inline-flex items-center hover:bg-orange-500 rounded cursor-pointer bg-orange-400 px-2 font-medium text-xl mb-3 py-1"
 						onClick={() => setCreatingSlide(false)}
 					>
 						<Icon icon="mdi:cancel-bold" width="24" height="24" />
@@ -1101,7 +1192,7 @@ function SlideshowEditor(props: {
 				:
 				<>
 					<button
-						className="text-white inline-flex items-center hover:bg-green-700 hover:ring-2 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
+						className="text-white inline-flex items-center hover:bg-green-700 rounded cursor-pointer bg-green-600 px-2 font-medium text-xl mb-3 py-1"
 						onClick={() => setCreatingSlide(true)}
 					>
 						<Icon icon="mdi:add-bold" width="24" height="24" />
@@ -1119,13 +1210,13 @@ function SlideshowEditor(props: {
 									<div className="mb-2">
 										<img
 											className="w-full h-48 object-cover rounded-lg"
-											src={`data:image/jpeg;base64, ${slide.image}`}
+											src={`${BACKEND_URL}/public/slides/${slide.id}.png`}
 											alt={slide.alt}
 										/>
 									</div>
 									<p className="text-base mb-2">{slide.alt}</p>
 									<button
-										className="text-white bg-red-500 hover:bg-red-600 rounded cursor-pointer px-4 font-small text-xl hover:ring-2"
+										className="text-white bg-red-500 hover:bg-red-600 rounded cursor-pointer px-4 font-small text-xl"
 										onClick={async () => {
 											if (confirm(`Weet je zeker dat je deze slide wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 												SlideDeleteMutator.mutate(slide);
@@ -1168,7 +1259,7 @@ function SlideCreator(props: {
 				<input id="alt" type="text" required placeholder="Bijv. 'Kinderen die boogschieten op het veld'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
-			<button type="submit" className="bg-green-600 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-xl hover:ring-2 font-bold mt-1">
+			<button type="submit" className="bg-green-600 hover:bg-green-700 rounded cursor-pointer px-4 font-small text-xl font-bold mt-1">
 				Toevoegen
 			</button>
 		</form>
@@ -1196,7 +1287,7 @@ function ActivitiesEmptyCheck(props: { activities: Treaty.Data<typeof BACKEND.ac
 class Helper extends Component<PropsWithChildren> {
 	render() {
 		return (
-			<div className="w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 bg-white">
+			<div className="w-full p-2 mb-6 rounded inline-flex items-center border-gray-500 border bg-white">
 				{this.props.children}
 			</div>
 		)
