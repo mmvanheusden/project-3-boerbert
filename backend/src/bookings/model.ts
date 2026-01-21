@@ -8,7 +8,7 @@ export const bookingsTable = sqliteTable("bookings", {
     activityId: int().references((): AnySQLiteColumn => activitiesTable.id).notNull(),
     slotId: int().references((): AnySQLiteColumn => slotsTable.id).notNull(),
     amount: int().notNull(),
-    paid: int().notNull(),
+    paid: int({ mode: 'boolean' }).notNull(),
     campingSpot: int().notNull(),
     email: text(),
     reminderEmailSent: int({mode: "boolean"}).notNull().default(false),

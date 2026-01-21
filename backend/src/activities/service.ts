@@ -55,6 +55,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             latitude: activity.latitude,
             longitude: activity.longitude,
             targetAudience: activity.targetAudience,
+			pinned: false,
         }).returning();
 
 		// Add image to image storage.
@@ -85,6 +86,7 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         targetAudience: activity.targetAudience,
         latitude: activity.latitude,
         longitude: activity.longitude,
+        pinned: activity.pinned,
     }).where(eq(activitiesTable.id, +id));
 }
 

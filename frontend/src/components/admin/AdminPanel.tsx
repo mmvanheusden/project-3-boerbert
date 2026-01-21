@@ -336,6 +336,7 @@ function ActivitiesEditor(props: {
 			targetAudience: activiteit?.targetAudience,
 			latitude: activiteit?.latitude,
 			longitude: activiteit?.longitude,
+			pinned: activiteit?.pinned,	
 		};
 
 		if (confirm(`Weet je zeker dat je activiteit "${activiteit?.title}" wilt aanpassen? Dit kan niet ongedaan worden gemaakt.`)) {
@@ -1067,6 +1068,12 @@ function ActivityListItem(props: {
 									}}
 									className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
 								/>
+							</div>
+							<div className="mb-2">
+								<label htmlFor="pinned">Vastgezet</label>
+								<input type="checkbox" id="pinned" checked={displayData.pinned} onChange={(e) => {
+										props.setActivityEditing(prev => ({ ...prev!, pinned: e.target.checked }));
+									}} />
 							</div>
 						</div>
 					</div>
