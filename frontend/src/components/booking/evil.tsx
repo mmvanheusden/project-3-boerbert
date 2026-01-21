@@ -51,9 +51,11 @@ export function Evil() {
 					<button
 						className="ml-2 w-full text-7xl rounded-2xl cursor-pointer px-4 font-medium hover:ring-2 bg-orange-600"
 						onClick={async () => {
+							const Kidz = new Audio("Jeh_toch.mp3");
+							await Kidz.play();
 							context.setCurrentStep(4);
 						}}>
-						Nee ben te bang papi😨
+						Nee ben te bang papi🙉
 					</button>
 					<button
 						className="ml-2 w-full text-7xl rounded-2xl cursor-pointer px-4 font-medium hover:ring-2 bg-red-600"
