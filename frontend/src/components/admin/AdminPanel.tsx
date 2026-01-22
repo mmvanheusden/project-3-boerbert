@@ -17,7 +17,6 @@ type ActivityCompact = Treaty.Data<typeof BACKEND.activities.compact.get>[0];
 type ActivityFull = Treaty.Data<typeof BACKEND.activities.get>[0];
 type Slot = Treaty.Data<typeof BACKEND.slots.get>[0];
 type Slide = Treaty.Data<typeof BACKEND.slideshow.get>[0];
-type TimeSlots = Treaty.Data<typeof BACKEND.timeslots.get>;	
 type View = "Activiteiten" | "Slideshow" | "Kaart" | "Tijdschema"; // De 4 tabjes bovenaan de pagina
 
 /* Turns a "." into a "," (localization) */
@@ -1253,7 +1252,7 @@ function SlideshowEditor(props: {
 	return (
 		<>
 			<Helper>
-				<Icon icon="material-symbols:info-outline" width="32" height="32" />
+				<Icon icon="material-symbols:info-outline" width="32" height="32" className="mr-2" />
 				<p>
 					Hieronder vindt u een lijst met alle slides in de slideshow. Met de knoppen kunt u ze verwijderen of nieuwe aanmaken.
 				</p>
