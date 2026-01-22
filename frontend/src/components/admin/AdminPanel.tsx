@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react";
 import "dayjs/locale/nl"
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import weekOfYear from "dayjs/plugin/weekOfYear";
 import { UpdateActivityRequestBody } from "../../../../backend/src/activities/model.ts";
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 
@@ -16,7 +17,8 @@ type ActivityCompact = Treaty.Data<typeof BACKEND.activities.compact.get>[0];
 type ActivityFull = Treaty.Data<typeof BACKEND.activities.get>[0];
 type Slot = Treaty.Data<typeof BACKEND.slots.get>[0];
 type Slide = Treaty.Data<typeof BACKEND.slideshow.get>[0];
-type View = "Activiteiten" | "Slideshow" | "Kaart"; // De 3 tabjes bovenaan de pagina
+type TimeSlots = Treaty.Data<typeof BACKEND.timeslots.get>;	
+type View = "Activiteiten" | "Slideshow" | "Kaart" | "Tijdschema"; // De 4 tabjes bovenaan de pagina
 
 /* Turns a "." into a "," (localization) */
 declare global {
@@ -28,6 +30,11 @@ String.prototype.dot2comma = function() {
 	return this.replace(".", ",");
 };
 
+dayjs.extend(weekOfYear);
+
+function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
 export const MAP_CENTER = {
@@ -170,6 +177,13 @@ export default function AdminPanel() {
 						</span>
 					</button>
 					<button
+						onClick={() => setView("Tijdschema")}
+						className={`text-white select-none rounded-t-lg px-4 py-0 font-medium text-xl ml-1 hover:bg-green-600 cursor-pointer bg-green-500 ${currentView == "Tijdschema" ? "bg-green-700" : null}`}>
+						<span>
+							Planning
+						</span>
+					</button>
+					<button
 						onClick={() => setView("Slideshow")}
 						className={`text-white select-none rounded-t-lg px-4 py-0 font-medium text-xl ml-1 hover:bg-green-600 cursor-pointer bg-green-500 ${currentView == "Slideshow" ? "bg-green-700" : null}`}>
 						<span>
@@ -183,6 +197,7 @@ export default function AdminPanel() {
 							Kaart
 						</span>
 					</button>
+
 					<a href="/">
 						<button
 							className="text-white inline-flex items-center hover:bg-orange-600 ml-4 rounded cursor-pointer bg-orange-500 px-2 font-medium text-base py-1">
@@ -218,10 +233,82 @@ export default function AdminPanel() {
 							setView={setView}
 						/>
 					)}
+					{currentView == "Tijdschema" && (
+						<Tijdschema slots={slots} activities={activities}/>
+					)}
 				</div>
 			</div>
 		</Provider>
 	)
+}
+
+
+
+
+function Tijdschema(props: {
+	slots: Treaty.Data<typeof BACKEND.slots.get>
+	activities: Treaty.Data<typeof BACKEND.activities.get>
+
+}) {
+	const context = useContext(Context)!;
+
+	console.trace(props.slots)
+	console.trace(props.activities)
+
+	return (
+		<>
+		<div>
+			<div className="flex flex-col h-full px-2 overflow-auto">
+				<p className="text-3xl bg-green-600 text-white p-2 w-fit rounded-xl font-semibold mb-2">{"Week " + dayjs().week()}</p>
+					{props.slots
+						.sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
+						.map((slot, index) => {
+							const activiteit = (props.activities.find((activity) => activity.id == slot.activityId));
+							if (!activiteit) {
+								return;
+							}
+
+							const prevSlot = props.slots[index-1];
+
+							return (<>
+							{<span>
+								{(() => {
+									const currentSlotDate = dayjs(slot.date).locale("nl")
+
+									const prevSlotDate = dayjs(prevSlot.date).locale("nl")
+									const berichtjes = [];
+
+									if (prevSlotDate.week() < currentSlotDate.week()) {
+										berichtjes.push(<p
+											className="text-3xl bg-green-600 text-white p-2 w-fit rounded-xl font-semibold mb-2 mt-7">{"Week " + currentSlotDate.week()}</p>)
+									}									return berichtjes
+								})()}
+							</span>
+							}
+							<div className="p-5 w-full flex bg-white rounded-lg justify-between items-center shadow mb-3">
+								<div>
+									<div className="w-32 h-32 me-4">
+										<img
+											className="rounded w-full h-full object-cover"
+											src={`${BACKEND_URL}/public/activities/${activiteit.id}.png`}
+											alt={activiteit.title.nl}
+										/>
+									</div>
+								</div>
+								<div className="w-full place-content-around h-full">
+									<p className="text-3xl font-bold">{activiteit.title.nl}</p>
+									<p className="text-3xl font-semibold w-full flex items-center">{capitalizeFirstLetter(dayjs(slot.date).locale("nl").format("dddd[ ]D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm"))}</p>
+									<p className="text-3xl w-full items-center"><b>{slot.bookings}</b>&nbsp;Mensen te verwachten&nbsp;<span className="text-xl italic">(Minimaal {activiteit!.threshold} van {activiteit!.capacity} nodig)</span></p>
+								</div>
+								<p className="italic font-bold text-6xl items-center flex  w-fit text-nowrap ">Omzet:&nbsp;<span className="text-green-500">€ {(activiteit!.price * slot.bookings).toFixed(2).dot2comma().replace(",00", ",-")}</span></p>
+							</div>
+						</>)})}
+				</div>
+		</div>
+			
+		</>
+	)
+
 }
 
 function MapView(props: {
