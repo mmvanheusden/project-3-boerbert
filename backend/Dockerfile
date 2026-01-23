@@ -7,6 +7,7 @@ COPY bun.lock bun.lock
 RUN bun install
 
 COPY ./src ./src
+COPY ./public ./public
 ENV NODE_ENV=production
 RUN bun build \
     --compile \
@@ -20,6 +21,7 @@ FROM gcr.io/distroless/base
 WORKDIR /app
 
 COPY --from=build /app/server server
+COPY --from=build /app/public public
 ENV NODE_ENV=production
 
 EXPOSE 3000

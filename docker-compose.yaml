@@ -21,4 +21,6 @@ services:
       - "3312:3000"
     env_file:
       - ./backend/.env
+    volumes:
+      - ./.boerbert-public:/app/public:ro
     restart: unless-stopped
