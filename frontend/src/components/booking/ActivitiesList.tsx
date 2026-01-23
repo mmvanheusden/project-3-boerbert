@@ -87,29 +87,19 @@ export function ActivitiesList() {
 			</div>
 
 			<div className="flex-1 overflow-auto">
-				<div>
+				<ul>
 					{
 						context.activities!
-						.filter((activity) => (activity.pinned == true))
-						.map((activiteit) => <><ActivityCard activiteit={activiteit} /></>)
+						.filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "")
+						.filter((activity) => (activity.minage === activityMinAgeFilter) || activityMinAgeFilter == "")
+						.filter((activity) => (activity.targetAudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
+						.filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
+						.sort((activity) => activity.pinned ? -1 : 1) // Bubbel de gepinde activiteiten naar boven!!!! (zo exciting :oooooo)
+						.map((activiteit) => <li key={activiteit.id}><ActivityCard activiteit={activiteit} /></li>)
 					}
-				</div>
-
-				<div>
-					<ul>
-						{
-							context.activities!
-							.filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "")
-							.filter((activity) => (activity.minage === activityMinAgeFilter) || activityMinAgeFilter == "")
-							.filter((activity) => (activity.targetAudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
-							.filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
-							.filter((activity) => (activity.pinned == false))
-							.map((activiteit) => <li key={activiteit.id}><ActivityCard activiteit={activiteit} /></li>)
-						}
-					</ul>
-				</div>
-
+				</ul>
 			</div>
+
 			<div className="flex">
 				<BottomRowButton text={t("cancel")} onClick={() => context.setCurrentStep(0)} colorHover={"red-600"} colorIdle={"red-500"} />
 			</div>
@@ -133,7 +123,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 	const isAvailable = hasAvailableSlots(activiteit);
 	return (
 		<div className="mb-2">
-			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned &&" border-12 border-green-400"}`}>
+			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400"}`}>
 				<div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
 					<div className="min-w-1/3">
 						<h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
@@ -149,7 +139,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 							alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
 						/>
 						{activiteit.pinned == true && (
-							<div className="absolute top-2 right-2 bg-green-400 text-black text-4xl font-bold px-3 py-1 rounded-lg">
+							<div className="absolute top-2 right-2 bg-green-400 text-black text-5xl font-bold px-3 py-3 rounded-lg">
 								{t("pinned_activity")}
 							</div>
 						)}
