@@ -59,7 +59,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
         }).returning();
 
 		// Add image to image storage.
-        fs.mkdirSync('public/slides', { recursive: true });
+        fs.mkdirSync('public/activities', { recursive: true });
 		fs.writeFileSync(`public/activities/${insertedActivity[0].id}.png`, imageBuffer);
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
