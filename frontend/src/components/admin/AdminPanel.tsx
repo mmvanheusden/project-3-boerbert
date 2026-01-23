@@ -268,6 +268,9 @@ function Tijdschema(props: {
 							}
 
 							const prevSlot = props.slots[index-1];
+							if (!prevSlot) {
+								return;
+							}
 
 							return (<>
 							{<span>
