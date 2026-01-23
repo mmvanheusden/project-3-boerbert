@@ -4,7 +4,7 @@ import Context from "./Context.tsx";
 import { Header } from "../KleineDingetjes.tsx";
 import { BottomRowButton } from "./BookingFlowManager.tsx";
 import i18n, { t } from "i18next";
-import useFirstRender, {BACKEND, BACKEND_URL} from "../../App.tsx";
+import useFirstRender, {BACKEND} from "../../App.tsx";
 import dayjs from "dayjs";
 import {Icon} from "@iconify/react";
 import { Treaty } from "@elysiajs/eden/treaty2";
@@ -145,7 +145,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 					<div className="relative min-w-2/3">
 						<img
 							className="w-full object-fill rounded-lg aspect-6/4"
-							src={`${BACKEND_URL}/public/activities/${activiteit.id}.png`}
+                            src={`data:image/png;base64, ${activiteit.hero}`}
 							alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
 						/>
 						{activiteit.pinned == true && (

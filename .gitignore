@@ -164,8 +164,6 @@ fabric.properties
 # Bun
 **/*.bun
 
-backend/public/activities/*
-backend/public/slides/*
 backend/package-lock.json
 backend/server
-backend/server.js
+backent/server.js

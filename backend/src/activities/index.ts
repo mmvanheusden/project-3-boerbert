@@ -1,19 +1,12 @@
-import {Elysia, file, Static, status} from "elysia";
+import {Elysia, Static} from "elysia";
 import {getActivities, getActivity, insertActivity, updateActivity} from "./service";
-import {
-    activitiesTable,
-    GetActivitiesResponseBody,
-    InsertActivityRequestBody,
-    OverrideField,
-    UpdateActivityRequestBody,
-} from "./model";
+import {activitiesTable, GetActivitiesResponseBody, InsertActivityRequestBody, OverrideField, UpdateActivityRequestBody} from "./model";
 import {eq, InferSelectModel} from "drizzle-orm";
 import db from "../config/db";
 import {getAllSlots} from "../slots/service";
 import {getActivityBookings} from "../bookings/service";
 import {bookingsTable} from "../bookings/model";
 import {slotsTable} from "../slots/model";
-import * as fs from "node:fs";
 
 export const ActivitiesController = new Elysia().group("/activities", (app) => app
     .get(
@@ -42,6 +35,7 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
 
                 modifiedActivities.push({
                     ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64'),
                     slots: activitySlots,
                 });
             }
@@ -53,10 +47,11 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
         async () => {
             const activites = await getActivities();
             // Only send the dutch fields
-            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'title' | 'subtitle' | 'description' | 'location', string>[] = [];
+            const modifiedActivities: OverrideField<InferSelectModel<typeof activitiesTable>, 'title' | 'subtitle' | 'description' | 'location' | 'hero', string>[] = [];
             activites.forEach((activity) => {
                 modifiedActivities.push({
                     ...activity,
+                    hero: Buffer.from(activity.hero).toString('base64'),
                     title: activity!.title.nl,
                     subtitle: activity!.subtitle.nl,
                     description: activity.description.nl,
@@ -70,7 +65,12 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
     .get(
         '/:id',
         async ({params: {id}}) => {
-            return await getActivity(id);
+            const activity = await getActivity(id);
+
+            return {
+                ...activity,
+                hero: Buffer.from(activity.hero).toString('base64')
+            }
         }
     )
     .put(
@@ -107,19 +107,4 @@ export const ActivitiesController = new Elysia().group("/activities", (app) => a
             await db.delete(activitiesTable).where(eq(activitiesTable.id, +id));
         }
     )
-	.get(
-		'/:id/image',
-		async ({params: {id}}) => {
-			let activity: InferSelectModel<typeof activitiesTable>;
-			try {
-				activity = await getActivity(id);
-			} catch (error) {
-				return status(404, "Activiteit niet gevonden");
-			}
-			if (!fs.existsSync(`public/activities/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`)) {
-				return status(500, "Plaatje niet gevonden");
-			}
-
-			return file(`public/activities/${(activity as InferSelectModel<typeof activitiesTable>).id}.png`);
-		})
 )

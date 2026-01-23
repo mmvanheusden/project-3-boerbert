@@ -4,7 +4,6 @@
     "@elysiajs/cors": "^1.4.1",
     "@elysiajs/cron": "^1.4.1",
     "@elysiajs/openapi": "^1.4.13",
-    "@elysiajs/static": "^1.4.7",
     "@libsql/client": "^0.17.0",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",

@@ -6,7 +6,6 @@ import { BottomRowButton } from "./BookingFlowManager.tsx";
 import { t } from "i18next";
 import i18n from "../../i18n/config.ts";
 import dayjs from "dayjs";
-import {BACKEND_URL} from "../../App.tsx";
 
 export function ViewActivity() {
     const {selectedActivity, prev, selectedAmount, setCurrentStep} = useContext(Context);
@@ -26,7 +25,7 @@ export function ViewActivity() {
                             <div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
                                 <img
                                     className="w-full h-full object-cover object-center"
-                                    src={`${BACKEND_URL}/public/activities/${selectedActivity?.id}.png`}
+                                    src={`data:image/png;base64, ${selectedActivity?.hero}`}
                                     style={{ imageRendering: "pixelated" }}
                                     alt={selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
                                 />

@@ -3,7 +3,6 @@ import i18n, { t } from "i18next";
 import { useContext } from "react";
 import Context from "./Context.tsx";
 import { BottomRowButton } from "./BookingFlowManager.tsx";
-import {BACKEND_URL} from "../../App.tsx";
 
 export function BookingSummary() {
 	const context = useContext(Context), { selectedActivity, prev, selectedAmount } = useContext(Context);
@@ -21,7 +20,7 @@ export function BookingSummary() {
 				<div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
 					<img
 						className="w-full h-full object-cover object-center"
-						src={`${BACKEND_URL}/public/activities/${selectedActivity?.id}.png`}
+						src={`data:image/png;base64, ${selectedActivity?.hero}`}
 						style={{ imageRendering: "pixelated" }}
 						alt={selectedActivity?.title[i18n.language as "en" | "de" | "nl"] ?? "activity image"}
 					/>

@@ -1,6 +1,5 @@
 import {activitiesTable, InsertActivityRequestBody, UpdateActivityRequestBody} from './model';
 import db from "../config/db";
-import * as fs from "node:fs";
 import {DrizzleQueryError, eq} from 'drizzle-orm';
 import {Static, status} from "elysia";
 import translate from "translate";
@@ -40,13 +39,13 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
     validateActivity(activity);
 
     try {
-		const imageBuffer = Buffer.from(await activity.hero.arrayBuffer());
         // TODO: (future proof): mocht de vertalingsdienst kapot gaan, alles in Nederlands ipv niks doen
-        const insertedActivity = await db.insert(activitiesTable).values({
+        await db.insert(activitiesTable).values({
             title: await vertaal(activity.title),
             subtitle: await vertaal(activity.subtitle),
             description: await vertaal(activity.description),
             price: (activity.price as number),
+            hero: Buffer.from(await activity.hero.arrayBuffer()),
             capacity: (activity.capacity as number),
             threshold: (activity.threshold as number),
             minage: activity.minage,
@@ -56,10 +55,7 @@ export async function insertActivity(activity: Static<typeof InsertActivityReque
             longitude: activity.longitude,
             targetAudience: activity.targetAudience,
 			pinned: false,
-        }).returning();
-
-		// Add image to image storage.
-		fs.writeFileSync(`public/activities/${insertedActivity[0].id}.png`, imageBuffer);
+        })
     } catch (e) {
         if (e instanceof DrizzleQueryError) {
             if (e.cause?.message.includes('UNIQUE constraint failed')) return status(409, "Een activiteit met deze titel bestaat al.")
@@ -78,6 +74,7 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
         subtitle: await vertaal(activity.subtitle),
         description: await vertaal(activity.description),
         price: (activity.price as number),
+        hero: (activity.hero ? Buffer.from(await activity.hero.arrayBuffer()) : undefined),
         capacity: (activity.capacity as number),
         threshold: (activity.threshold as number),
         minage: activity.minage,
@@ -91,11 +88,7 @@ export async function updateActivity(id: string, activity: Static<typeof UpdateA
 }
 
 export async function getActivity(id: string) {
-	const result = ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
-	if (!result) {
-		throw new Error("Activity not found");
-	}
-	return result;
+    return ((await db.select().from(activitiesTable).where(eq(activitiesTable.id, +id))))[0];
 }
 
 
