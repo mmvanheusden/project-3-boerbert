@@ -15,7 +15,7 @@ export const activitiesTable = sqliteTable("activities", {
 	latitude: int().notNull(),
 	longitude: int().notNull(),
 	targetAudience: text({ enum: ["Kinderen", "Gezinnen", "Senioren", "Volwassenen"] }).notNull(),
-	pinned: int({ mode: 'boolean' }).notNull().default(0),
+	pinned: int({ mode: 'boolean' }).notNull().default(false),
 });
 
 
