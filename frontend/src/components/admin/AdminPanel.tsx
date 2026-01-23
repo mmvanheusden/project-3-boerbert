@@ -3,7 +3,7 @@ import useFirstRender, { BACKEND, queryClient } from "../../App.tsx";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Context, Provider } from "./Context.tsx";
-import {Component, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState} from "react";
+import {Component, type PropsWithChildren, useContext, useMemo, useRef, useState} from "react";
 import type { Treaty } from "@elysiajs/eden";
 import { Icon } from "@iconify/react";
 import "dayjs/locale/nl"
@@ -44,7 +44,7 @@ export const MAP_CENTER = {
 export default function AdminPanel() {
 	const [currentView, setView] = useState<View>("Activiteiten");
 	const [searchQuery, search] = useState("");
-	const { isPending, error, data } = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
+	const { isPending, error, data: activities } = useQuery<Treaty.Data<typeof BACKEND.activities.get>>({
 		queryKey: ["activities"],
 		queryFn: async () => {
 			const res = await BACKEND.activities.get();
@@ -52,7 +52,7 @@ export default function AdminPanel() {
 		},
 	});
 
-	const { isPending: slideshowPending, error: slideshowError, data: slideshowData } = useQuery<Treaty.Data<typeof BACKEND.slideshow.get>>({
+	const { isPending: slideshowPending, error: slideshowError, data: slides } = useQuery<Treaty.Data<typeof BACKEND.slideshow.get>>({
 		queryKey: ["slideshow"],
 		queryFn: async () => {
 			const res = await BACKEND.slideshow.get();
@@ -60,7 +60,7 @@ export default function AdminPanel() {
 		},
 	});
 
-	const { isPending: slotsPending, error: slotsError, data: slotsData } = useQuery<Treaty.Data<typeof BACKEND.slots.get>>({
+	const { isPending: slotsPending, error: slotsError, data: slots } = useQuery<Treaty.Data<typeof BACKEND.slots.get>>({
 		queryKey: ["slots"],
 		queryFn: async () => {
 			const res = await BACKEND.slots.get();
@@ -68,7 +68,7 @@ export default function AdminPanel() {
 		},
 	});
 
-	const { isPending: compactActivitiesPending, error: compactActivitiesError, data: compactActivitiesData } = useQuery<Treaty.Data<typeof BACKEND.activities.compact.get>>({
+	const { isPending: compactActivitiesPending, error: compactActivitiesError, data: compactActivities } = useQuery<Treaty.Data<typeof BACKEND.activities.compact.get>>({
 		queryKey: ["compactActivities"],
 		queryFn: async () => {
 			const res = await BACKEND.activities.compact.get();
@@ -79,7 +79,10 @@ export default function AdminPanel() {
 	/* Tanstack Query mutaties, hiermee invalideren we de cache wanneer we de activiteiten willen muteren, zodat de site de ge-update lijst met activiteiten ophaalt. */
 	const ActivityPatchMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).patch(activity),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+			queryClient.invalidateQueries({ queryKey: ["compactActivities"] })
+		},
 	})
 	const ActivityInsertMutator = useMutation({
 		mutationFn: async (activity: any) => {
@@ -89,11 +92,17 @@ export default function AdminPanel() {
 			}
 			return response.data
 		},
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+			queryClient.invalidateQueries({ queryKey: ["compactActivities"] })
+		},
 	})
 	const ActivityDeleteMutator = useMutation({
 		mutationFn: (activity: any) => BACKEND.activities({ id: activity.id }).delete(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["activities"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+			queryClient.invalidateQueries({ queryKey: ["compactActivities"] })
+		},
 	})
 
 	/* Tanstack Query mutaties voor slideshow */
@@ -115,54 +124,42 @@ export default function AdminPanel() {
 
 	const SlotInsertMutator = useMutation({
 		mutationFn: (slot: any) => BACKEND.slots.put(slot),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["slots"] })
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+		},
 	})
 	const SlotDeleteMutator = useMutation({
 		mutationFn: (slot: any) => BACKEND.slots({ id: slot.id }).delete(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["slots"] })
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+		},
 	})
 	const SlotRepeatMutator = useMutation({
 		mutationFn: (options: {slotId: number, interval: "monthly" | "daily" | "weekly", times: number}) => BACKEND.slots({ id: options.slotId }).repeat.post(options),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["slots"] }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["slots"] })
+			queryClient.invalidateQueries({ queryKey: ["activities"] })
+		},
 	})
-
-
-	// Sync query data into local state once fetched
-	useEffect(() => {
-		if (data) {
-			setActivities(data);
-		}
-	}, [data]);
-	const [activities, setActivities] = useState<Treaty.Data<typeof BACKEND.activities.get>>([]);
-
-	useEffect(() => {
-		if (slideshowData) {
-			setSlides(slideshowData);
-		}
-	}, [slideshowData]);
-	const [slides, setSlides] = useState<Treaty.Data<typeof BACKEND.slideshow.get>>([]);
-
-	useEffect(() => {
-		if (slotsData) {
-			setSlots(slotsData);
-		}
-	}, [slotsData]);
-	const [slots, setSlots] = useState<Treaty.Data<typeof BACKEND.slots.get>>([]);
-
-	useEffect(() => {
-		if (compactActivitiesData) {
-			setCompactActivities(compactActivitiesData);
-		}
-	}, [compactActivitiesData]);
-	const [compactActivities, setCompactActivities] = useState<Treaty.Data<typeof BACKEND.activities.compact.get>>([]);
 
 
 	if (isPending || slideshowPending || compactActivitiesPending || slotsPending) return <LoadingSpinner loading={true} text="GEGEVENS OPHALEN..." />;
 	if (error || slideshowError || compactActivitiesError || slotsError) return <div className="bg-white p-5 rounded border font-medium">Server is onbereikbaar! Storing...</div>;
 
 	return (
-		<Provider value={{ activities, setActivities }}>
-			<LoadingSpinner loading={ActivityInsertMutator.isPending || ActivityPatchMutator.isPending || ActivityDeleteMutator.isPending || SlideInsertMutator.isPending || SlideDeleteMutator.isPending || isPending} />
+		<Provider value={{ activities: activities!, setActivities: () => {} }}>
+			<LoadingSpinner loading={
+				ActivityInsertMutator.isPending ||
+				ActivityPatchMutator.isPending ||
+				ActivityDeleteMutator.isPending ||
+				SlideInsertMutator.isPending ||
+				SlideDeleteMutator.isPending ||
+				SlotInsertMutator.isPending ||
+				SlotDeleteMutator.isPending ||
+				SlotRepeatMutator.isPending
+			} />
 			<div className="flex flex-col gap-3 h-full bg-white/90 p-4 px-4 rounded-3xl">
 				<Header>
 					<span className="text-white select-none rounded-t-lg bg-blue-500 px-4 mr-1 font-semibold text-4xl">
@@ -210,8 +207,8 @@ export default function AdminPanel() {
 						<ActivitiesEditor
 							searchQuery={searchQuery}
 							setSearchQuery={search}
-							compactActivities={compactActivities}
-							slots={slots}
+							compactActivities={compactActivities!}
+							slots={slots!}
 							ActivityInsertMutator={ActivityInsertMutator}
 							ActivityPatchMutator={ActivityPatchMutator}
 							ActivityDeleteMutator={ActivityDeleteMutator}
@@ -222,7 +219,7 @@ export default function AdminPanel() {
 					)}
 					{currentView == "Slideshow" && (
 						<SlideshowEditor
-							slides={slides}
+							slides={slides!}
 							SlideInsertMutator={SlideInsertMutator}
 							SlideDeleteMutator={SlideDeleteMutator}
 						/>
@@ -233,7 +230,7 @@ export default function AdminPanel() {
 						/>
 					)}
 					{currentView == "Tijdschema" && (
-						<Tijdschema slots={slots} activities={activities}/>
+						<Tijdschema slots={slots!} activities={activities!}/>
 					)}
 				</div>
 			</div>
@@ -435,7 +432,6 @@ function ActivitiesEditor(props: {
 	};
 	// Check if we have a relevant instruction in the url hash on the first render.
 	useFirstRender(() => {
-		while (!activities) {}
 		if (!location.hash) {return;}
 		if (location.hash.startsWith("#edit-")) {
 			// Instructie voor bewerken activiteit staat in de URL hash, haal de ID eruit en open de bewerkingsweergave voor deze activiteit
@@ -1232,7 +1228,6 @@ function ActivityListItem(props: {
 							onClick={async () => {
 								if (confirm(`Weet je zeker dat je activiteit "${activiteit.title}" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
 									props.ActivityDeleteMutator.mutate(activiteit);
-									props.compactActivities.splice(props.compactActivities.findIndex(a => a.id === activiteit.id), 1);
 								}
 							}}>
 							Verwijderen
