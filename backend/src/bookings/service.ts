@@ -7,8 +7,6 @@ import {Static, status} from "elysia";
 import { and, DrizzleQueryError, eq, InferSelectModel, isNotNull } from "drizzle-orm";
 import {slotsTable} from "../slots/model";
 import {activitiesTable} from "../activities/model";
-import * as fs from "node:fs";
-import * as handlebars from "handlebars";
 import dayjs from "dayjs";
 import "dayjs/locale/nl"
 import duration from "dayjs/plugin/duration";
@@ -48,7 +46,7 @@ export async function insertBooking(request: Static<typeof InsertBookingRequest>
             slotId: request.slotId,
             amount: request.amount,
             campingSpot: request.campingSpot,
-            paid: 1,
+            paid: true,
             email: request.email,
             reminderEmailSent: false,
         }).returning();
