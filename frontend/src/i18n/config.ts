@@ -17,16 +17,16 @@ i18n
         // when a user visits our site for the first time.
         // We use English here, but feel free to use
         // whichever locale you want.
-        lng: "en",
+        lng: "nl",
 
         // Fallback locale used when a translation is
         // missing in the active locale. Again, use your
         // preferred locale here.
-        fallbackLng: "en",
+        fallbackLng: "nl",
 
         // Enables useful output in the browser’s
         // dev console.
-        debug: true,
+        debug: false,
 
         // Normally, we want `escapeValue: true` as it
         // ensures that i18next escapes any code in
