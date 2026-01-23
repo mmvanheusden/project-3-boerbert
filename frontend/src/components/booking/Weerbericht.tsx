@@ -12,12 +12,10 @@ if (typeof document !== "undefined") {
   document.head.appendChild(style);
 }
 
-
 function Weerbericht() {
   const [weer, setWeer] = useState<any>(null);
   const [forecast, setForecast] = useState<any[]>([]);
   const [laden, setLaden] = useState(true);
-  
 
   const apiKey = "a3e97ae2a9d868bfd778f5fedf2f45c1";
   const stad = "Utrecht";
@@ -44,7 +42,7 @@ function Weerbericht() {
 
   if (laden) {
     return (
-      <div className="flex h-full items-center justify-center text-3xl">
+      <div className="flex h-full items-center justify-center text-4xl">
         🌤️
       </div>
     );
@@ -98,46 +96,44 @@ function Weerbericht() {
       )}
 
       <div className="mx-auto max-w-xl rounded-3xl bg-white/20 p-8 text-center backdrop-blur-lg shadow-xl relative z-10">
-        <div className="text-8xl my-6">
+        <div className="text-9xl my-6">
           {emoji[weerType] || "🌤️"}
         </div>
 
-        <p className="text-5xl font-bold mb-4">
+        <p className="text-6xl font-bold mb-6">
           {temperatuur}°
         </p>
 
-        <div className="space-y-2 text-lg">
-          <p className="flex justify-center gap-2">
+        {/* 🔽 ALLEEN DIT BLOK GROTER GEMAAKT */}
+        <div className="space-y-4 text-3xl">
+          <p className="flex justify-center gap-4">
             <Icon icon="carbon:temperature-feels-like" />
             {gevoel}°
           </p>
-          <p className="flex justify-center gap-2">
+          <p className="flex justify-center gap-4">
             <Icon icon="meteocons:wind-offshore-fill" />
             {wind}
           </p>
         </div>
-
-        <p className="mt-4 text-sm opacity-70">
-          {isDag ? "🌞" : "🌙"}
-        </p>
       </div>
 
-      <div className="mx-auto mt-10 max-w-5xl relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      {/* 🔽 EXTRA DAGEN NU EXACT IN HET MIDDEN */}
+      <div className="mx-auto mt-12 max-w-5xl relative z-10 flex justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
           {forecast.map((dag) => (
             <div
               key={dag.dt}
-              className="rounded-2xl bg-white/20 p-4 text-center backdrop-blur shadow"
+              className="rounded-2xl bg-white/20 p-5 text-center backdrop-blur shadow"
             >
-              <p className="font-semibold">
+              <p className="font-semibold text-lg">
                 {new Date(dag.dt * 1000).toLocaleDateString()}
               </p>
 
-              <div className="text-4xl my-2">
+              <div className="text-5xl my-3">
                 {emoji[dag.weather[0].main.toLowerCase()] || "🌤️"}
               </div>
 
-              <p className="font-bold">
+              <p className="font-bold text-2xl">
                 {Math.round(dag.main.temp)}°
               </p>
             </div>
@@ -149,3 +145,4 @@ function Weerbericht() {
 }
 
 export default Weerbericht;
+
