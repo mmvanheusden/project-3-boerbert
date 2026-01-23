@@ -1,10 +1,23 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
+if (typeof document !== "undefined") {
+  const style = document.createElement("style");
+  style.innerHTML = `
+  @keyframes moveClouds {
+    from { transform: translateX(-300px); }
+    to { transform: translateX(100vw); }
+    }`;
+
+  document.head.appendChild(style);
+}
+
+
 function Weerbericht() {
   const [weer, setWeer] = useState<any>(null);
   const [forecast, setForecast] = useState<any[]>([]);
   const [laden, setLaden] = useState(true);
+  
 
   const apiKey = "a3e97ae2a9d868bfd778f5fedf2f45c1";
   const stad = "Utrecht";
@@ -12,10 +25,10 @@ function Weerbericht() {
   useEffect(() => {
     Promise.all([
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${stad}&units=metric&appid=${apiKey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${stad}&units=metric&appid=${apiKey}&lang=nl`
       ).then((res) => res.json()),
-      fetch(  
-        `https://api.openweathermap.org/data/2.5/forecast?q=${stad}&units=metric&appid=${apiKey}`
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${stad}&units=metric&appid=${apiKey}&lang=nl`
       ).then((res) => res.json()),
     ]).then(([weerData, forecastData]) => {
       setWeer(weerData);
@@ -46,6 +59,12 @@ function Weerbericht() {
 
   const weerType = weer.weather[0].main.toLowerCase();
 
+  const beschrijving = weer.weather?.[0]?.description?.toLowerCase() ?? "";
+  const isLichtBewolkt = beschrijving.includes("licht");
+  const isHalfBewolkt = beschrijving.includes("half");
+  const isZwaarBewolkt =
+    beschrijving.includes("zwaar") || beschrijving.includes("bewolkt");
+
   const emoji: Record<string, string> = {
     clear: isDag ? "☀️" : "🌙",
     clouds: "☁️",
@@ -61,8 +80,24 @@ function Weerbericht() {
     : "from-slate-900 to-indigo-900";
 
   return (
-    <div className={`min-h-screen bg-linear-to-br ${achtergrond} p-10 text-white`}>
-      <div className="mx-auto max-w-xl rounded-3xl bg-white/20 p-8 text-center backdrop-blur-lg shadow-xl">
+    <div
+      className={`relative min-h-screen bg-linear-to-br ${achtergrond} p-10 text-white overflow-hidden`}
+    >
+      {/* Bewegende wolken */}
+      {(isLichtBewolkt || isHalfBewolkt || isZwaarBewolkt) && (
+        <>
+          <div className="absolute top-12 left-0 text-[12rem] opacity-60" style={{ animation: "moveClouds 30s linear infinite" }}>☁️</div>
+          <div className="absolute top-32 left-0 text-[40rem] opacity-40" style={{ animation: "moveClouds 32s linear infinite" }}>☁️</div>
+          <div className="absolute top-48 left-0 text-[60rem] opacity-40" style={{ animation: "moveClouds 54s linear infinite" }}>☁️</div>
+          <div className="absolute top-20 left-0 text-[30rem] opacity-35" style={{ animation: "moveClouds 40s linear infinite" }}>☁️</div>
+          <div className="absolute top-40 left-0 text-[50rem] opacity-40" style={{ animation: "moveClouds 38s linear infinite" }}>☁️</div>
+          <div className="absolute top-28 left-0 text-[18rem] opacity-45" style={{ animation: "moveClouds 60s linear infinite" }}>☁️</div>
+          <div className="absolute top-54 left-0 text-[40rem] opacity-40" style={{ animation: "moveClouds 50s linear infinite" }}>☁️</div>
+          <div className="absolute top-10 left-0 text-[20rem] opacity-50" style={{ animation: "moveClouds 45s linear infinite" }}>☁️</div>
+        </>
+      )}
+
+      <div className="mx-auto max-w-xl rounded-3xl bg-white/20 p-8 text-center backdrop-blur-lg shadow-xl relative z-10">
         <div className="text-8xl my-6">
           {emoji[weerType] || "🌤️"}
         </div>
@@ -87,7 +122,7 @@ function Weerbericht() {
         </p>
       </div>
 
-      <div className="mx-auto mt-10 max-w-5xl">
+      <div className="mx-auto mt-10 max-w-5xl relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {forecast.map((dag) => (
             <div
@@ -114,4 +149,3 @@ function Weerbericht() {
 }
 
 export default Weerbericht;
-
