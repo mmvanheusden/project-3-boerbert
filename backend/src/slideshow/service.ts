@@ -21,6 +21,7 @@ export async function insertSlide(slide: Static<typeof InsertSlideRequestBody>) 
             alt: slide.alt,
         }).returning();
 
+        fs.mkdirSync('public/slides', { recursive: true });
         fs.writeFileSync(`public/slides/${insertedSlideEntry[0].id}.png`, imageBuffer);
     } catch (e) {
         console.trace(e);
