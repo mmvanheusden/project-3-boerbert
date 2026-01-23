@@ -8,6 +8,8 @@ services:
     container_name: boerbert-frontend
     ports:
       - "4323:80"
+    environment:
+      NODE_ENV: production
     env_file:
       - ./frontend/.env
     restart: unless-stopped
@@ -18,14 +20,12 @@ services:
       dockerfile: Dockerfile
     container_name: boerbert-backend
     volumes:
-      # Keep source code in sync (optional)
-      - ./src:/app/src
-      # IMPORTANT: mount the static folder
-      - ./public:/app/public
-    environment:
-      NODE_ENV: development
+      # HIER STAAN DE PLAAAATJES LOLOL
+      - ./.boerbert-assets:/app/public
     ports:
       - "7656:3000"
+    environment:
+      NODE_ENV: production
     env_file:
       - ./backend/.env
     restart: unless-stopped

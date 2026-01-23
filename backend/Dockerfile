@@ -1,6 +1,5 @@
 # Dockerfile (dev)
 FROM oven/bun:latest
-ENV NODE_ENV=production
 
 WORKDIR /app
 
