@@ -146,41 +146,44 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 	return (
 		<div className="mb-2">
 			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400"}`}>
-				<div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
-					<div className="min-w-1/3">
-						<h3 className="text-7xl font-semibold mb-8 overflow:hidden text-ellipsis">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-						<p className="text-6xl text-gray-600 mt-3 overflow:hidden text-ellipsis">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{t(getActivityTypeKey(activiteit.type))}</p>
-						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-						<p className="text-5xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-						<p className="text-5xl text-gray-600 mt-3">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
+				<div className="w-2/5 flex flex-col gap-2 items-stretch break-all px-3 py-3">
+					<div className="flex flex-col h-full">
+						<h3 className="text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+						<p className="text-6xl text-gray-600 mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+						<p className="text-5xl text-gray-600 mt-5 line-clamp-4">{activiteit.description[i18n.language as "en" | "de" | "nl"]}</p>
+						<div className="mt-auto">
+							<p className="text-5xl text-gray-600 mt-5">{t(getActivityTypeKey(activiteit.type))}</p>
+							<p className="text-5xl text-gray-600 mt-5">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
+							<p className="text-5xl text-gray-600 mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+							<p className="text-5xl text-gray-600 mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
+						</div>
 					</div>
-					<div className="relative min-w-2/3">
-						<img
-							className="w-full object-fill rounded-lg aspect-6/4"
-                            src={`data:image/png;base64, ${activiteit.hero}`}
-							alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
-						/>
-						{activiteit.pinned == true && (
-							<div className="absolute top-2 right-2 bg-green-400 text-black text-5xl font-bold px-3 py-3 rounded-lg">
-								{t("pinned_activity")}
-							</div>
-						)}
-						<button
-							onClick={() => {
-								context.selectActivity(activiteit);
-								context.next();
-							}}
-							type="button"
-							className={`rounded-lg mt-3 py-8 text-white w-full text-7xl transition-colors inline-flex justify-center  ${
-								isAvailable
-									? "bg-green-600 hover:bg-green-700 focus:outline-none"
-									: "bg-red-600 pointer-events-none"
-							}`}
-						>
-							{isAvailable ? t("proceed") : <><Icon icon="mdi:alert"/>{t("not_available")}</>}
-						</button>
-					</div>
+				</div>
+				<div className="w-3/5 relative inline-flex flex-col gap-2 items-stretch px-3 py-3">
+					<img
+						className="w-full object-fill rounded-lg aspect-6/4"
+                        src={`data:image/png;base64, ${activiteit.hero}`}
+						alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
+					/>
+					{activiteit.pinned == true && (
+						<div className="absolute top-2 right-2 bg-green-400 text-black text-5xl font-bold px-3 py-3 rounded-lg">
+							{t("pinned_activity")}
+						</div>
+					)}
+					<button
+						onClick={() => {
+							context.selectActivity(activiteit);
+							context.next();
+						}}
+						type="button"
+						className={`rounded-lg py-8 text-white w-full text-7xl transition-colors inline-flex justify-center  ${
+							isAvailable
+								? "bg-green-600 hover:bg-green-700 focus:outline-none"
+								: "bg-red-600 pointer-events-none"
+						}`}
+					>
+						{isAvailable ? t("proceed") : <><Icon icon="mdi:alert"/>{t("not_available")}</>}
+					</button>
 				</div>
 			</div>
 		</div>

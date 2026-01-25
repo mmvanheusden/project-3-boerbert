@@ -79,7 +79,8 @@ function Weerbericht() {
 
   return (
     <div
-      className={`relative min-h-screen bg-linear-to-br ${achtergrond} p-10 text-white overflow-hidden`}
+      className={`relative h-screen bg-linear-to-br ${achtergrond} p-10 text-white overflow-hidden flex flex-col justify-start items-center`}
+      style={{ paddingTop: '20vh' }}
     >
       {/* Bewegende wolken */}
       {(isLichtBewolkt || isHalfBewolkt || isZwaarBewolkt) && (
@@ -95,49 +96,51 @@ function Weerbericht() {
         </>
       )}
 
-      <div className="mx-auto max-w-xl rounded-3xl bg-white/20 p-8 text-center backdrop-blur-lg shadow-xl relative z-10">
-        <div className="text-9xl my-6">
-          {emoji[weerType] || "🌤️"}
+      <div className="flex flex-col justify-center items-center relative z-10 w-full gap-12">
+        <div className="mx-auto w-3/5 rounded-3xl bg-white/50 p-8 text-center backdrop-blur-lg shadow-xl">
+          <div className="text-9xl my-6">
+            {emoji[weerType] || "🌤️"}
+          </div>
+
+          <p className="text-8xl font-bold mb-6">
+            {temperatuur}°
+          </p>
+
+          {/* 🔽 ALLEEN DIT BLOK GROTER GEMAAKT */}
+          <div className="space-y-4 text-8xl">
+            <p className="flex justify-center gap-4">
+              <Icon icon="carbon:temperature-feels-like" />
+              {gevoel}°
+            </p>
+            <p className="flex justify-center gap-4">
+              <Icon icon="meteocons:wind-offshore-fill" />
+              {wind}
+            </p>
+          </div>
         </div>
 
-        <p className="text-6xl font-bold mb-6">
-          {temperatuur}°
-        </p>
+        {/* 🔽 EXTRA DAGEN NU EXACT IN HET MIDDEN */}
+        <div className="flex justify-center w-full">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-3/4">
+            {forecast.map((dag) => (
+              <div
+                key={dag.dt}
+                className="rounded-3xl bg-white/50 p-5 text-center backdrop-blur shadow"
+              >
+                <p className="font-semibold text-4xl">
+                  {new Date(dag.dt * 1000).toLocaleDateString()}
+                </p>
 
-        {/* 🔽 ALLEEN DIT BLOK GROTER GEMAAKT */}
-        <div className="space-y-4 text-3xl">
-          <p className="flex justify-center gap-4">
-            <Icon icon="carbon:temperature-feels-like" />
-            {gevoel}°
-          </p>
-          <p className="flex justify-center gap-4">
-            <Icon icon="meteocons:wind-offshore-fill" />
-            {wind}
-          </p>
-        </div>
-      </div>
+                <div className="text-8xl my-3">
+                  {emoji[dag.weather[0].main.toLowerCase()] || "🌤️"}
+                </div>
 
-      {/* 🔽 EXTRA DAGEN NU EXACT IN HET MIDDEN */}
-      <div className="mx-auto mt-12 max-w-5xl relative z-10 flex justify-center">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {forecast.map((dag) => (
-            <div
-              key={dag.dt}
-              className="rounded-2xl bg-white/20 p-5 text-center backdrop-blur shadow"
-            >
-              <p className="font-semibold text-lg">
-                {new Date(dag.dt * 1000).toLocaleDateString()}
-              </p>
-
-              <div className="text-5xl my-3">
-                {emoji[dag.weather[0].main.toLowerCase()] || "🌤️"}
+                <p className="font-bold text-6xl">
+                  {Math.round(dag.main.temp)}°
+                </p>
               </div>
-
-              <p className="font-bold text-2xl">
-                {Math.round(dag.main.temp)}°
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
