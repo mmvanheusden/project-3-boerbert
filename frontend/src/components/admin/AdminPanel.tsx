@@ -12,6 +12,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import { UpdateActivityRequestBody } from "../../../../backend/src/activities/model.ts";
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+import { t } from "i18next";
 
 type ActivityCompact = Treaty.Data<typeof BACKEND.activities.compact.get>[0];
 type ActivityFull = Treaty.Data<typeof BACKEND.activities.get>[0];
@@ -651,44 +652,44 @@ function ActivityCreator(props: {
 			</div>
 
 			<div className="mb-2">
-				<label htmlFor="type">Type activiteit</label>
+				<label htmlFor="type">{t("type")}</label>
 				<select id="type" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="Sport/Spel">Sport/Spel</option>
-					<option value="Educatief">Educatief</option>
-					<option value="Eten">Eten</option>
-					<option value="Overig" selected>Overig</option>
+					<option value="Sport/Spel">{t("sport_game")}</option>
+					<option value="Educatief">{t("educational")}</option>
+					<option value="Eten">{t("food")}</option>
+					<option value="Overig" selected>{t("other")}</option>
 				</select>
 			</div>
 			<div className="mb-2">
-				<label htmlFor="targetAudience">Doelgroep</label>
+				<label htmlFor="targetAudience">{t("target_audience")}</label>
 				<select id="targetAudience" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="Kinderen" selected>Kinderen</option>
-					<option value="Gezinnen">Gezinnen</option>
-					<option value="Senioren">Senioren</option>
-					<option value="Volwassenen">(Jong)volwassenen</option>
+					<option value="Kinderen" selected>{t("children")}</option>
+					<option value="Gezinnen">{t("families")}</option>
+					<option value="Senioren">{t("seniors")}</option>
+					<option value="Volwassenen">{t("adults")}</option>
 				</select>
 			</div>
 			<div className="mb-2">
-				<label htmlFor="minage">Minimumleeftijd</label>
+				<label htmlFor="minage">{t("minimum_age")}</label>
 				<select id="minage" className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
-					<option value="0">Alle leeftijden</option>
-					<option value="3">Vanaf 3 jaar</option>
-					<option value="7" selected>Vanaf 7 jaar</option>
-					<option value="12">Vanaf 12 jaar</option>
+					<option value="0">{t("all_ages")}</option>
+					<option value="3">{t("min_3")}</option>
+					<option value="7" selected>{t("min_7")}</option>
+					<option value="12">{t("min_12")}</option>
 				</select>
 			</div>
 			<div className="mb-2">
-				<label htmlFor="capacity">Capaciteit</label>
+				<label htmlFor="capacity">{t("capacity")}</label>
 				<input id="capacity" type="number" required placeholder="Bijv. '20'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<div className="mb-2">
-				<label htmlFor="threshold">Drempelbezetting</label>
+				<label htmlFor="threshold">{t("threshold")}</label>
 				<input id="threshold" type="number" required placeholder="Bijv. '5'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>
 			<div className="mb-2">
-				<label htmlFor="price">Prijs</label>
+				<label htmlFor="price">{t("price")}</label>
 				<input id="price" type="number" step="0.01" required placeholder="'Bijv. '€4,50'"
 					className="block w-full p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" />
 			</div>

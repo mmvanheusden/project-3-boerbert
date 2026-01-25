@@ -109,7 +109,23 @@ i18n
                     here: "Voer hier in",
                     not_available: "Niet beschikbaar",
                     no_activities_available: "Geen activiteiten beschikbaar",
-                    pinned_activity: "Uitgelicht"
+                    pinned_activity: "Uitgelicht",
+                    all: "Alles",
+                    sport_spel: "Sport/Spel",
+                    educative: "Educatief",
+                    food: "Eten",
+                    other: "Overig",
+                    age_3: "Vanaf 3 jaar",
+                    age_7: "Vanaf 7 jaar",
+                    age_12: "Vanaf 12 jaar",
+                    children: "Kinderen",
+                    families: "Gezinnen",
+                    seniors: "Senioren",
+                    adults: "Volwassenen",
+                    max_3_50_euro: "Max € 3,50",
+                    max_5_euro: "Max € 5,00",
+                    max_10_euro: "Max € 10,00",
+                    free: "Gratis"
                 },
             }, // German
             de: {
@@ -177,7 +193,23 @@ i18n
                     here: "Hier eintragen",
                     not_available: "Nicht verfügbar",
                     no_activities_available: "Keine Aktivitäten verfügbar",
-                    pinned_activity: "Vorgestellt"
+                    pinned_activity: "Vorgestellt",
+                    all: "Alles",
+                    sport_spel: "Sport/Spiel",
+                    educative: "Lehrreich",
+                    food: "Essen",
+                    other: "Sonstiges",
+                    age_3: "Ab 3 Jahren",
+                    age_7: "Ab 7 Jahren",
+                    age_12: "Ab 12 Jahren",
+                    children: "Kinder",
+                    families: "Familien",
+                    seniors: "Senioren",
+                    adults: "Erwachsene",
+                    max_3_50_euro: "Max 3,50 €",
+                    max_5_euro: "Max 5,00 €",
+                    max_10_euro: "Max 10,00 €",
+                    free: "Kostenlos"
                 }
             }, // English
             en: {
@@ -246,6 +278,23 @@ i18n
                     not_available: "Not available",
                     no_activities_available: "No activities available",
                     pinned_activity: "Featured",
+                    all: "All",
+                    sport_spel: "Sport/Game",
+                    educative: "Educational",
+                    food: "Food",
+                    other: "Other",
+                    age_3: "From 3 years",
+                    age_7: "From 7 years",
+                    age_12: "From 12 years",
+                    children: "Children",
+                    families: "Families",
+                    seniors: "Seniors",
+                    adults: "Adults",
+                    max_3_50_euro: "Max € 3.50",
+                    max_5_euro: "Max € 5.00",
+                    max_10_euro: "Max € 10.00",
+                    free: "Free"
+                    
                 }
             }
         },

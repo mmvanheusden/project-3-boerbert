@@ -37,12 +37,12 @@ export function ActivitiesList() {
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityTypeFilter != "" && "ring-5 ring-orange-500"}`}>{t("type")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
 							onChange={(e) => setActivityTypeFilter(e.target.value)}>
-						<option hidden selected value="">Type</option>
-						<option value="">Alles</option>
-						<option value="Sport/Spel">Sport/Spel</option>
-						<option value="Educatief">Educatief</option>
-						<option value="Eten">Eten</option>
-						<option value="Overig">Overig</option>
+						<option hidden selected value="">{t("type")}</option>
+						<option value="">{t("all")}</option>
+						<option value="Sport/Spel">{t("sport_spel")}</option>
+						<option value="Educatief">{t("educative")}</option>
+						<option value="Eten">{t("food")}</option>
+						<option value="Overig">{t("other")}</option>
 					</select>
 				</div>
 
@@ -50,12 +50,12 @@ export function ActivitiesList() {
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityMinAgeFilter != "" && "ring-5 ring-orange-500"}`}>{t("age")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
 							onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
-						<option hidden selected value="">Leeftijd</option>
-						<option value="">Alles</option>
-						<option value="3">3+</option>
-						<option value="7">7+</option>
-						<option value="12">12+</option>
-						<option value="0">Alle leeftijden</option>
+						<option hidden selected value="">{t("age")}</option>
+						<option value="">{t("all")}</option>
+						<option value="3">{t("age_3")}</option>
+						<option value="7">{t("age_7")}</option>
+						<option value="12">{t("age_12")}</option>
+						<option value="0">{t("all_ages")}</option>
 					</select>
 				</div>
 
@@ -64,24 +64,24 @@ export function ActivitiesList() {
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
 							value={activityTargetAudienceFilter}
 							onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
-						<option hidden selected value="">Doelgroep</option>
+						<option hidden selected value="">{t("target_audience")}</option>
 						<option value="">Alles</option>
-						<option value="Kinderen">Kinderen</option>
-						<option value="Gezinnen">Gezinnen</option>
-						<option value="Senioren">Senioren</option>
-						<option value="Volwassenen">(Jong)volwassenen</option>
+						<option value="Kinderen">{t("children")}</option>
+						<option value="Gezinnen">{t("families")}</option>
+						<option value="Senioren">{t("seniors")}</option>
+						<option value="Volwassenen">{t("adults")}</option>
 					</select>
 				</div>
 				<div className="relative w-full">
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityPriceFilter != "" && "ring-5 ring-orange-500"}`}>{t("price")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
 							onChange={(e) => setActivityPriceFilter(e.target.value)}>
-						<option hidden selected value="">Prijs</option>
-						<option value="">Alles</option>
-						<option value="3.5">Max. 3,50 euro</option>
-						<option value="5">Max. 5 euro</option>
-						<option value="10">Max. 10 euro</option>
-						<option value="0">Gratis</option>
+						<option hidden selected value="">{t("price")}</option>
+						<option value="">{t("all")}</option>
+						<option value="3.5">{t("max_3_50_euro")}</option>
+						<option value="5">{t("max_5_euro")}</option>
+						<option value="10">{t("max_10_euro")}</option>
+						<option value="0">{t("free")}</option>
 					</select>
 				</div>
 			</div>
@@ -126,11 +126,12 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400"}`}>
 				<div className="w-full inline-flex gap-2 items-stretch break-all px-3 py-3">
 					<div className="min-w-1/3">
-						<h3 className="text-7xl font-semibold mb-8">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-						<p className="text-6xl text-gray-600 mt-3">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+						<h3 className="text-7xl font-semibold mb-8 overflow:hidden text-ellipsis">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+						<p className="text-6xl text-gray-600 mt-3 overflow:hidden text-ellipsis">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{activiteit.type}</p>
+						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{activiteit.targetAudience}</p>
 						<p className="text-5xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
 						<p className="text-5xl text-gray-600 mt-3">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
-						<p className="text-5xl text-gray-600 mt-3">{t("locationlist", { location: activiteit.location })}</p>
 					</div>
 					<div className="relative min-w-2/3">
 						<img
