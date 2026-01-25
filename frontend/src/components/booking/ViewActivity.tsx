@@ -43,8 +43,7 @@ export function ViewActivity() {
                         </div>
 
                         <div>
-                            <div className="text-5xl font-semibold text-gray-700">{t("select_timeslot")}</div>
-                            <hr></hr> 
+                            <div className="text-5xl mt-5 font-semibold text-gray-700">{t("select_timeslot")}:</div>
                             <SlotSelector selectedAmount={selectedAmount}/>
                         </div>
 
@@ -79,7 +78,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`bg-gray-300 rounded-md min-h-50 text-nowrap px-1.5 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-xl min-h-50 text-nowrap px-3 py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -92,7 +91,6 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                         <div className="h-full w-full">
                             <div>
                                 <p>{dayjs(slot.date).locale("nl").format("D[ ]MMMM[ ]YYYY[ ][ om ]HH:mm")}</p>
-                                <hr></hr>
                             </div>
                             <p><b>{t("duration")}: </b>{slot.duration} {t("hours")}</p>
 

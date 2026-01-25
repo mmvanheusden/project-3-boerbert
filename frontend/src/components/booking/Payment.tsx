@@ -74,14 +74,12 @@ export function Payment() {
                                     <h1 className="font-bold text-6xl mt-60">
                                         <p><b>{t("price_sum")}: € </b> {context.selectedPrice!.toFixed(2).dot2comma().replace(",00", ",-")}</p>
                                     </h1>
-                                    <label>
                                         <button
                                             className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-green-600`}
                                             onClick={() => { playClickSound(); context.next(); }}
                                             >
                                         {t("proceed")}
                                         </button>
-                                    </label>
                                 </>
                             case "CONTANT":
                                 return <><Icon className="mt-10" icon="bi:cash-coin" width="600" height="600" />

@@ -18,28 +18,30 @@ export function PaymentMethod() {
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                    <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
+                    <div className="w-full h-full overflow-auto flex flex-col justify-between items-center bg-white shadow-md rounded-lg py-7">
                             <div>
                                 <h1 className="text-8xl text-center font-bold mb-30">
                                     {t("select_payment_method")}
                                 </h1>
                             </div>
-                            <div className="inline-flex">
-                                <div>
-                                <Icon className=" ml-20" icon="bi:cash-coin" width="450" height="450" />
-                                <button className="ml-10 mr-10 mt-10 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer" onClick={() => {
+                            <div className="flex gap-10 w-full justify-center">
+                                <div className="flex-1 flex flex-col justify-center items-center">
+                                <Icon className="" icon="bi:cash-coin" width="450" height="450" />
+                                </div>
+                                <div className="flex-1 flex flex-col justify-center items-center">
+                                <Icon className="" icon="cib:ideal" width="450" height="450"/>
+                                </div>
+                            </div>
+                            <div className="inline-flex gap-10 w-full px-7">
+                                <button className="flex-1 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
                                     context.selectPaymentMethod("CONTANT")
                                     context.next()
                                 }}>{t("pay_cash")}</button>
 
-                                </div>
-                                <div>
-                                <Icon className="ml-20" icon="cib:ideal" width="450" height="450"/>
-                                <button className="ml-10 mr-10 mt-10 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer" onClick={() => {
+                                <button className="flex-1 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
                                     context.selectPaymentMethod("PIN")
                                     context.next()
                                 }}>{t("pay_digital")}</button>
-                                </div>
                             </div>
                     </div>
             </div>

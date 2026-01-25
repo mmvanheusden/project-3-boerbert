@@ -15,7 +15,7 @@ export function BookingSummary() {
 			</span>
 		</Header>
 
-		<div className="flex-1 overflow-auto text-2xl p-5 bg-white shadow-md rounded-lg">
+		<div className="flex-1 overflow-auto text-2xl p-5 bg-white shadow-md rounded-lg flex flex-col justify-between">
 			<div>
 				<div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
 					<img
@@ -32,7 +32,7 @@ export function BookingSummary() {
 				</div>
 			</div>
 			<button
-				className="cursor-pointer w-full rounded-xl py-10 px-10 bg-green-600 hover:bg-green-700 focus:outline-none text-7xl text-white"
+				className="cursor-pointer w-full rounded-xl py-10 px-10 bg-green-600 hover:bg-green-700 focus:outline-none text-7xl text-white mt-5"
 				onClick={context.next}>
 				{t("confirm_booking_details")}
 			</button>

@@ -19,7 +19,8 @@ export function LogIn() {
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
+                <div className="w-full h-full overflow-auto flex flex-col justify-between items-center bg-white shadow-md rounded-lg py-7">
+                        <div className="flex flex-col justify-center items-center flex-1">
                         <h1 className="text-8xl font-bold mb-10 mt-5 mx-15 justify-center text-center">
                             {t("enter_campingspot")}
                         </h1>
@@ -33,21 +34,27 @@ export function LogIn() {
                             onChange={(e) => context.selectCampingSpot(e.target.value)}
                             />
                         </form>
-                        <button
-                              className={`mt-10 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl ${(context.selectedCampingSpot == null || Number(context.selectedCampingSpot) <= 0 || Number(context.selectedCampingSpot) >= 31 ) ? "bg-gray-500 pointer-events-none" : "bg-green-600"}`}
-                              onClick={context.next}
-                          >
-                             {t("proceed")}
-                        </button>
+                        </div>
+                        <div className="w-full px-7 flex flex-col gap-5">
 
+                         {context.selectedCampingSpot == "666" && (
                          <button
-                             className= {`mt-10 text-7xl hover:cursor-pointer px-15 py-15 bg-red-500 focus:outline-none rounded-xl ${(context.selectedCampingSpot == "666") ? "text-black" : "bg-white text-white pointer-events-none" }`}
+                             className="w-full text-7xl hover:cursor-pointer py-15 bg-red-500 rounded-xl flex justify-center items-center text-black hover:bg-red-600"
                              onClick={async () => {
                                  context.setCurrentStep(10)}}
                          >
                            <Icon icon="game-icons:devil-mask" width="100" height="100" />
                            
                            </button>
+                         )}
+                        <button
+                              className={`w-full text-7xl hover:cursor-pointer py-15 border-black focus:outline-none text-white rounded-xl flex justify-center items-center ${(context.selectedCampingSpot == null || Number(context.selectedCampingSpot) <= 0 || Number(context.selectedCampingSpot) >= 31 ) ? "bg-gray-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                              onClick={context.next}
+                          >
+                             {t("proceed")}
+                        </button>
+
+                        </div>
 
                 </div>
             </div>

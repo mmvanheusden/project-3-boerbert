@@ -19,7 +19,8 @@ export function RememberMail() {
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                <div className="w-full h-full overflow-auto flex flex-col justify-center items-center bg-white shadow-md rounded-lg">
+                <div className="w-full h-full overflow-auto flex flex-col justify-between items-center bg-white shadow-md rounded-lg py-7">
+                        <div className="flex flex-col justify-center items-center flex-1">
                         <h1 className="text-8xl font-bold mb-10 mt-5 mx-15 justify-center text-center">
                             {t("receive_email_updates")}
                         </h1>
@@ -29,17 +30,17 @@ export function RememberMail() {
                             e.preventDefault();
                             context.next()
                         }}>
-                            <label className="text-7xl mt-5 mb-10 flex justify-center">
+                            <label className="text-7xl mt-5 mb-10 flex">
                                 <input type="email" placeholder= {t("email_placeholder")} className="outline-2 outline-offset-2 rounded-xl mt-10 text-center"
                                         value={context.selectedEmail}
                                        onChange={(e) => context.selectEmail(e.target.value)}
                                 />
-                                <input type="checkbox" className="outline-2 outline-offset-2 rounded-4xl w-30 h-30 ml-5 mt-10"/> 
                             </label>
                         </form>
-                        <div className="flex items-center justify-evenly w-full">
+                        </div>
+                        <div className="flex items-center justify-evenly w-full px-7 gap-5">
                           <button
-                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl bg-red-500 hover:bg-red-600 `}
+                              className="flex-1 h-full text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-2xl bg-red-500 hover:bg-red-600 flex justify-center items-center"
                               onClick={() => {
                                   context.selectEmail(""); // Zorg dat we de email in de context legen.
                                   context.next();
@@ -47,7 +48,7 @@ export function RememberMail() {
                           > {t("proceed_without_email_updates")}
                         </button>
                          <button
-                              className={`w-50% h-96 mt-10 mx-5 text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-xl  hover:bg-green-700 ${(context.selectedEmail.includes("@") && context.selectedEmail.includes(".")) ? "bg-green-600" : "bg-gray-600 pointer-events-none"}`}
+                              className={`flex-1 h-full text-7xl hover:cursor-pointer px-15 py-15 border-black focus:outline-none text-white rounded-2xl flex justify-center items-center ${(context.selectedEmail.includes("@") && context.selectedEmail.includes(".")) ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 pointer-events-none"}`}
                               onClick={context.next}
                           > {t("proceed")}
                         </button>

@@ -125,7 +125,8 @@ i18n
                     max_3_50_euro: "Max € 3,50",
                     max_5_euro: "Max € 5,00",
                     max_10_euro: "Max € 10,00",
-                    free: "Gratis"
+                    free: "Gratis",
+                    finish_booking: "Boeking bevestigen en terug naar begin",
                 },
             }, // German
             de: {
@@ -209,7 +210,8 @@ i18n
                     max_3_50_euro: "Max 3,50 €",
                     max_5_euro: "Max 5,00 €",
                     max_10_euro: "Max 10,00 €",
-                    free: "Kostenlos"
+                    free: "Kostenlos",
+                    finish_booking: "Buchung abschließen und zurück zum Anfang",
                 }
             }, // English
             en: {
@@ -293,7 +295,8 @@ i18n
                     max_3_50_euro: "Max € 3.50",
                     max_5_euro: "Max € 5.00",
                     max_10_euro: "Max € 10.00",
-                    free: "Free"
+                    free: "Free",
+                    finish_booking: "Confirm booking and back to start",
                     
                 }
             }
