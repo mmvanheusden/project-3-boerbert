@@ -117,6 +117,28 @@ const hasAvailableSlots = (activity: Treaty.Data<typeof BACKEND.activities.get>[
 	});
 };
 
+// Map activity types to translation keys
+const getActivityTypeKey = (type: string): string => {
+	const typeMap: { [key: string]: string } = {
+		"Sport/Spel": "sport_spel",
+		"Educatief": "educative",
+		"Eten": "food",
+		"Overig": "other"
+	};
+	return typeMap[type] || type;
+};
+
+// Map target audiences to translation keys
+const getTargetAudienceKey = (audience: string): string => {
+	const audienceMap: { [key: string]: string } = {
+		"Kinderen": "children",
+		"Gezinnen": "families",
+		"Senioren": "seniors",
+		"Volwassenen": "adults"
+	};
+	return audienceMap[audience] || audience;
+};
+
 function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities.get>[0]}) {
 	const { activiteit } = props;
 	const context = useContext(Context);
@@ -128,8 +150,8 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 					<div className="min-w-1/3">
 						<h3 className="text-7xl font-semibold mb-8 overflow:hidden text-ellipsis">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
 						<p className="text-6xl text-gray-600 mt-3 overflow:hidden text-ellipsis">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{activiteit.type}</p>
-						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{activiteit.targetAudience}</p>
+						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{t(getActivityTypeKey(activiteit.type))}</p>
+						<p className="text-5xl text-gray-600 mt-3 overflow:hidden trunctate text-ellipsis">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
 						<p className="text-5xl text-gray-600 mt-3">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
 						<p className="text-5xl text-gray-600 mt-3">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
 					</div>
