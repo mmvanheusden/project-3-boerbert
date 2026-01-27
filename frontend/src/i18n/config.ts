@@ -58,7 +58,7 @@ i18n
                     booking_details: "Boekingsdetails",
                     campingspot_overview: "Campingplaatsnummer doorgeven",
                     cancel: "Afbreken",
-                    choose_an_activity: "Activiteitsoverzicht",
+                    choose_an_activity: "Activiteitenoverzicht",
                     choose_payment_method: "Kies betaalmethode",
                     confirm_booking: "Boekingsbevestiging",
                     confirm_booking_details: "Bevestig details",
