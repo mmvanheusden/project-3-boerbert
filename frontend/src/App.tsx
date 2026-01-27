@@ -16,7 +16,7 @@ export function App() {
 	return (
 		<Router>
 			<QueryClientProvider client={queryClient}>
-				<main className="pb-20 h-full">
+				<main className={`${process.env.NODE_ENV !== "production" && "pb-20"} h-full`}>
 					<Switch redirect="/">
 						<Route path="/" component={BookingFlow} />
 						<Route path="/admin" component={AdminPanel} />
@@ -33,13 +33,12 @@ export class Footer extends Component<PropsWithChildren> {
 		return (
 			<Router>
 				<QueryClientProvider client={queryClient}>
-					<div className="bg-white fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
-						<span className="text-sm text-body sm:text-center">
-							2025 Squad Skyr™
-						</span>
-						<span className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-							{process.env.NODE_ENV !== "production" &&
-								<>
+					{process.env.NODE_ENV !== "production" &&
+                        <div className="bg-white fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
+							<span className="text-red-500 text-body text-4xl">
+							2026 Squad Skyr™ -- ONTWIKKELINGSBUILD
+							</span>
+                         	   <span className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
 									<div className="me-4 md:me-6">
 										<ConnectivityCheck/>
 									</div>
@@ -50,10 +49,9 @@ export class Footer extends Component<PropsWithChildren> {
 											</button>
 										</a>
 									</nav>
-								</>
-							}
-						</span>
-					</div>
+							</span>
+                        </div>
+					}
 				</QueryClientProvider>
 			</Router>
 		)
