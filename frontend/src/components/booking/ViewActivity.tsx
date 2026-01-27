@@ -71,14 +71,14 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
     const {selectedActivity, selectSlot, selectedSlot} =  useContext(Context);
 
     return (
-        <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-4xl scroll-py-5">
+        <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-3xl scroll-py-5">
             {selectedActivity?.slots
             .filter((slot) => (selectedActivity.capacity - slot.bookings) != 0)
             .sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`bg-gray-300 rounded-xl min-h-50 text-nowrap px-3 py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-xl min-h-50 min-w-60 text-nowrap px-3 py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -98,7 +98,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                     </div>
                     <div>
                         {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>}
-                        <p className="text-3xl flex font-bold mb-5">
+                        <p className="text-3xl flex font-bold mb-2">
                             {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} {t("slots_available")}
                         </p>
                     </div>
