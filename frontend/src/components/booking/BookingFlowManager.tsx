@@ -102,7 +102,7 @@ const BookingFlow = () => {
 
 	return (
 		<Provider value={{ currentStep, setCurrentStep, next, prev, activities: activitiesQuery.data ?? [], selectedActivity, selectActivity, slideshow: slidesQuery.data ?? [], selectedPaymentMethod, selectPaymentMethod, selectedPrice, selectPrice, selectedSlot, selectSlot, selectedAmount, selectAmount, refetchData: () => { activitiesQuery.refetch(); slidesQuery.refetch(); }, clearPreviousSession: () => { selectActivity(null);selectSlot(null);selectAmount(1);selectPrice(0); }, selectedCampingSpot, selectCampingSpot, selectedEmail, selectEmail, selectedCode, selectCode }}>
-			<div className="bg-white/90 border-2 h-full border-black p-4 rounded-3xl select-none">
+			<div className="bg-white/90 border-2 h-full border-black p-2 md:p-4 rounded-3xl select-none">
 				{renderStep(currentStep) /* <---- Hier staat de stap content.*/}
 			</div>
 		</Provider>
@@ -112,7 +112,7 @@ export default BookingFlow;
 
 export function BottomRowButton(props: { text?: string, colorIdle?: string, colorHover?: string, onClick: () => void }) {
 	return (
-		<button className={`inline-flex items-center h-full hover:cursor-pointer py-7 px-7 bg-${props.colorIdle} hover:bg-${props.colorHover} rounded-xl text-5xl text-white`} onClick={props.onClick}>
+		<button className={`inline-flex items-center h-full hover:cursor-pointer py-4 px-4 md:py-7 md:px-7 bg-${props.colorIdle} hover:bg-${props.colorHover} rounded-xl text-3xl md:text-5xl text-white`} onClick={props.onClick}>
 			{props.text}
 		</button>
 	)
