@@ -32,9 +32,10 @@ export function ActivitiesList() {
                     {t("choose_an_activity")}
                 </span>
 			</Header>
-			<div className="w-full flex justify-between gap-3">
+			<div className="w-full flex justify-between gap-4">
 				<div className="relative w-full">
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityTypeFilter != "" && "ring-5 ring-orange-500"}`}>{t("type")}</button>
+					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityTypeFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("type")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
 							onChange={(e) => setActivityTypeFilter(e.target.value)}>
 						<option hidden selected value="">{t("type")}</option>
@@ -47,7 +48,8 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityMinAgeFilter != "" && "ring-5 ring-orange-500"}`}>{t("age")}</button>
+					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityMinAgeFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("age")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
 							onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
 						<option hidden selected value="">{t("age")}</option>
@@ -60,7 +62,8 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityTargetAudienceFilter != "" && "ring-5 ring-orange-500"}`}> {t("target_audience")}</button>
+					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityTargetAudienceFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}> {t("target_audience")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
 							value={activityTargetAudienceFilter}
 							onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
@@ -73,7 +76,8 @@ export function ActivitiesList() {
 					</select>
 				</div>
 				<div className="relative w-full">
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full ${activityPriceFilter != "" && "ring-5 ring-orange-500"}`}>{t("price")}</button>
+					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityPriceFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("price")}</button>
 					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
 							onChange={(e) => setActivityPriceFilter(e.target.value)}>
 						<option hidden selected value="">{t("price")}</option>
@@ -90,10 +94,11 @@ export function ActivitiesList() {
 				<ul>
 					{
 						context.activities!
-						.filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "")
+						.filter((activity) => (activity.type === activityTypeFilter) || activityTypeFilter == "") // Lege filter betekent: alles true (dus geen filter)
 						.filter((activity) => (activity.minage === activityMinAgeFilter) || activityMinAgeFilter == "")
 						.filter((activity) => (activity.targetAudience === activityTargetAudienceFilter) || activityTargetAudienceFilter == "")
 						.filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
+						.sort((activity) => hasAvailableSlots(activity)? -1 : 1) // Bubbel de beschikbare activiteiten naar boven
 						.sort((activity) => activity.pinned ? -1 : 1) // Bubbel de gepinde activiteiten naar boven!!!! (zo exciting :oooooo)
 						.map((activiteit) => <li key={activiteit.id}><ActivityCard activiteit={activiteit} /></li>)
 					}
@@ -145,17 +150,19 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 	const isAvailable = hasAvailableSlots(activiteit);
 	return (
 		<div className="mb-2">
-			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400"}`}>
+			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400 mb-10"}`}>
 				<div className="w-2/5 flex flex-col gap-2 items-stretch break-all px-3 py-3">
 					<div className="flex flex-col h-full">
 						<h3 className="text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-						<p className="text-6xl text-gray-600 mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
-						<p className="text-5xl text-gray-600 mt-5 line-clamp-4">{activiteit.description[i18n.language as "en" | "de" | "nl"]}</p>
+						<p className="text-5xl text-gray-800 mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
 						<div className="mt-auto">
-							<p className="text-5xl text-gray-600 mt-5">{t(getActivityTypeKey(activiteit.type))}</p>
-							<p className="text-5xl text-gray-600 mt-5">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-							<p className="text-5xl text-gray-600 mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-							<p className="text-5xl text-gray-600 mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>
+							<p className="text-5xl text-gray-800 mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+							{activiteit.price != 0 && <p className="text-5xl text-gray-800 mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
+							<div className="flex-row flex gap-3">
+								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-4xl text-gray-800 mt-5 bg-blue-500 w-fit p-3 rounded-xl font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
+								<p className="text-4xl text-gray-800 mt-5 bg-green-500 w-fit p-3 rounded-xl font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
+								{activiteit.price == 0 && <p className="text-4xl text-gray-800 mt-5 bg-orange-500 w-fit p-3 rounded-xl font-semibold">{t("free")}</p>}
+							</div>
 						</div>
 					</div>
 				</div>

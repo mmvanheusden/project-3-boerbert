@@ -39,7 +39,7 @@ export function ViewActivity() {
                             <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
                             <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
                             <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age", {age: selectedActivity?.minage})}</div>
-                            <div className="text-4xl mb-1">{t("price_per_person", {price: selectedActivity?.price.toFixed(2).dot2comma().replace(",00", ",-")})}</div>
+                            <div className="text-4xl mb-1">{selectedActivity?.price == 0 ? t("free") :  t("price_per_person", {price: selectedActivity?.price.toFixed(2).dot2comma().replace(",00", ",-")})}</div>
                         </div>
 
                         <div>
@@ -52,7 +52,7 @@ export function ViewActivity() {
                         </div>
 
                         <div>
-                            <Reserveren price={selectedActivity?.price!} />
+                            <Reserveren price={selectedActivity!.price} />
                         </div>
 
                         
@@ -109,9 +109,8 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
     )
 }
 
-function Reserveren({ price }: { price: number | undefined }) {
+function Reserveren({ price }: { price: number }) {
   const context = useContext(Context);
-  if (!price) return null;
 
     return (
       <div className="items-center justify-center">

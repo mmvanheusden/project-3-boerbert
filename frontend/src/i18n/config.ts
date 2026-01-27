@@ -277,7 +277,7 @@ i18n
                     back_to_start: "Back to start",
                     verification: "Enter the code ",
                     here: "Enter here",
-                    not_available: "Not available",
+                    not_available: "Unavailable",
                     no_activities_available: "No activities available",
                     pinned_activity: "Featured",
                     all: "All",
