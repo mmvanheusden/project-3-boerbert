@@ -78,7 +78,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`bg-gray-300 rounded-xl min-h-32 md:min-h-50 min-w-40 md:min-w-60 text-nowrap px-2 py-2 md:px-3 md:py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-xl min-h-32 md:min-h-50 min-w-40 md:min-w-60 px-2 py-2 md:px-3 md:py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -97,7 +97,7 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                         </div>
                     </div>
                     <div>
-                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>}
+                        <p className={`text-blue-700 ${(selectedSlot?.id != slot.id) && "invisible"}`}>{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>
                         <p className="text-xl md:text-3xl flex font-bold mb-1 md:mb-2">
                             {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} {t("slots_available")}
                         </p>
