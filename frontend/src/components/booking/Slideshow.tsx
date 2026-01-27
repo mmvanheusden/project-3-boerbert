@@ -50,8 +50,8 @@ export function Slideshow() {
 
   return (<>
         <div className="flex flex-col h-full">
-        <span className="font-bold text-center text-8xl mb-2 italic bg-green-600 text-white rounded-xl p-4 inline-flex items-center justify-center gap-4">
-          <Icon icon="material-symbols:camping-rounded" width="96" height="96" /> {t("welcome")}
+        <span className="font-bold text-center text-4xl md:text-6xl lg:text-8xl mb-2 italic bg-green-600 text-white rounded-xl p-2 md:p-4 inline-flex items-center justify-center gap-4">
+          <Icon icon="material-symbols:camping-rounded" className="w-16 h-16 md:w-24 md:h-24" /> {t("welcome")}
         </span>
           <div
               id="gallery"
@@ -105,21 +105,21 @@ export function Slideshow() {
           {/*Vlaggen en knoppenrij!!!!!1!!1!! omg omg*/}
           <div className="flex items-center justify-between">
             {/*Deze div wordt aan het begin verspreid (er staat 3 vlaggetjes in)*/}
-            <div className="inline-flex gap-8 justify-evenly w-33%">
+            <div className="inline-flex gap-3 md:gap-5 justify-evenly translate-y-2">
               <button
-                  className={`text-9xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "nl" && "ring-7"}`}
+                  className={`text-5xl md:text-8xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "nl" && "ring-7"}`}
                   onClick={() => i18n.changeLanguage("nl")}
               >
                 <Icon icon="circle-flags:lang-nl" />
               </button>
               <button
-                  className={`text-9xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "de" && "ring-7"}`}
+                  className={`text-5xl md:text-8xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "de" && "ring-7"}`}
                   onClick={() => i18n.changeLanguage("de")}
               >
                 <Icon icon="circle-flags:lang-de" />
               </button>
               <button
-                  className={`text-9xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "en" && "ring-7"}`}
+                  className={`text-5xl md:text-8xl my-auto cursor-pointer rounded-full ring-green-600 hover:ring-7 ${i18n.language as "en" | "de" | "nl" == "en" && "ring-7"}`}
                   onClick={() => i18n.changeLanguage("en")}
               >
                 <Icon icon="circle-flags:lang-en" />
@@ -129,7 +129,7 @@ export function Slideshow() {
             {/*Deze div wordt aan het einde verspreid (er staat 1 knopje in)*/}
             <div>
               <button
-                  className={`w-66% h-full items-center inline-flex text-8xl hover:cursor-pointer translate-y-2 py-10 px-10 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
+                  className={`h-full items-center inline-flex text-4xl md:text-7xl hover:cursor-pointer translate-y-2 py-4 px-4 md:py-6 md:px-5 border-black focus:outline-none text-white rounded-xl ${(activities != null && activities.length == 0) ? "disabled bg-red-500 pointer-events-none" : "bg-green-600 hover:bg-green-700"}`}
                   onClick={next}
               >
                 {(activities != null && activities.length == 0) ? <><Icon icon="mdi:alert"/>{t("no_activities_available")}</> : t("proceed")}

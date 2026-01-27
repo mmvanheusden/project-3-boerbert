@@ -14,15 +14,15 @@ export function ViewActivity() {
         <div className="flex flex-col gap-3 h-full">
             <Header>
                 <span
-                    className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
+                    className="select-none rounded-t-lg bg-green-600 px-4 md:px-8 mb-1 font-semibold text-3xl md:text-5xl text-white">
                   {t("activity_details")}
                 </span>
             </Header>
             <div className="rounded-4xl bg-white/50 flex-1 overflow-auto">
-                <div className="p-5">
-                    <div className="w-full flex flex-col gap-6">
+                <div className="p-3 md:p-5">
+                    <div className="w-full flex flex-col gap-4 md:gap-6">
                         <div>
-                            <div className="w-full h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
+                            <div className="w-full h-[15vh] md:h-[20vh] max-h-[20vh] overflow-hidden rounded-xl">
                                 <img
                                     className="w-full h-full object-cover object-center"
                                     src={`data:image/png;base64, ${selectedActivity?.hero}`}
@@ -33,17 +33,17 @@ export function ViewActivity() {
                         </div>
 
                         <div className="text-gray-800">
-                            <h1 className="text-8xl font-semibold mb-5">{selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</h1>
-                            <div className="text-5xl font-semibold text-gray-700 mb-5">{selectedActivity?.subtitle[i18n.language as "en" | "de" | "nl"]}</div>
-                            <div className="text-4xl mb-5">{selectedActivity?.description[i18n.language as "en" | "de" | "nl"]}</div>
-                            <div className="text-4xl mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
-                            <div className="text-4xl mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
-                            <div className="text-4xl mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age", {age: selectedActivity?.minage})}</div>
-                            <div className="text-4xl mb-1">{selectedActivity?.price == 0 ? t("free") :  t("price_per_person", {price: selectedActivity?.price.toFixed(2).dot2comma().replace(",00", ",-")})}</div>
+                            <h1 className="text-5xl md:text-8xl font-semibold mb-2 md:mb-5">{selectedActivity?.title[i18n.language as "en" | "de" | "nl"]}</h1>
+                            <div className="text-3xl md:text-5xl font-semibold text-gray-700 mb-2 md:mb-5">{selectedActivity?.subtitle[i18n.language as "en" | "de" | "nl"]}</div>
+                            <div className="text-xl md:text-4xl mb-2 md:mb-5">{selectedActivity?.description[i18n.language as "en" | "de" | "nl"]}</div>
+                            <div className="text-xl md:text-4xl mb-2 md:mb-5">{t("max_participants", {capacity: selectedActivity?.capacity})}</div>
+                            <div className="text-xl md:text-4xl mb-2 md:mb-5">{t("location_label", {location: selectedActivity?.location[i18n.language as "en" | "de" | "nl"]})}</div>
+                            <div className="text-xl md:text-4xl mb-2 md:mb-5">{selectedActivity?.minage == "0" ? t("all_ages") : t("min_age", {age: selectedActivity?.minage})}</div>
+                            <div className="text-xl md:text-4xl mb-1">{selectedActivity?.price == 0 ? t("free") :  t("price_per_person", {price: selectedActivity?.price.toFixed(2).dot2comma().replace(",00", ",-")})}</div>
                         </div>
 
                         <div>
-                            <div className="text-5xl mt-5 font-semibold text-gray-700">{t("select_timeslot")}:</div>
+                            <div className="text-3xl md:text-5xl mt-2 md:mt-5 font-semibold text-gray-700">{t("select_timeslot")}:</div>
                             <SlotSelector selectedAmount={selectedAmount}/>
                         </div>
 
@@ -71,14 +71,14 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
     const {selectedActivity, selectSlot, selectedSlot} =  useContext(Context);
 
     return (
-        <div className="flex flex-row space-x-3 py-3 px-2 scroll-my-6 overflow-x-auto text-4xl scroll-py-5">
+        <div className="flex flex-row space-x-2 md:space-x-3 py-2 md:py-3 px-1 md:px-2 scroll-my-6 overflow-x-auto text-xl md:text-3xl scroll-py-5">
             {selectedActivity?.slots
             .filter((slot) => (selectedActivity.capacity - slot.bookings) != 0)
             .sort((slot, nextSlot) => dayjs(slot.date).isAfter(dayjs(nextSlot.date)) ? 1 : -1) // Sorteer de datums
             .filter((slot) => dayjs(slot.date).isAfter(dayjs())) // Slot moet na nu zijn.
             .map((slot) => (
                 <div
-                    className={`bg-gray-300 rounded-xl min-h-50 text-nowrap px-3 py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
+                    className={`bg-gray-300 rounded-xl min-h-32 md:min-h-50 min-w-40 md:min-w-60 px-2 py-2 md:px-3 md:py-3 w-fit hover:cursor-pointer transition flex flex-col ${(selectedSlot?.id == slot.id) && "bg-green-500 scale-103"  || (selectedActivity.capacity - slot.bookings - selectedAmount <= 0) && "bg-gray-600 pointer-events-none" }` }
                     onClick={() => selectSlot({
                         id: slot.id,
                         activityId: selectedActivity?.id,
@@ -97,8 +97,8 @@ function SlotSelector({selectedAmount}: {selectedAmount: number}) {
                         </div>
                     </div>
                     <div>
-                        {(selectedSlot?.id == slot.id) && <p className="text-blue-700">{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>}
-                        <p className="text-3xl flex font-bold mb-5">
+                        <p className={`text-blue-700 ${(selectedSlot?.id != slot.id) && "invisible"}`}>{t("slots_available_after_booking", {slots: selectedActivity.capacity - slot.bookings - selectedAmount})}</p>
+                        <p className="text-xl md:text-3xl flex font-bold mb-1 md:mb-2">
                             {(selectedActivity.capacity - slot.bookings)} / {selectedActivity.capacity} {t("slots_available")}
                         </p>
                     </div>
@@ -114,12 +114,12 @@ function Reserveren({ price }: { price: number }) {
 
     return (
       <div className="items-center justify-center">
-        <div className="text-5xl mb-10 text-center font-bold text-gray-800 min-w-70">{t("price_sum")}: € {(context.selectedAmount * price)!.toFixed(2).dot2comma().replace(",00", ",-")}</div>
-        <div className = "text-red-700 text-4xl mb-3 ml-5">
+        <div className="text-3xl md:text-5xl mb-4 md:mb-10 text-center font-bold text-gray-800 min-w-40 md:min-w-70">{t("price_sum")}: € {(context.selectedAmount * price)!.toFixed(2).dot2comma().replace(",00", ",-")}</div>
+        <div className = "text-red-700 text-2xl md:text-4xl mb-2 md:mb-3 ml-2 md:ml-5">
           { (context.selectedSlot == null) ? t("error_select") : null} 
         </div>
         <button
-          className={`w-full h-40 flex items-center justify-center  text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${(context.selectedSlot == null) ? "bg-gray-500 pointer-events-none" : "bg-green-600"} `}
+          className={`w-full h-24 md:h-40 flex items-center justify-center  text-white rounded-2xl hover:bg-green-700 transition-colors text-3xl md:text-6xl ${(context.selectedSlot == null) ? "bg-gray-500 pointer-events-none" : "bg-green-600"} `}
           onClick={
             () => {
                 context.selectPrice(context.selectedAmount * price);
@@ -137,26 +137,26 @@ function Aantalmensen({ selectedAmount }: { selectedAmount: number | undefined }
   if (!selectedAmount) return null;
 
     return (
-      <div className="p-4 w-full">
-      <h1 className="text-center text-5xl font-semibold mb-10">
+      <div className="p-2 md:p-4 w-full">
+      <h1 className="text-center text-3xl md:text-5xl font-semibold mb-4 md:mb-10">
           {t("how_many_people")}
       </h1>
 
       <div className="flex items-center justify-evenly">
         <button
           type="button"
-          className="w-full h-40 flex items-center justify-center bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-colors text-6xl"
+          className="w-full h-24 md:h-40 flex items-center justify-center bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-colors text-3xl md:text-6xl"
           onClick={() => context.selectAmount(Math.max(1, context.selectedAmount! - 1))}
         >
           -
 
         </button>
 
-        <div className="mx-15 abolute min-w-10 text-center flex items-center justify-center text-6xl font-bold text-gray-800">{context.selectedAmount}</div>
+        <div className="mx-6 md:mx-15 abolute min-w-5 md:min-w-10 text-center flex items-center justify-center text-3xl md:text-6xl font-bold text-gray-800">{context.selectedAmount}</div>
 
         <button
           type="button"
-          className={`w-full h-40 flex items-center justify-center text-white rounded-2xl hover:bg-green-700 transition-colors text-6xl ${context.selectedSlot != null && context.selectedActivity && (context.selectedActivity.capacity - (context.selectedActivity.slots.find((slot) => slot.id === context.selectedSlot?.id)?.bookings ?? 0)) <= context.selectedAmount! ? "bg-gray-600 pointer-events-none" : "bg-green-600" }`}
+          className={`w-full h-24 md:h-40 flex items-center justify-center text-white rounded-2xl hover:bg-green-700 transition-colors text-3xl md:text-6xl ${context.selectedSlot != null && context.selectedActivity && (context.selectedActivity.capacity - (context.selectedActivity.slots.find((slot) => slot.id === context.selectedSlot?.id)?.bookings ?? 0)) <= context.selectedAmount! ? "bg-gray-600 pointer-events-none" : "bg-green-600" }`}
           onClick={() => context.selectAmount(context.selectedAmount! + 1)}
         >
           +

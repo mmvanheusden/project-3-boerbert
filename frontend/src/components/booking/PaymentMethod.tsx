@@ -13,32 +13,32 @@ export function PaymentMethod() {
         <div className="flex flex-col gap-3 h-full">
             <Header>
             <span
-                className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
+                className="select-none rounded-t-lg bg-green-600 px-4 md:px-8 mb-1 font-semibold text-3xl md:text-5xl text-white">
               {t("choose_payment_method")}
             </span>
             </Header>
             <div className="flex-1 overflow-auto">
-                    <div className="w-full h-full overflow-auto flex flex-col justify-between items-center bg-white shadow-md rounded-lg py-7">
+                    <div className="w-full h-full overflow-auto flex flex-col justify-between items-center bg-white shadow-md rounded-lg py-4 md:py-7">
                             <div>
-                                <h1 className="text-8xl text-center font-bold mb-30">
+                                <h1 className="text-4xl md:text-8xl text-center font-bold mb-10 md:mb-30">
                                     {t("select_payment_method")}
                                 </h1>
                             </div>
-                            <div className="flex gap-10 w-full justify-center">
+                            <div className="flex flex-col md:flex-row gap-5 md:gap-10 w-full justify-center items-center">
                                 <div className="flex-1 flex flex-col justify-center items-center">
-                                <Icon className="" icon="bi:cash-coin" width="450" height="450" />
+                                <Icon className="w-32 h-32 md:w-96 md:h-96" icon="bi:cash-coin" />
                                 </div>
                                 <div className="flex-1 flex flex-col justify-center items-center">
-                                <Icon className="" icon="cib:ideal" width="450" height="450"/>
+                                <Icon className="w-32 h-32 md:w-96 md:h-96" icon="cib:ideal" />
                                 </div>
                             </div>
-                            <div className="inline-flex gap-10 w-full px-7">
-                                <button className="flex-1 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
+                            <div className="flex flex-col md:flex-row gap-3 md:gap-10 w-full px-4 md:px-7 mt-5">
+                                <button className="flex-1 text-3xl md:text-6xl hover:cursor-pointer px-4 md:px-15 py-6 md:py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
                                     context.selectPaymentMethod("CONTANT")
                                     context.next()
                                 }}>{t("pay_cash")}</button>
 
-                                <button className="flex-1 text-6xl hover:cursor-pointer px-15 py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
+                                <button className="flex-1 text-3xl md:text-6xl hover:cursor-pointer px-4 md:px-15 py-6 md:py-15 text-white rounded-xl bg-green-600 hover:bg-green-700 cursor-pointer flex justify-center items-center" onClick={() => {
                                     context.selectPaymentMethod("PIN")
                                     context.next()
                                 }}>{t("pay_digital")}</button>

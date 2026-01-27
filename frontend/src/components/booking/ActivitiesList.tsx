@@ -28,15 +28,15 @@ export function ActivitiesList() {
 		<div className="flex flex-col gap-3 h-full">
 			<Header>
                 <span
-					className="select-none rounded-t-lg bg-green-600 px-8 mb-1 font-semibold text-5xl text-white">
+					className="select-none rounded-t-lg bg-green-600 px-4 md:px-8 mb-1 font-semibold text-3xl md:text-5xl text-white">
                     {t("choose_an_activity")}
                 </span>
 			</Header>
-			<div className="w-full flex justify-between gap-4">
+			<div className="w-full flex justify-between gap-2 md:gap-4">
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityTypeFilter ? "#FF6900" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("type")}</button>
-					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("type")}</button>
+					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
 							onChange={(e) => setActivityTypeFilter(e.target.value)}>
 						<option hidden selected value="">{t("type")}</option>
 						<option value="">{t("all")}</option>
@@ -48,9 +48,9 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityMinAgeFilter ? "#FF6900" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("age")}</button>
-					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityMinAgeFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("age")}</button>
+					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
 							onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
 						<option hidden selected value="">{t("age")}</option>
 						<option value="">{t("all")}</option>
@@ -62,9 +62,9 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityTargetAudienceFilter ? "#FF6900" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}> {t("target_audience")}</button>
-					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTargetAudienceFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}> {t("target_audience")}</button>
+					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
 							value={activityTargetAudienceFilter}
 							onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
 						<option hidden selected value="">{t("target_audience")}</option>
@@ -76,9 +76,9 @@ export function ActivitiesList() {
 					</select>
 				</div>
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0" icon="tabler:filter-filled" width="45" height="45" color={`${activityPriceFilter ? "#FF6900" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-5xl font-semibold py-5 px-5 rounded-xl w-full text-center h-full`}>{t("price")}</button>
-					<select className="text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityPriceFilter ? "#FF6900" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("price")}</button>
+					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
 							onChange={(e) => setActivityPriceFilter(e.target.value)}>
 						<option hidden selected value="">{t("price")}</option>
 						<option value="">{t("all")}</option>
@@ -153,15 +153,15 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400 mb-10"}`}>
 				<div className="w-2/5 flex flex-col gap-2 items-stretch break-all px-3 py-3">
 					<div className="flex flex-col h-full">
-						<h3 className="text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-						<p className="text-5xl text-gray-800 mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+						<h3 className="text-3xl md:text-5xl lg:text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
+						<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
 						<div className="mt-auto">
-							<p className="text-5xl text-gray-800 mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-							{activiteit.price != 0 && <p className="text-5xl text-gray-800 mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
-							<div className="flex-row flex gap-3">
-								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-4xl text-gray-800 mt-5 bg-blue-500 w-fit p-3 rounded-xl font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
-								<p className="text-4xl text-gray-800 mt-5 bg-green-500 w-fit p-3 rounded-xl font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-								{activiteit.price == 0 && <p className="text-4xl text-gray-800 mt-5 bg-orange-500 w-fit p-3 rounded-xl font-semibold">{t("free")}</p>}
+							<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
+							<div className="flex-row flex flex-wrap gap-2 md:gap-3">
+								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-blue-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
+								<p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-green-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
+								{activiteit.price == 0 && <p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-orange-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t("free")}</p>}
 							</div>
 						</div>
 					</div>
@@ -173,7 +173,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 						alt={activiteit.title[i18n.language as "en" | "de" | "nl"]}
 					/>
 					{activiteit.pinned == true && (
-						<div className="absolute top-2 right-2 bg-green-400 text-black text-5xl font-bold px-3 py-3 rounded-lg">
+						<div className="absolute top-2 right-2 bg-green-400 text-black text-2xl md:text-5xl font-bold px-2 py-2 md:px-3 md:py-3 rounded-lg">
 							{t("pinned_activity")}
 						</div>
 					)}
@@ -183,7 +183,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 							context.next();
 						}}
 						type="button"
-						className={`rounded-lg py-8 text-white w-full text-7xl transition-colors inline-flex justify-center  ${
+						className={`rounded-lg py-4 md:py-8 text-white w-full text-4xl md:text-7xl transition-colors inline-flex justify-center  ${
 							isAvailable
 								? "bg-green-600 hover:bg-green-700 focus:outline-none"
 								: "bg-red-600 pointer-events-none"
