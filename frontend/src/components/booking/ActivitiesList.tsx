@@ -34,7 +34,7 @@ export function ActivitiesList() {
 			</Header>
 			<div className="w-full flex justify-between gap-2 md:gap-4">
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#FF6900" : "#28282B"}`} />
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#2B7FFF" : "#28282B"}`} />
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("type")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
 							onChange={(e) => setActivityTypeFilter(e.target.value)}>
@@ -48,7 +48,7 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityMinAgeFilter ? "#FF6900" : "#28282B"}`} />
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityMinAgeFilter ? "#7CCF00" : "#28282B"}`} />
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("age")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
 							onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
@@ -62,7 +62,7 @@ export function ActivitiesList() {
 				</div>
 
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTargetAudienceFilter ? "#FF6900" : "#28282B"}`} />
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTargetAudienceFilter ? "#AD46FF" : "#28282B"}`} />
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}> {t("target_audience")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
 							value={activityTargetAudienceFilter}
@@ -156,12 +156,12 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 						<h3 className="text-3xl md:text-5xl lg:text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
 						<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
 						<div className="mt-auto">
-							<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
+							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5 mb-5 md:mb-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
 							<div className="flex-row flex flex-wrap gap-2 md:gap-3">
-								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-blue-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
-								<p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-green-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-								{activiteit.price == 0 && <p className="text-lg md:text-2xl lg:text-4xl text-gray-800 mt-2 md:mt-5 bg-orange-500 w-fit p-2 md:p-3 rounded-xl font-semibold">{t("free")}</p>}
+								<p className="text-lg md:text-2xl lg:text-4xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-lg md:text-2xl lg:text-4xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
+								<p className="text-lg md:text-2xl lg:text-4xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
+								{activiteit.price == 0 && <p className="text-lg md:text-2xl lg:text-4xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t("free")}</p>}
 							</div>
 						</div>
 					</div>
