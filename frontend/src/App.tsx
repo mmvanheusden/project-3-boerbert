@@ -16,7 +16,7 @@ export function App() {
 	return (
 		<Router>
 			<QueryClientProvider client={queryClient}>
-				<main className={`${process.env.NODE_ENV !== "production" && "pb-20"} h-full`}>
+				<main className={`h-full`}>
 					<Switch redirect="/">
 						<Route path="/" component={BookingFlow} />
 						<Route path="/admin" component={AdminPanel} />
@@ -25,37 +25,6 @@ export function App() {
 			</QueryClientProvider>
 		</Router>
 	)
-}
-
-
-export class Footer extends Component<PropsWithChildren> {
-	render() {
-		return (
-			<Router>
-				<QueryClientProvider client={queryClient}>
-					{process.env.NODE_ENV !== "production" &&
-                        <div className="bg-white fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
-							<span className="text-red-500 text-body text-4xl">
-							2026 Squad Skyr™ -- ONTWIKKELINGSBUILD
-							</span>
-                         	   <span className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-									<div className="me-4 md:me-6">
-										<ConnectivityCheck/>
-									</div>
-									<nav>
-										<a href="/admin">
-											<button className="hover:underline ml-2 rounded cursor-pointer bg-green-500 px-4 font-medium text-2xl hover:ring-2">
-												Beheerderspaneel
-											</button>
-										</a>
-									</nav>
-							</span>
-                        </div>
-					}
-				</QueryClientProvider>
-			</Router>
-		)
-	}
 }
 
 // Source - https://stackoverflow.com/a/79257253
