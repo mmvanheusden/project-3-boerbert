@@ -171,12 +171,12 @@ function ActivityCard(props: {
 	const context = useContext(Context);
 	const isAvailable = hasAvailableSlots(activiteit);
 	return (
-		<div className="mb-2">
-			<div className={`bg-white shadow-md rounded-xl p-2 w-full flex ${activiteit.pinned && "border-12 border-green-400 mb-10"}`}>
-				<div className="w-2/5 flex flex-col gap-2 items-stretch break-all px-3 py-3">
+		<div className="mb-3">
+			<div className={`bg-white shadow-md rounded-xl px-3 py-2 gap-4 w-full flex ${activiteit.pinned && "border-12 border-green-400 mb-10"}`}>
+				<div className="w-4/10 flex flex-col items-stretch">
 					<div className="flex flex-col h-full">
 						<h3 className="text-3xl md:text-5xl lg:text-7xl font-semibold mt-2">{activiteit.title[i18n.language as "en" | "de" | "nl"]}</h3>
-						<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
+						<p className="text-xl md:text-3xl lg:text-4xl text-gray-800 mt-2 md:mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
 						<div className="mt-auto">
 							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5 mb-5 md:mb-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
 							<hr className="mt-5 mb-2 w-[95%]"/>
@@ -217,7 +217,7 @@ function ActivityCard(props: {
 						</div>
 					</div>
 				</div>
-				<div className="w-3/5 relative inline-flex flex-col gap-2 items-stretch px-3 py-3">
+				<div className="w-6/10 relative inline-flex flex-col gap-2 items-stretch">
 					<img
 						className="w-full object-fill rounded-lg aspect-6/4"
                         src={`data:image/png;base64, ${activiteit.hero}`}
