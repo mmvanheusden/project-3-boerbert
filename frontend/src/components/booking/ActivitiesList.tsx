@@ -1,13 +1,13 @@
 import "../../index.css";
-import { useContext, useState } from "react";
+import {useContext, useState} from "react";
 import Context from "./Context.tsx";
-import { Header } from "../KleineDingetjes.tsx";
-import { BottomRowButton } from "./BookingFlowManager.tsx";
-import i18n, { t } from "i18next";
+import {Header} from "../KleineDingetjes.tsx";
+import {BottomRowButton} from "./BookingFlowManager.tsx";
+import i18n, {t} from "i18next";
 import useFirstRender, {BACKEND} from "../../App.tsx";
 import dayjs from "dayjs";
 import {Icon} from "@iconify/react";
-import { Treaty } from "@elysiajs/eden/treaty2";
+import {Treaty} from "@elysiajs/eden/treaty2";
 
 export function ActivitiesList() {
 	const context = useContext(Context);
@@ -35,7 +35,7 @@ export function ActivitiesList() {
 			<div className="w-full flex justify-between gap-2 md:gap-4">
 				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#2B7FFF" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("type")}</button>
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityTypeFilter ? "font-bold underline" : "font-semibold"}`}>{t("type")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
 							onChange={(e) => setActivityTypeFilter(e.target.value)}>
 						<option hidden selected value="">{t("type")}</option>
@@ -49,7 +49,7 @@ export function ActivitiesList() {
 
 				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityMinAgeFilter ? "#7CCF00" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("age")}</button>
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityMinAgeFilter ? "font-bold underline" : "font-semibold"}`}>{t("age")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
 							onChange={(e) => setActivityMinAgeFilter(e.target.value)}>
 						<option hidden selected value="">{t("age")}</option>
@@ -63,7 +63,7 @@ export function ActivitiesList() {
 
 				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTargetAudienceFilter ? "#AD46FF" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}> {t("target_audience")}</button>
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityTargetAudienceFilter ? "font-bold underline" : "font-semibold"}`}> {t("target_audience")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer"
 							value={activityTargetAudienceFilter}
 							onChange={(e) => setActivityTargetAudienceFilter(e.target.value)}>
@@ -77,7 +77,7 @@ export function ActivitiesList() {
 				</div>
 				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityPriceFilter ? "#FF6900" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl font-semibold py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full`}>{t("price")}</button>
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityPriceFilter ? "font-bold underline" : "font-semibold"}`}>{t("price")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityPriceFilter}
 							onChange={(e) => setActivityPriceFilter(e.target.value)}>
 						<option hidden selected value="">{t("price")}</option>
@@ -100,7 +100,17 @@ export function ActivitiesList() {
 						.filter((activity) => (activity.price <= Number(activityPriceFilter)) || activityPriceFilter == "")
 						.sort((activity) => hasAvailableSlots(activity)? -1 : 1) // Bubbel de beschikbare activiteiten naar boven
 						.sort((activity) => activity.pinned ? -1 : 1) // Bubbel de gepinde activiteiten naar boven!!!! (zo exciting :oooooo)
-						.map((activiteit) => <li key={activiteit.id}><ActivityCard activiteit={activiteit} /></li>)
+						.map((activiteit) => (
+							<li key={activiteit.id}>
+								<ActivityCard
+									activiteit={activiteit}
+									onSetActivityMinAgeFilter={setActivityMinAgeFilter}
+									onSetActivityPriceFilter={setActivityPriceFilter}
+									onSetActivityTargetAudienceFilter={setActivityTargetAudienceFilter}
+									onSetActivityTypeFilter={setActivityTypeFilter}
+								/>
+							</li>
+						))
 					}
 				</ul>
 			</div>
@@ -144,8 +154,20 @@ const getTargetAudienceKey = (audience: string): string => {
 	return audienceMap[audience] || audience;
 };
 
-function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities.get>[0]}) {
-	const { activiteit } = props;
+function ActivityCard(props: {
+	activiteit: Treaty.Data<typeof BACKEND.activities.get>[0];
+	onSetActivityMinAgeFilter: (value: string) => void;
+	onSetActivityPriceFilter: (value: string) => void;
+	onSetActivityTargetAudienceFilter: (value: string) => void;
+	onSetActivityTypeFilter: (value: string) => void;
+}) {
+	const {
+		activiteit,
+		onSetActivityMinAgeFilter,
+		onSetActivityPriceFilter,
+		onSetActivityTargetAudienceFilter,
+		onSetActivityTypeFilter
+	} = props;
 	const context = useContext(Context);
 	const isAvailable = hasAvailableSlots(activiteit);
 	return (
@@ -159,10 +181,38 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5 mb-5 md:mb-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
 							<hr className="mt-5 mb-2 w-[95%]"/>
 							<div className="flex-row flex flex-wrap gap-2 md:gap-3">
-								<p className="inset-shadow-sm inset-shadow-lime-400 drop-shadow-lime-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-								{getActivityTypeKey(activiteit.type) != "other" && <p className="inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
-								<p className="inset-shadow-sm inset-shadow-purple-400 drop-shadow-purple-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-								{activiteit.price == 0 && <p className="inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t("free")}</p>}
+								<button
+									type="button"
+									onClick={() => onSetActivityMinAgeFilter(activiteit.minage)}
+									className="active:scale-120 transition inset-shadow-sm inset-shadow-lime-400 drop-shadow-lime-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+								>
+									{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}
+								</button>
+								{getActivityTypeKey(activiteit.type) != "other" && (
+									<button
+										type="button"
+										onClick={() => onSetActivityTypeFilter(activiteit.type)}
+										className="active:scale-120 transition inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+									>
+										{t(getActivityTypeKey(activiteit.type))}
+									</button>
+								)}
+								<button
+									type="button"
+									onClick={() => onSetActivityTargetAudienceFilter(activiteit.targetAudience)}
+									className="active:scale-120 transition inset-shadow-sm inset-shadow-purple-400 drop-shadow-purple-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+								>
+									{t(getTargetAudienceKey(activiteit.targetAudience))}
+								</button>
+								{activiteit.price == 0 && (
+									<button
+										type="button"
+										onClick={() => onSetActivityPriceFilter("0")}
+										className="active:scale-120 transition inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+									>
+										{t("free")}
+									</button>
+								)}
 							</div>
 						</div>
 					</div>
@@ -186,7 +236,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 						type="button"
 						className={`rounded-lg py-4 md:py-8 text-white w-full text-4xl md:text-7xl transition inline-flex justify-center ${
 							isAvailable
-								? "bg-green-600 hover:bg-green-700 focus:outline-none"
+								? "bg-green-600 hover:bg-green-700 focus:outline-none cursor-pointer"
 								: "bg-red-600 pointer-events-none"
 						}`}
 					>
