@@ -34,20 +34,6 @@ export function ActivitiesList() {
 			</Header>
 			<div className="w-full flex justify-between gap-2 md:gap-4">
 				<div className="relative w-full">
-					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#2B7FFF" : "#28282B"}`} />
-					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityTypeFilter ? "font-bold underline" : "font-semibold"}`}>{t("type")}</button>
-					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
-							onChange={(e) => setActivityTypeFilter(e.target.value)}>
-						<option hidden selected value="">{t("type")}</option>
-						<option value="">{t("all")}</option>
-						<option value="Sport/Spel">{t("sport_spel")}</option>
-						<option value="Educatief">{t("educative")}</option>
-						<option value="Eten">{t("food")}</option>
-						<option value="Overig">{t("other")}</option>
-					</select>
-				</div>
-
-				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityMinAgeFilter ? "#7CCF00" : "#28282B"}`} />
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityMinAgeFilter ? "font-bold underline" : "font-semibold"}`}>{t("age")}</button>
 					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityMinAgeFilter}
@@ -75,6 +61,7 @@ export function ActivitiesList() {
 						<option value="Volwassenen">{t("adults")}</option>
 					</select>
 				</div>
+
 				<div className="relative w-full">
 					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityPriceFilter ? "#FF6900" : "#28282B"}`} />
 					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityPriceFilter ? "font-bold underline" : "font-semibold"}`}>{t("price")}</button>
@@ -86,6 +73,20 @@ export function ActivitiesList() {
 						<option value="5">{t("max_5_euro")}</option>
 						<option value="10">{t("max_10_euro")}</option>
 						<option value="0">{t("free")}</option>
+					</select>
+				</div>
+
+				<div className="relative w-full">
+					<Icon className="absolute top-0 right-0 w-6 h-6 md:w-11 md:h-11" icon="tabler:filter-filled" color={`${activityTypeFilter ? "#2B7FFF" : "#28282B"}`} />
+					<button className={`bg-green-600 hover:bg-green-700 text-white text-2xl md:text-5xl py-3 px-2 md:py-5 md:px-5 rounded-xl w-full text-center h-full ${activityTypeFilter ? "font-bold underline" : "font-semibold"}`}>{t("type")}</button>
+					<select className="text-xl md:text-4xl absolute inset-0 opacity-0 w-full cursor-pointer" value={activityTypeFilter}
+							onChange={(e) => setActivityTypeFilter(e.target.value)}>
+						<option hidden selected value="">{t("type")}</option>
+						<option value="">{t("all")}</option>
+						<option value="Sport/Spel">{t("sport_spel")}</option>
+						<option value="Educatief">{t("educative")}</option>
+						<option value="Eten">{t("food")}</option>
+						<option value="Overig">{t("other")}</option>
 					</select>
 				</div>
 			</div>
@@ -188,15 +189,6 @@ function ActivityCard(props: {
 								>
 									{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}
 								</button>
-								{getActivityTypeKey(activiteit.type) != "other" && (
-									<button
-										type="button"
-										onClick={() => onSetActivityTypeFilter(activiteit.type)}
-										className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold"
-									>
-										{t(getActivityTypeKey(activiteit.type))}
-									</button>
-								)}
 								<button
 									type="button"
 									onClick={() => onSetActivityTargetAudienceFilter(activiteit.targetAudience)}
@@ -211,6 +203,15 @@ function ActivityCard(props: {
 										className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold"
 									>
 										{t("free")}
+									</button>
+								)}
+								{getActivityTypeKey(activiteit.type) != "other" && (
+									<button
+										type="button"
+										onClick={() => onSetActivityTypeFilter(activiteit.type)}
+										className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+									>
+										{t(getActivityTypeKey(activiteit.type))}
 									</button>
 								)}
 							</div>
