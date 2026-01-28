@@ -22,9 +22,7 @@ const app = new Elysia()
     .use(openapi({
         references: fromTypes()
     }))
-    .use(cors({
-        origin: process.env.FRONTEND_URL || ""
-    }))
+    .use(cors())
     .use(cron({
         name: "reminder_email",
         pattern: Patterns.EVERY_30_MINUTES,
