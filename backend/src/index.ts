@@ -53,6 +53,11 @@ export const EmailTransporter = nodemailer.createTransport(
             user: 'api',
             pass: process.env.MAILTRAP_TOKEN!
         },
+        tls: {
+            rejectUnauthorized: false
+        },
+        logger: process.env.MAILTRAP_DEBUG == "true" || false,
+        debug: process.env.MAILTRAP_DEBUG == "true" || false,
     },
     {
         from: {
