@@ -35,7 +35,7 @@ function Weerbericht() {
         item.dt_txt.includes("12:00:00")
       );
 
-      setForecast(dagelijks.slice(1, 5));
+      setForecast(dagelijks.slice(0, 4));
       setLaden(false);
     });
   }, []);
