@@ -157,11 +157,12 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 						<p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5">{activiteit.subtitle[i18n.language as "en" | "de" | "nl"]}</p>
 						<div className="mt-auto">
 							{activiteit.price != 0 && <p className="text-xl md:text-3xl lg:text-5xl text-gray-800 mt-2 md:mt-5 mb-5 md:mb-5">{t("price_per_person", { price: activiteit.price.toFixed(2).dot2comma().replace(",00", ",-") })}</p>}
+							<hr className="mt-5 mb-2 w-[95%]"/>
 							<div className="flex-row flex flex-wrap gap-2 md:gap-3">
-								<p className="text-lg md:text-2xl lg:text-4xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
-								{getActivityTypeKey(activiteit.type) != "other" && <p className="text-lg md:text-2xl lg:text-4xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
-								<p className="text-lg md:text-2xl lg:text-4xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
-								{activiteit.price == 0 && <p className="text-lg md:text-2xl lg:text-4xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t("free")}</p>}
+								<p className="inset-shadow-sm inset-shadow-lime-400 drop-shadow-lime-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold">{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}</p>
+								{getActivityTypeKey(activiteit.type) != "other" && <p className="inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getActivityTypeKey(activiteit.type))}</p>}
+								<p className="inset-shadow-sm inset-shadow-purple-400 drop-shadow-purple-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t(getTargetAudienceKey(activiteit.targetAudience))}</p>
+								{activiteit.price == 0 && <p className="inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold">{t("free")}</p>}
 							</div>
 						</div>
 					</div>
@@ -183,7 +184,7 @@ function ActivityCard(props: { activiteit: Treaty.Data<typeof BACKEND.activities
 							context.next();
 						}}
 						type="button"
-						className={`rounded-lg py-4 md:py-8 text-white w-full text-4xl md:text-7xl transition-colors inline-flex justify-center  ${
+						className={`rounded-lg py-4 md:py-8 text-white w-full text-4xl md:text-7xl transition inline-flex justify-center ${
 							isAvailable
 								? "bg-green-600 hover:bg-green-700 focus:outline-none"
 								: "bg-red-600 pointer-events-none"
