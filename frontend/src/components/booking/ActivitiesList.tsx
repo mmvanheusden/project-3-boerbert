@@ -184,7 +184,7 @@ function ActivityCard(props: {
 								<button
 									type="button"
 									onClick={() => onSetActivityMinAgeFilter(activiteit.minage)}
-									className="active:scale-120 transition inset-shadow-sm inset-shadow-lime-400 drop-shadow-lime-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+									className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-lime-400 drop-shadow-lime-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-lime-500 w-fit p-2 md:p-3 rounded-full font-semibold"
 								>
 									{activiteit.minage == "0" ? t("all_ages") : t("min_age", { age: activiteit.minage })}
 								</button>
@@ -192,7 +192,7 @@ function ActivityCard(props: {
 									<button
 										type="button"
 										onClick={() => onSetActivityTypeFilter(activiteit.type)}
-										className="active:scale-120 transition inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+										className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-blue-400 drop-shadow-blue-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-blue-500 w-fit p-2 md:p-3 rounded-full font-semibold"
 									>
 										{t(getActivityTypeKey(activiteit.type))}
 									</button>
@@ -200,7 +200,7 @@ function ActivityCard(props: {
 								<button
 									type="button"
 									onClick={() => onSetActivityTargetAudienceFilter(activiteit.targetAudience)}
-									className="active:scale-120 transition inset-shadow-sm inset-shadow-purple-400 drop-shadow-purple-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+									className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-purple-400 drop-shadow-purple-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white  bg-purple-500 w-fit p-2 md:p-3 rounded-full font-semibold"
 								>
 									{t(getTargetAudienceKey(activiteit.targetAudience))}
 								</button>
@@ -208,7 +208,7 @@ function ActivityCard(props: {
 									<button
 										type="button"
 										onClick={() => onSetActivityPriceFilter("0")}
-										className="active:scale-120 transition inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold"
+										className="cursor-zoom-in active:scale-120 transition inset-shadow-sm inset-shadow-orange-400 drop-shadow-orange-500 drop-shadow-sm text-lg md:text-2xl lg:text-3xl text-white bg-orange-500 w-fit p-2 md:p-3 rounded-full font-semibold"
 									>
 										{t("free")}
 									</button>
